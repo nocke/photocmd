@@ -10,7 +10,7 @@ console.log('\n');
 program.version( pjson.version );   // .version('0.0.1');
 
 program
-	.command('delete <dir> [otherDirs...]') // optional and mandatory params
+	.command('delete <dir> [moreDirs...]') // optional and mandatory params
 	.description('delete \"lonely\" images of sorts')
 	.option('-v, --verbose', 'log more details')
 	.option('-l, --live', 'actually do it')
