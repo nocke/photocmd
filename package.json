@@ -1,0 +1,37 @@
+{
+  "name": "photocmd",
+  "version": "0.0.2",
+  "description": "a command-line tool for working with ‘families’ of photos, syncing metadata, deleting, renaming",
+  "main": "build/index.js",
+  "scripts": {
+    "clean": "rm -rf build && mkdir build",
+    "build": "babel src -d build -s",
+    "watch": "babel src -d build -s -w",
+    "test": "echo \"wish I had a test\""
+  },
+  "keywords": [
+    "photo",
+    "raw",
+    "jpeg",
+    "tagging",
+    "deletion",
+    "metadata",
+    "stamping"
+  ],
+  "author": "Frank",
+  "license": "Apache-2.0",
+  "bin": {
+    "photo": "./build/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/nocke/photocmd/issues"
+  },
+  "homepage": "https://github.com/nocke/photocmd#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015-node5": "^1.2.0"
+  }
+}
