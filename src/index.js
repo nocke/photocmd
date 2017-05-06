@@ -20,9 +20,21 @@ program
 if (process.argv.length == 2 )
 	process.argv.push('--help');
 
-program.parse(process.argv); // in help case, parse exits ( .outputHelp() would avoid this )
+// in help case, parse exits ( .outputHelp() would avoid this )
+try {
+	program.parse(process.argv); 
+} catch (err) {
+	console.error('Error in Command: %s\n\nStacktrace: %s', err.message, err.stack)
+	process.exit(6);
+}
 
 // did any command run? if not, output help
 const noRun = 'string' === typeof program.args[program.args.length-1];
 if (noRun) program.help();
+
+// no (legible) command (aka action) given?
+if (typeof cmdValue === 'undefined') {
+   console.error('no command given!123');
+   process.exit(1);
+}
 

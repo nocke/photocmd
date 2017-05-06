@@ -1,3 +1,6 @@
+
+import assert from 'assert';
+
 import fs from 'fs';
 import path from 'path';
 
@@ -7,26 +10,45 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	let liveMode    = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
 
-	console.log( "live: "    + liveMode );
-	console.log( "verbose: " + verboseMode );
-	console.log( '-----------------' );
-	
+	// console.log( "live: "    + liveMode );
+	// console.log( "verbose: " + verboseMode );
+	// console.log( '-----------------' );
+
 	let dirs = [firstDir, ...moreDirs];
 
-	console.dir(dirs, 'dirs');
+	// console.dir(dirs, 'dirs');
 
-	if (!dirs)
-		return new Error('no directory');
+	// if (!dirs)
+		throw new Error('no directory');
 
 	dirs.forEach(function (dir) {
 
-		console.log('\nhandling dir %s', dir);
+		console.log('\nhandling dir %s ---------------------', dir);
 
 		if ( fs.existsSync(dir) ) {
 
 			let stats = fs.statSync( dir );
 			if (stats.isDirectory()) {
+
 				console.log( "directory!" );
+				assert.ok( dir.length > 0, 'insufficient string length');
+
+				fs.readdir( dir, function( err, files) {
+					if( err ) {
+						console.error( "Could not list the directory.", err );
+						process.exit(1);
+					}
+
+					files.forEach( function( file, index ) {
+						console.log('File: ', file);
+					});
+
+				});
+
+
+
+				// NEXT: wie fange ich so async-tasks denn dann wieder ein?
+
 			} else {
 				console.log( "file!" );
 			}
