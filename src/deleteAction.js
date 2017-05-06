@@ -4,10 +4,14 @@ import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 
+import Family from './model/Family.js';
 import config from '../config';
 
 
 function deleteAction( firstDir, moreDirs, cmd ) {
+
+	// var f = new Family();
+	// var g = new Family(['a','b']);
 
 	let liveMode    = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
