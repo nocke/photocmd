@@ -4,21 +4,20 @@ import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 
+const CONFIG = JSON.parse(fs.readFileSync('./config.json'));
+
 
 function deleteAction( firstDir, moreDirs, cmd ) {
 
 	let liveMode    = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
 
-	// console.log( "live: "    + liveMode );
-	// console.log( "verbose: " + verboseMode );
-	// console.log( '-----------------' );
-
+	// simply merge all dirs, treat each one seperately
 	let dirs = [firstDir, ...moreDirs];
 
-	// console.dir(dirs, 'dirs');
+	console.dir(CONFIG);
 
-	// if (!dirs)
+	if (!dirs)
 		throw new Error('no directory');
 
 	dirs.forEach(function (dir) {
@@ -44,8 +43,6 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 					});
 
 				});
-
-
 
 				// NEXT: wie fange ich so async-tasks denn dann wieder ein?
 

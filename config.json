@@ -1,0 +1,6 @@
+{
+	"extensions": [ "jpg", "foo"],
+	"extensions_raw": "xyz@123",
+	"email": "xyz@xyz.com",
+	"uid": 1100123
+}
