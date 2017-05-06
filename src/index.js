@@ -24,7 +24,7 @@ if (process.argv.length == 2 )
 try {
 	program.parse(process.argv); 
 } catch (err) {
-	console.error('Error in Command: %s\n\nStacktrace: %s', err.message, err.stack)
+	console.error('Error: \"%s\n\nStacktrace: %s\"', err.message, err.stack)
 	process.exit(6);
 }
 
@@ -32,9 +32,5 @@ try {
 const noRun = 'string' === typeof program.args[program.args.length-1];
 if (noRun) program.help();
 
-// no (legible) command (aka action) given?
-if (typeof cmdValue === 'undefined') {
-   console.error('no command given!123');
-   process.exit(1);
-}
+// note: an exit() here prevents command execution (async reasons?)
 
