@@ -1,4 +1,4 @@
-
+'use strict'
 import assert from 'assert';
 
 
@@ -34,11 +34,12 @@ class Family {
 
 	parse( files ) {
 		console.log('parsing files');
+		this._fam = files;
 	}
 
-	// static staticHi() {
-	// 	console.log('Howdy Partner');
-	// }
+	static staticHi() {
+		console.log('Howdy Partner');
+	}
 
 
 

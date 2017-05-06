@@ -36,10 +36,14 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 		}
 
 		fs.readdir( dir, (err,files) => {
-			files.forEach( (file) =>
+			files.map( (file) =>
 				console.log(file)
 			);
 		});
+
+		console.log('async done');
+
+		
 
 	});
 
