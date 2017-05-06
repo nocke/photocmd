@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
-import "babel-polyfill"; // https://babeljs.io/docs/usage/polyfill/
+// import "babel-polyfill"; // https://babeljs.io/docs/usage/polyfill/
 
+ 
 import program from 'commander';
 import pjson from '../package.json';
 

@@ -8,12 +8,12 @@ const assert = chai.assert;
 
 describe('ES6 self-test', () => {
 
-	it('Array', () => {
+	// it('Array', () => {
 
-		var a = [1, 2, 3];
-		assert( a.includes(2),'one' );
-		assert( !a.includes(4), 'two' );
-	});
+	// 	var a = [1, 2, 3];
+	// 	assert( a.includes(2),'one' );
+	// 	assert( !a.includes(4), 'two' );
+	// });
 
 	it('Set', () => {
 
