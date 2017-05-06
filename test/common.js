@@ -1,5 +1,4 @@
 
-// nothing
+import "babel-polyfill"; // https://babeljs.io/docs/usage/polyfill/
 
-require('babel-core/register');
-
+// needed?  –  require('babel-core/register');

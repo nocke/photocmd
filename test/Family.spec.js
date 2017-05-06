@@ -3,7 +3,7 @@
 import chai from 'chai';
 import path from 'path';
 
-// shorthands
+// shorthand
 const assert = chai.assert;
 
 // system under test:

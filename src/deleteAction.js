@@ -10,6 +10,22 @@ import config from '../config';
 
 function deleteAction( firstDir, moreDirs, cmd ) {
 
+	// Array test:
+	var a = [1, 2, 3];
+	console.log( a.includes(2) ); // true 
+	console.log( a.includes(4) ); // false
+
+	// Set Test:
+	var mySet = new Set();
+	mySet.add(1); // Set { 1 }
+	mySet.add(5); // Set { 1, 5 }
+	console.log(mySet);
+
+	return 1234567;
+
+
+
+
 	// var f = new Family();
 	// var g = new Family(['a','b']);
 
