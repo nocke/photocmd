@@ -35,15 +35,20 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 			return;
 		}
 
-		fs.readdir( dir, (err,files) => {
-			files.map( (file) =>
+		let files = fs.readdirSync( dir );
+
+		// geht: console.dir( config.extensions );
+
+		files
+		.filter( (file) => {
+			// TOOD filter out extension
+
+			return true; // NEXT config.extensions.includes('jpg');
+		})
+		.map( (file) =>
 				console.log(file)
-			);
-		});
+		);
 
-		console.log('async done');
-
-		
 
 	});
 
