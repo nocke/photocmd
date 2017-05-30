@@ -1,7 +1,7 @@
 {
   "name": "photocmd",
   "version": "0.0.2",
-  "description": "a command-line tool for working with ‘families’ of photos, syncing metadata, deleting, renaming",
+  "description": "a command-line tool for working with ‘families’ of photos, syncing metadata, deleting and renaming",
   "main": "build/index.js",
   "scripts": {
     "clean": "rm -rf build && mkdir build",
