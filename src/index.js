@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-// import "babel-polyfill"; // https://babeljs.io/docs/usage/polyfill/
-
- 
 import program from 'commander';
 import pjson from '../package.json';
 
@@ -25,7 +22,7 @@ if (process.argv.length == 2 )
 
 // in help case, parse exits ( .outputHelp() would avoid this )
 try {
-	program.parse(process.argv); 
+	program.parse(process.argv);
 } catch (err) {
 	console.error('Error: \"%s\n\nStacktrace: %s\"', err.message, err.stack)
 	process.exit(6);

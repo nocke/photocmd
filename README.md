@@ -85,7 +85,9 @@ The bin-section of the [package.json](package.json) defines it as a command line
 ----
 ## Development
 
-`npm run test` – runs mocha test suite.
+`npm run watch` – to keep compiling ES6 → ES5
+
+`npm test` – runs mocha test suite.
 * ensure ES6 transpilation
 * smoke test
 
