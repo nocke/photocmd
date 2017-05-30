@@ -83,6 +83,15 @@ The bin-section of the [package.json](package.json) defines it as a command line
 ```
 
 ----
+## Development
+
+`npm run test` – runs mocha test suite.
+* ensure ES6 transpilation
+* smoke test
+
+
+
+----
 ## License
 
-The content on this project are released under the very permissive terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and it places almost no restrictions on what you can do with the Project.
+The content on this project are released under the very permissive terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and places almost no restrictions on what you can do with the Project.
