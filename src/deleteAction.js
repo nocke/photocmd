@@ -29,23 +29,17 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	dirs.forEach(function (dir) {
 
 		if ( !fs.existsSync(dir) ) {
-			// TODO testing
-			console.error('no directory or file %s -------------', dir);
-			return;
+			throw new Error('no directory or file %s -------------', dir);
 		}
 
 		let stats = fs.statSync( dir );
 		if ( !stats.isDirectory()) {
-			console.error('single File – not handled yet ------------');
-			return;
+			throw new Error('single File – not handled yet ------------');
 		}
 
 		let files = fs.readdirSync( dir );
 
-		// geht: console.dir( config.extensions );
-
-		files
-		.filter( (filepath) => {
+		files.filter( (filepath) => {
 
 			const p = path.parse( filepath );
 			// remove leading dot
