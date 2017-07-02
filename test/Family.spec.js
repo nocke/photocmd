@@ -28,6 +28,8 @@ describe('Family Initialize', () => {
 		f = new Family(['foo.jpg', 'bar.png']);
 		assert.typeOf(f, 'object');
 		assert.deepEqual(f._fam, ['foo.jpg', 'bar.png']);
+
+
 	});
 
 	it('bad initialize', () => {
