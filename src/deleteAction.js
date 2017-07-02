@@ -14,7 +14,6 @@ import config from '../config';
 
 function deleteAction( firstDir, moreDirs, cmd ) {
 
-
 	// var f = new Family();
 	// var g = new Family(['a','b']);
 
@@ -30,6 +29,7 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	dirs.forEach(function (dir) {
 
 		if ( !fs.existsSync(dir) ) {
+			// TODO testing
 			console.error('no directory or file %s -------------', dir);
 			return;
 		}
@@ -45,15 +45,19 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 		// geht: console.dir( config.extensions );
 
 		files
-		.filter( (file) => {
-			// TOOD filter out extension
+		.filter( (filepath) => {
 
-			return true; // NEXT config.extensions.includes('jpg');
+			const p = path.parse( filepath );
+			// remove leading dot
+			if (p.ext[0]==='.')
+				p.ext = p.ext.substr(1);
+
+			// console.log("dir "+p.dir+ "name "+p.name+ "  p.ext: "+p.ext );
+			return config.extensions.includes(p.ext.toLowerCase() );
 		})
 		.map( (file) =>
 				console.log(file)
 		);
-
 
 	});
 
