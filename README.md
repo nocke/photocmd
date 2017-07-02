@@ -48,6 +48,8 @@ Common tasks with freshly shot images that made me write this tool were:
 
     $> photo ...
 
+* always the same pain: timestamp offset. Least thinking required: photograph a reliable clock, tell the name of the image and the time seen in it. Tool will pull exif date, build the time difference, do it's job (for all images, or by criteria. i.e. before mixing with alternate cameras / friends pictures... )
+
 
 * distribution ... (into preconfigured channels)
 
@@ -80,6 +82,10 @@ The bin-section of the [package.json](package.json) defines it as a command line
 
 	-h, --help     output usage information
 	-V, --version  output the version number
+
+
+	examples:
+	
 ```
 
 ----
