@@ -91,6 +91,11 @@ The bin-section of the [package.json](package.json) defines it as a command line
 ----
 ## Development
 
+Most ofthe time you will just want:
+
+`npm start` – starts watchint `src/` and `test/` folder, rebuilds and tests on change.
+
+
 #### build
 
 `npm run build` – build ES6 → ES5 once
