@@ -10,21 +10,12 @@ import path from 'path';
 import Family from './model/Family.js';
 import config from '../config';
 
+// ----------------------------
 
-
-function deleteAction( firstDir, moreDirs, cmd ) {
-
-	// var f = new Family();
-	// var g = new Family(['a','b']);
-
-	let liveMode    = cmd.live || false;
-	let verboseMode = cmd.verbose || false;
-
-	// simply merge all dirs, treat each one seperately
-	let dirs = [firstDir, ...moreDirs];
-
-	if (!dirs)
-		throw new Error('no directory');
+/**
+ * parses array of directories
+ */
+function parseDirs(dirs) {
 
 	dirs.forEach(function (dir) {
 
@@ -42,11 +33,13 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 		files.filter( (filepath) => {
 
 			const p = path.parse( filepath );
-			// remove leading dot
+			
+			// remove leading dot (hidden files)
 			if (p.ext[0]==='.')
 				p.ext = p.ext.substr(1);
 
-			// console.log("dir "+p.dir+ "name "+p.name+ "  p.ext: "+p.ext );
+			console.log("dir "+p.dir+ "name "+p.name+ "  p.ext: "+p.ext );
+
 			return config.extensions.includes(p.ext.toLowerCase() );
 		})
 		.map( (file) =>
@@ -54,6 +47,31 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 		);
 
 	});
+
+
+
+
+}
+
+
+// -----------------------------
+
+function deleteAction( firstDir, moreDirs, cmd ) {
+
+	// var f = new Family();
+	// var g = new Family(['a','b']);
+
+	let liveMode    = cmd.live || false;
+	let verboseMode = cmd.verbose || false;
+
+	// simply merge all dirs, treat each one seperately
+	let dirs = [firstDir, ...moreDirs];
+
+	if (!dirs)
+		throw new Error('no directory');
+
+	parseDirs(dirs);
+
 
 } // deleteAction
 
