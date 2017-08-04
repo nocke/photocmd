@@ -3,6 +3,7 @@
 import array from 'core-js/fn/array';
 
 import assert from 'assert';
+import {enforce} from './utils';
 
 import fs from 'fs';
 import path from 'path';
@@ -14,26 +15,25 @@ import config from '../config';
 
 /**
  * parses array of directories
+ *
+ * returns Array of Families
  */
 function parseDirs(dirs) {
 
 	dirs.forEach(function (dir) {
 
-		if ( !fs.existsSync(dir) ) {
-			throw new Error('no directory or file %s -------------', dir);
-		}
+		enforce( fs.existsSync(dir), `no directory or file ${dir}`);
 
 		let stats = fs.statSync( dir );
-		if ( !stats.isDirectory()) {
-			throw new Error('single File – not handled yet ------------');
-		}
+		enforce( stats.isDirectory(), 'single File – not handled yet');
 
 		let files = fs.readdirSync( dir );
 
+		// parsing an individual dir:
 		files.filter( (filepath) => {
 
 			const p = path.parse( filepath );
-			
+
 			// remove leading dot (hidden files)
 			if (p.ext[0]==='.')
 				p.ext = p.ext.substr(1);
@@ -48,32 +48,23 @@ function parseDirs(dirs) {
 
 	});
 
-
-
-
 }
-
 
 // -----------------------------
 
 function deleteAction( firstDir, moreDirs, cmd ) {
 
-	// var f = new Family();
-	// var g = new Family(['a','b']);
-
 	let liveMode    = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
 
 	// simply merge all dirs, treat each one seperately
+	// TODO move to caller
 	let dirs = [firstDir, ...moreDirs];
 
 	if (!dirs)
 		throw new Error('no directory');
 
 	parseDirs(dirs);
+}
 
-
-} // deleteAction
-
-// OLD: module.exports = deleteAction;
 export default deleteAction;
