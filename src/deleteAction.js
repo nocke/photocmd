@@ -16,9 +16,7 @@ import {FileSet, Family, Member} from './model';
  */
 function parseDirs(dirs) {
 
-	Family.parse(dirs);
-	Member.sayHi();
-	FileSet.sayHi();
+	let fileSet = new FileSet(dirs);
 
 }
 

@@ -9,12 +9,14 @@ import {enforce, fail} from '../helpers';
 
  class FileSet {
 
-		static sayHi(){
+	constructor(dirs) {
 
-			console.log('Hi FileSet!');
+		enforce( Array.isArray(dirs), 'not an array' );
+		this._families = new Set();
 
-		}
-
+		console.log('FileSet constructed');
+		return;
+	}
 }
 
 export default FileSet;
