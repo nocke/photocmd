@@ -5,11 +5,7 @@ import array from 'core-js/fn/array';
 import assert from 'assert';
 import {enforce} from './utils';
 
-import fs from 'fs';
-import path from 'path';
-
-import Family from './model/Family.js';
-import config from '../config';
+import {Family, Tribe, Member} from './model';
 
 // ----------------------------
 
@@ -21,8 +17,8 @@ import config from '../config';
 function parseDirs(dirs) {
 
 	Family.parse(dirs);
-
-	console.log('parseDirs -------------------------');
+	Member.sayHi();
+	Tribe.sayHi();
 
 }
 

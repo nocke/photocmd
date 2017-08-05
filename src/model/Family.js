@@ -1,15 +1,14 @@
 'use strict'
-import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 
 import {
-	enforce
+	enforce,
+	fail
 } from '../utils';
 import config from '../../config';
 
-
-/**
+/*
  * maintains a family of images
  * - images and sidecars belonging together, based on naming
  *
@@ -44,16 +43,30 @@ import config from '../../config';
 class Family {
 
 	/**
-	 * parses a directory,
+	 * parses a directory, returns a set of families.
+	 * ech Family consisting out of (family) Members
+	 *
 	 * @param {Array} dirs one or more directories
 	 *
 	 * @return {Set} a set with all families
-	 *
-	 *
 	 */
 	static parse(dirs) {
 		const r = new Set();
 		console.log('parsing files...');
+
+
+		/* STEP 1
+		 *    parse picasa ini to key-value array to obtained starred
+		 *
+		 * STEP 2
+		 *    iterate images and collect families and singles
+		 *    (non-family-matchable) singles become important for i.e. unstarred
+		 *    deletions...)
+		 * 
+		 * STEP 3  perform action
+		 *    actual delete/recycle or simulation of it
+		 */
+
 
 
 		// parsing each dir:
@@ -64,7 +77,9 @@ class Family {
 
 			let files = fs.readdirSync(dir);
 
-			files.filter((filepath) => {
+			files
+				// filtering for valid-extension files
+				.filter((filepath) => {
 					const p = path.parse(filepath);
 
 					enforce(p.name.length > 0, 'sanity: no empty filenames');
@@ -111,6 +126,7 @@ class Family {
 		}
 
 		throw new Error('bad constructor');
+
 	}
 
 
