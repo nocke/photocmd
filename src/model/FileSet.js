@@ -3,18 +3,18 @@ import config from '../../config';
 import {enforce, fail} from '../helpers';
 
 /*
- *  data structure of Tribe
- * 
+ *  data structure of FileSet
+ *
  */
 
- class Tribe {
+ class FileSet {
 
 		static sayHi(){
 
-			console.log('Hi Tribe!');
+			console.log('Hi FileSet!');
 
 		}
 
 }
 
-export default Tribe;
+export default FileSet;

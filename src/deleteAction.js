@@ -3,9 +3,9 @@
 import array from 'core-js/fn/array';
 
 import assert from 'assert';
-import {enforce} from './helpers';
+import {enforce, fail} from './helpers';
 
-import {Family, Tribe, Member} from './model';
+import {FileSet, Family, Member} from './model';
 
 // ----------------------------
 
@@ -18,7 +18,7 @@ function parseDirs(dirs) {
 
 	Family.parse(dirs);
 	Member.sayHi();
-	Tribe.sayHi();
+	FileSet.sayHi();
 
 }
 
@@ -30,11 +30,8 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	let verboseMode = cmd.verbose || false;
 
 	// simply merge all dirs, treat each one seperately
-	// TODO move to caller
 	let dirs = [firstDir, ...moreDirs];
-
-	if (!dirs)
-		throw new Error('no directory');
+	enforce(!!dirs,'no directory');
 
 	parseDirs(dirs);
 }
