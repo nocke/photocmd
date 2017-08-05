@@ -1,6 +1,4 @@
 'use strict'
-import fs from 'fs';
-import path from 'path';
 
 import {
 	enforce,
@@ -42,97 +40,10 @@ import config from '../../config';
  */
 class Family {
 
-	/**
-	 * parses a directory, returns a set of families.
-	 * ech Family consisting out of (family) Members
-	 *
-	 * @param {Array} dirs one or more directories
-	 *
-	 * @return {Set} a set with all families
-	 */
-	static parse(dirs) {
-		const r = new Set();
-		console.log('parsing files...');
-
-
-		/* STEP 1
-		 *    parse picasa ini to key-value array to obtained starred
-		 *
-		 * STEP 2
-		 *    iterate images and collect families and singles
-		 *    (non-family-matchable) singles become important for i.e. unstarred
-		 *    deletions...)
-		 * 
-		 * STEP 3  perform action
-		 *    actual delete/recycle or simulation of it
-		 */
-
-
-
-		// parsing each dir:
-		dirs.forEach(function (dir) {
-
-			enforce(fs.existsSync(dir), `no directory or file ${dir}`);
-			enforce(fs.statSync(dir).isDirectory(), 'single File – not handled yet');
-
-			let files = fs.readdirSync(dir);
-
-			files
-				// filtering for valid-extension files
-				.filter((filepath) => {
-					const p = path.parse(filepath);
-
-					enforce(p.name.length > 0, 'sanity: no empty filenames');
-					// skipping hidden
-					if (p.name[0] === '.') return false;
-					// remove leading dot on ext (always, unless extensionless)
-					if (p.ext.length > 0) {
-						enforce(p.ext[0] === '.', 'sanity');
-						p.ext = p.ext.substr(1);
-					}
-
-					console.log("dir " + p.dir + "name " + p.name + "  p.ext: " + p.ext);
-					// filter for supported filetypes
-					return config.extensions.includes(p.ext.toLowerCase());
-				})
-				.map((filepath) => {
-					console.log(filepath)
-
-
-
-				});
-
-		});
-
-
-
-		return r;
-	}
-
-
-
-	constructor(files = undefined) {
-
-		this._fam = [];
-
+	constructor(foo = undefined) {
 		console.log('Family constructed');
-
-		if (typeof files === 'undefined')
-			return;
-
-		if (typeof files === 'object' && Array.isArray(files)) {
-			this.parse(files);
-			return;
-		}
-
-		throw new Error('bad constructor');
-
 	}
 
-
-	static staticHi() {
-		console.log('Howdy Partner');
-	}
 
 } // Family
 
