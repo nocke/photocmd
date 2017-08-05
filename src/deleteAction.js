@@ -20,33 +20,9 @@ import config from '../config';
  */
 function parseDirs(dirs) {
 
-	dirs.forEach(function (dir) {
+	Family.parse(dirs);
 
-		enforce( fs.existsSync(dir), `no directory or file ${dir}`);
-
-		let stats = fs.statSync( dir );
-		enforce( stats.isDirectory(), 'single File – not handled yet');
-
-		let files = fs.readdirSync( dir );
-
-		// parsing an individual dir:
-		files.filter( (filepath) => {
-
-			const p = path.parse( filepath );
-
-			// remove leading dot (hidden files)
-			if (p.ext[0]==='.')
-				p.ext = p.ext.substr(1);
-
-			console.log("dir "+p.dir+ "name "+p.name+ "  p.ext: "+p.ext );
-
-			return config.extensions.includes(p.ext.toLowerCase() );
-		})
-		.map( (file) =>
-				console.log(file)
-		);
-
-	});
+	console.log('parseDirs -------------------------');
 
 }
 

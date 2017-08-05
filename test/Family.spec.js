@@ -19,18 +19,18 @@ describe('Family Initialize', () => {
 		console.log('beforeEach123');
 	});
 
-	it('plain initialize', () => {
-		f = new Family();
-		assert.typeOf(f, 'object');
-	});
+	// reactivate some time
 
-	it('array initialize', () => {
-		f = new Family(['foo.jpg', 'bar.png']);
-		assert.typeOf(f, 'object');
-		assert.deepEqual(f._fam, ['foo.jpg', 'bar.png']);
+	// it('plain initialize', () => {
+	// 	f = new Family();
+	// 	assert.typeOf(f, 'object');
+	// });
 
-
-	});
+	// it('array initialize', () => {
+	// 	f = new Family(['foo.jpg', 'bar.png']);
+	// 	assert.typeOf(f, 'object');
+	// 	assert.deepEqual(f._fam, ['foo.jpg', 'bar.png']);
+	// });
 
 	it('bad initialize', () => {
 		assert.throws( ()=>{ new Family(42); } );
