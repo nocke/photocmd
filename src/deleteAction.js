@@ -3,7 +3,7 @@
 import array from 'core-js/fn/array';
 
 import assert from 'assert';
-import {enforce} from './utils';
+import {enforce} from './helpers';
 
 import {Family, Tribe, Member} from './model';
 

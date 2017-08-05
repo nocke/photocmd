@@ -1,6 +1,6 @@
 'use strict'
 import config from '../../config';
-import {enforce, fail} from '../utils';
+import {enforce, fail} from '../helpers';
 
 
 /*
