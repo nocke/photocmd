@@ -85,7 +85,7 @@ The bin-section of the [package.json](package.json) defines it as a command line
 
 
 	examples:
-	
+
 ```
 
 ----
@@ -93,14 +93,13 @@ The bin-section of the [package.json](package.json) defines it as a command line
 
 Most ofthe time you will just want:
 
-`npm start` – starts watchint `src/` and `test/` folder, rebuilds and tests on change.
-
+`npm start` – starts watching (`src/` and `test/` folder), rebuilds and tests on change.
 
 #### build
 
 `npm run build` – build ES6 → ES5 once
 
-`npm run build-watch` – to keep compiling ES6 → ES5
+`npm run watch` – to keep compiling ES6 → ES5
 
 #### test
 
@@ -110,8 +109,7 @@ Most ofthe time you will just want:
 
 `npm run test-watch` – watch source files and keep testing
 
-
 ----
 ## License
 
-The content on this project are released under the very permissive terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and places almost no restrictions on what you can do with the Project.
+The content on this project are released under the (very permissive) terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and places almost no restrictions on what you can do with the Project.

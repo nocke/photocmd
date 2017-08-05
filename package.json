@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf build && mkdir build",
     "build": "babel src -d build -s",
-    "build-watch": "babel src -d build -s -w",
+    "watch": "babel src -d build -s -w",
     "test": "mocha",
     "test-watch": "mocha -R list -w",
     "test-and-build": "npm run build && npm run test",
