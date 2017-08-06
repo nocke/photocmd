@@ -19,10 +19,11 @@ import {enforce, fail} from '../helpers';
 		this._families = new Map();
 		console.log('FileSet constructed');
 
+		// TEMPTEMP
 		this._families.set('DSC1234',42);
 		this._families.set('_IMG_5678','banana');
 
-
+		// TODO:
 		// STEP 1   parse picasa ini to key-value array to obtained starred
 		 /*
 		 * STEP 2
@@ -36,7 +37,6 @@ import {enforce, fail} from '../helpers';
 		 */
 
 
-
 		// parsing each dir:
 		dirs.forEach(function (dir) {
 
@@ -45,30 +45,56 @@ import {enforce, fail} from '../helpers';
 
 			let files = fs.readdirSync(dir);
 
-			files
-				// filtering for valid-extension files
-				.filter((filepath) => {
-					const p = path.parse(filepath);
+			files.map((filepath) => {
 
-					enforce(p.name.length > 0, 'sanity: no empty filenames');
-					// skipping hidden
-					if (p.name[0] === '.') return false;
-					// remove leading dot on ext (always, unless extensionless)
-					if (p.ext.length > 0) {
-						enforce(p.ext[0] === '.', 'sanity');
-						p.ext = p.ext.substr(1);
-					}
+				// ========================================================================
+				// BIG LOOP
+				// ========================================================================
 
-					console.log("dir " + p.dir + "name " + p.name + "  p.ext: " + p.ext);
-					// filter for supported filetypes
-					return config.extensions.includes(p.ext.toLowerCase());
-				})
-				.map((filepath) => {
-					console.log(filepath)
-				});
-		});
+				const p = path.parse(filepath);
+				//console.log("dir " + p.dir + "name " + p.name + "  p.ext: " + p.ext);
 
-		console.log('dumping FileSet Map:');
+				enforce(p.dir==='', 'no relative subDirs (for now)');
+				enforce(p.name.length > 0, 'sanity: no empty filenames');
+				// skipping hidden
+				if (p.name[0] === '.')
+					return;
+
+				// remove leading dot on ext (always, unless extensionless)
+				if (p.ext.length > 0) {
+					enforce(p.ext[0] === '.', 'sanity');
+					p.ext = p.ext.substr(1);
+				}
+
+				// filter for supported filetypes 
+				// TODO supported sidecars, etc
+				if ( !config.extensions.includes(p.ext.toLowerCase()) )
+					return;
+
+				// REF
+				// { root: '',
+				// dir: '',
+				// base: 'PM5A2847.JPG',
+				// ext: 'JPG',
+				// name: 'PM5A2847' }
+
+				console.dir("dir " + dir + "  p.dir "+ p.dir + "    name " + p.name + "  p.ext: " + p.ext);
+
+
+
+
+
+
+				// ========================================================================
+				// BIG LOOP
+				// ========================================================================
+
+				
+			}) // files.map
+		}); // forEach
+
+
+		console.log('dumping FileSet Map: ===============================');
 
 		for(var [key, value] of this._families) {
 			console.log(key + ' = ' + value);
