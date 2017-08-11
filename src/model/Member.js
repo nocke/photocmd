@@ -12,11 +12,25 @@ import {enforce, fail} from '../helpers';
 
  class Member {
 
-		static sayHi(){
+	// COULDDO: deal with root and platform separator for windows:
+	// https://nodejs.org/api/path.html#path_path_parse_path
 
-			console.log('Hi Member!');
+	/**
+	 * 
+	 * @param {*} pathObj 
+	 * { root: '',  // not used
+	 *   dir: '',
+	 *   base: 'PM5A2847.JPG',
+	 *   ext: 'JPG',
+	 *   name: 'PM5A2847' }
+	 * 
+	 */
+	constructor(pathObj) {
 
-		}
+
+
+
+	}
 
 }
 

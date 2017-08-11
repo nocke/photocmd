@@ -47,14 +47,17 @@ import {enforce, fail} from '../helpers';
 
 			files.map((filepath) => {
 
-				// ========================================================================
+				// ================================================================
 				// BIG LOOP
-				// ========================================================================
+				// ================================================================
 
 				const p = path.parse(filepath);
 				//console.log("dir " + p.dir + "name " + p.name + "  p.ext: " + p.ext);
 
+				// use dir path from above, so far, relative subdir is empty
 				enforce(p.dir==='', 'no relative subDirs (for now)');
+				p.dir = dir;
+
 				enforce(p.name.length > 0, 'sanity: no empty filenames');
 				// skipping hidden
 				if (p.name[0] === '.')
@@ -66,7 +69,7 @@ import {enforce, fail} from '../helpers';
 					p.ext = p.ext.substr(1);
 				}
 
-				// filter for supported filetypes 
+				// filter for supported filetypes
 				// TODO supported sidecars, etc
 				if ( !config.extensions.includes(p.ext.toLowerCase()) )
 					return;
@@ -78,7 +81,8 @@ import {enforce, fail} from '../helpers';
 				// ext: 'JPG',
 				// name: 'PM5A2847' }
 
-				console.dir("dir " + dir + "  p.dir "+ p.dir + "    name " + p.name + "  p.ext: " + p.ext);
+				console.dir("p.dir "+ p.dir + "    name " + p.name + "  p.ext: " + p.ext);
+
 
 
 
@@ -89,7 +93,7 @@ import {enforce, fail} from '../helpers';
 				// BIG LOOP
 				// ========================================================================
 
-				
+
 			}) // files.map
 		}); // forEach
 

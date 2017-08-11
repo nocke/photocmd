@@ -35,7 +35,7 @@ import config from '../../config';
  *    Hidden files beginning with a dot are never part of a family
  *    In case of multiple dots, the last one splits the extension
  *        stem:  IMG_1251.holiday.2016.usa    ext: jpg
- *    Yes, there may be extensionless files (harder to deal with, though)
+ *    There may be extensionless files (harder to deal with, though)
  *
  */
 class Family {
@@ -43,6 +43,8 @@ class Family {
 	constructor(foo = undefined) {
 		console.log('Family constructed');
 	}
+
+
 
 
 } // Family
