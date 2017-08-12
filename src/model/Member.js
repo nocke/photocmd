@@ -12,9 +12,10 @@ import {enforce, fail} from '../helpers';
 	 * @param {*} pathObj 
 	 * { root: '',  // not used
 	 *   dir: '',
-	 *   base: 'PM5A2847.JPG',
-	 *   ext: 'JPG',
-	 *   name: 'PM5A2847' }
+	  // base: 'PM5A2847_retouche.JPG',
+		// name: 'PM5A2847_retouche' }
+		//  => core: 'PM5A2847'
+		// ext: 'JPG',
 	 * 
 	 */
 	constructor(pathObj) {

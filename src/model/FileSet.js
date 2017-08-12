@@ -3,7 +3,10 @@ import fs from 'fs';
 import path from 'path';
 
 import config from '../../config';
-import {enforce, fail} from '../helpers';
+import {
+	enforce,
+	fail
+} from '../helpers';
 
 /*
  *  data structure of FileSet
@@ -11,51 +14,43 @@ import {enforce, fail} from '../helpers';
  *      (no DSC IMG ...) , still important i.e. for unstarred deletion
  *      each Family consisting out of individual Members (Files)
  */
- class FileSet {
+class FileSet {
 
 
 	static getCore(p) {
-		console.log('getting core...' + p.name);
-
 		let exp,
-		    match = null;
+			match = null;
 
 		// look for match
-		config.coreMatches.find(function(expCandidate){
+		config.coreMatches.find(function (expCandidate) {
 			exp = expCandidate;
 			match = p.name.match(exp);
-			return match!==null; // no match → false → keep on searching
+			return match !== null; // no match → false → keep on searching
 		});
 
-		if ( match===null ) {
-
-			console.log('     single: ' + p.name);
-		} else {
-
-			console.log( `exp ${exp} matched!` );
-			console.dir(match)
-
+		// found a match
+		if (match !== null) {
+			enforce(match.length === 3, 'match exprssion length');
+			return match[1];
 		}
-		console.log(' ');
-		console.log(' ');
-
-		return 42;
+		// else: a single
+		return null;
 	}
 
 
 	constructor(dirs) {
 
-		enforce( Array.isArray(dirs), 'not an array' );
+		enforce(Array.isArray(dirs), 'not an array');
 		this._families = new Map();
 		console.log('FileSet constructed');
 
 		// TEMPTEMP
-		this._families.set('DSC1234',42);
-		this._families.set('_IMG_5678','banana');
+		this._families.set('DSC1234', 42);
+		this._families.set('_IMG_5678', 'banana');
 
 		// TODO:
 		// STEP 1   parse picasa ini to key-value array to obtained starred
-		 /*
+		/*
 		 * STEP 2
 		 *    iterate images and collect families and singles
 		 *    (non-family-matchable) singles become important for i.e. unstarred
@@ -85,7 +80,7 @@ import {enforce, fail} from '../helpers';
 				//console.log("dir " + p.dir + "name " + p.name + "  p.ext: " + p.ext);
 
 				// use dir path from above, so far, relative subdir is empty
-				enforce(p.dir==='', 'no relative subDirs (for now)');
+				enforce(p.dir === '', 'no relative subDirs (for now)');
 				p.dir = dir;
 
 				enforce(p.name.length > 0, 'sanity: no empty filenames');
@@ -101,15 +96,15 @@ import {enforce, fail} from '../helpers';
 
 				// filter for supported filetypes
 				// TODO supported sidecars, etc
-				if ( !config.extensions.includes(p.ext.toLowerCase()) )
+				if (!config.extensions.includes(p.ext.toLowerCase()))
 					return;
 
 
-				console.dir("p.dir "+ p.dir + "    name" + p.name + "  p.ext: " + p.ext);
+				console.dir("p.dir " + p.dir + "    name" + p.name + "  p.ext: " + p.ext);
 
-				p.core =  FileSet.getCore(p);
+				p.core = FileSet.getCore(p);
 
-				console.dir("p.dir "+ p.dir + "    name" + p.name + "  p.ext: " + p.ext + " p.core" + p.core);
+				console.dir(p);
 
 				console.log('----------');
 
@@ -127,7 +122,7 @@ import {enforce, fail} from '../helpers';
 
 		console.log('dumping FileSet Map: ===============================');
 
-		for(var [key, value] of this._families) {
+		for (var [key, value] of this._families) {
 			console.log(key + ' = ' + value);
 		}
 
