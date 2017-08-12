@@ -90,14 +90,11 @@ class FileSet {
 
 				if ( p.core === null )
 				{
-					// on singles, name is treated like core
-					// holiday <= holiday.jpg|xmp|cr2
-					this._singles.set(p.name, member);
-					return;
+					// treat singles just like families
+					// with the exception, that p.core is defined by the full p.name...
+					p.core = p.name;
+					
 				}
-				// COULDDO:
-				// treat singles just like families (saves lines on special cases...)
-				// with the exception, that  p.core is defined by the full p.name
 
 				if (!this._families.has(p.core))
 					this._families.set(p.core, new Family(p.core));
