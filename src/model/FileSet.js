@@ -42,11 +42,8 @@ class FileSet {
 
 		enforce(Array.isArray(dirs), 'not an array');
 		this._families = new Map();
+		this._singles = new Map();
 		console.log('FileSet constructed');
-
-		// TEMPTEMP
-		this._families.set('DSC1234', 42);
-		this._families.set('_IMG_5678', 'banana');
 
 		// TODO:
 		// STEP 1   parse picasa ini to key-value array to obtained starred
@@ -100,16 +97,13 @@ class FileSet {
 					return;
 
 
-				console.dir("p.dir " + p.dir + "    name" + p.name + "  p.ext: " + p.ext);
-
 				p.core = FileSet.getCore(p);
+				console.dir("p.dir " + p.dir + "    name: " + p.name + "  p.ext: " + p.ext + "   p.core: "+ p.core);
 
-				console.dir(p);
-
-				console.log('----------');
-
-
-
+				if ( p.core === null )
+					this._singles.set(p.name, p);
+				else
+					this._families.set(p.name, p);
 
 				// ========================================================================
 				// BIG LOOP
@@ -117,12 +111,16 @@ class FileSet {
 
 
 			}) // files.map
-		}); // forEach
+		}, this); // forEach
 
 
 		console.log('dumping FileSet Map: ===============================');
 
 		for (var [key, value] of this._families) {
+			console.log(key + ' = ' + value);
+		}
+		console.log('singles');
+		for (var [key, value] of this._singles) {
 			console.log(key + ' = ' + value);
 		}
 
