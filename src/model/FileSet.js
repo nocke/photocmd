@@ -58,9 +58,7 @@ class FileSet {
 				// ================================================================
 				// BIG LOOP
 				// ================================================================
-
 				const p = path.parse(filepath);
-				//console.log("dir " + p.dir + "name " + p.name + "  p.ext: " + p.ext);
 
 				// use dir path from above, so far, relative subdir is empty
 				enforce(p.dir === '', 'no relative subDirs (for now)');
@@ -93,7 +91,6 @@ class FileSet {
 					// treat singles just like families
 					// with the exception, that p.core is defined by the full p.name...
 					p.core = p.name;
-					
 				}
 
 				if (!this._families.has(p.core))

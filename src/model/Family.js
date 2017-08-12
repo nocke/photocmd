@@ -6,6 +6,8 @@ import {
 } from '../helpers';
 import config from '../../config';
 
+import {Member} from '.';
+
 /*
  * maintains a family of images
  * - images and sidecars belonging together, based on naming
@@ -40,18 +42,19 @@ import config from '../../config';
  */
 class Family {
 
+	/**
+	 * @param {string} core Constructs a family, based on core basename (PM5A2087, or name in case of singles)
+	 */
 	constructor(core) {
 		enforce( typeof core === 'string', 'invalid core argument');
 		this._core = core;
 		this._map = new Map();
-		console.log('Family constructed');
 	}
 
 	add(member) {
-		console.log('adding member ');
+		enforce( member instanceof Member, 'can only add members');
 		this._map.set(member.name, member);
 	}
-
 
 } // Family
 
