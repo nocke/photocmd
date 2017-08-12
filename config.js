@@ -9,3 +9,24 @@ config.extensions_raw = ['cr', 'raw', 'cr2', 'cr3', 'nef'];
 config.sidecars = ['xmp', 'dop'];
 
 
+// list of core matchers.
+// Priority does matter, first one winds (i.e Android-date before Android-generic).
+config.coreMatches = [
+
+		// Android-date
+		/^(IMG_20\d\d\d\d\d\d_\d{4,8})(.*)$/i,
+		// Android-generic
+		/^(IMG_?\d{4,8})(.*)$/i,
+		// Canon-AdobeRGB
+		/^(_MG_\d{4,8})(.*)$/i,
+		// Canon-sRGB (normal)
+		/^(IMGSX\d{4,8})(.*)$/i,
+		// Canon Compact Cam
+		/^(DSCN\d{3,8})(.*)$/i,
+		// Canon DSLR - 5D mk iii
+		/^(PM5A\d{3,6})(.*)$/i
+
+		// REF $family[] = $m[1];
+
+
+];
