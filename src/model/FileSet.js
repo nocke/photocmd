@@ -13,6 +13,36 @@ import {enforce, fail} from '../helpers';
  */
  class FileSet {
 
+
+	static getCore(p) {
+		console.log('getting core...' + p.name);
+
+		let exp,
+		    match = null;
+
+		// look for match
+		config.coreMatches.find(function(expCandidate){
+			exp = expCandidate;
+			match = p.name.match(exp);
+			return match!==null; // no match → false → keep on searching
+		});
+
+		if ( match===null ) {
+
+			console.log('     single: ' + p.name);
+		} else {
+
+			console.log( `exp ${exp} matched!` );
+			console.dir(match)
+
+		}
+		console.log(' ');
+		console.log(' ');
+
+		return 42;
+	}
+
+
 	constructor(dirs) {
 
 		enforce( Array.isArray(dirs), 'not an array' );
@@ -74,17 +104,14 @@ import {enforce, fail} from '../helpers';
 				if ( !config.extensions.includes(p.ext.toLowerCase()) )
 					return;
 
-				// REF
-				// { root: '',
-				// dir: '',
-				// base: 'PM5A2847.JPG',
-				// ext: 'JPG',
-				// name: 'PM5A2847' }
 
-				console.dir("p.dir "+ p.dir + "    name " + p.name + "  p.ext: " + p.ext);
+				console.dir("p.dir "+ p.dir + "    name" + p.name + "  p.ext: " + p.ext);
 
+				p.core =  FileSet.getCore(p);
 
+				console.dir("p.dir "+ p.dir + "    name" + p.name + "  p.ext: " + p.ext + " p.core" + p.core);
 
+				console.log('----------');
 
 
 
@@ -108,7 +135,12 @@ import {enforce, fail} from '../helpers';
 
 
 		return;
-	}
-}
+	} // constructor
+
+
+
+
+
+} // class
 
 export default FileSet;
