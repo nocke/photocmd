@@ -7,6 +7,7 @@ import {
 	enforce,
 	fail
 } from '../helpers';
+import {Family, Member} from '.';
 
 /*
  *  data structure of FileSet
@@ -15,7 +16,6 @@ import {
  *      each Family consisting out of individual Members (Files)
  */
 class FileSet {
-
 
 	static getCore(p) {
 		let exp,
@@ -41,23 +41,9 @@ class FileSet {
 	constructor(dirs) {
 
 		enforce(Array.isArray(dirs), 'not an array');
+
 		this._families = new Map();
 		this._singles = new Map();
-		console.log('FileSet constructed');
-
-		// TODO:
-		// STEP 1   parse picasa ini to key-value array to obtained starred
-		/*
-		 * STEP 2
-		 *    iterate images and collect families and singles
-		 *    (non-family-matchable) singles become important for i.e. unstarred
-		 *    deletions...)
-		 */
-
-		/* STEP 3  perform action
-		 *    actual delete/recycle or simulation of it
-		 */
-
 
 		// parsing each dir:
 		dirs.forEach(function (dir) {
@@ -96,18 +82,33 @@ class FileSet {
 				if (!config.extensions.includes(p.ext.toLowerCase()))
 					return;
 
-
+				// figure out Core
 				p.core = FileSet.getCore(p);
-				console.dir("p.dir " + p.dir + "    name: " + p.name + "  p.ext: " + p.ext + "   p.core: "+ p.core);
+
+				// construct Member
+				const member = new Member(p);
 
 				if ( p.core === null )
-					this._singles.set(p.name, p);
-				else
-					this._families.set(p.name, p);
+				{
+					// on singles, name is treated like core
+					// holiday <= holiday.jpg|xmp|cr2
+					this._singles.set(p.name, member);
+					return;
+				}
+				// COULDDO:
+				// treat singles just like families (saves lines on special cases...)
+				// with the exception, that  p.core is defined by the full p.name
 
-				// ========================================================================
+				if (!this._families.has(p.core))
+					this._families.set(p.core, new Family(p.core));
+
+				const f = this._families.get(p.core);
+				f.add(member);
+
+
+				// ==================================================================
 				// BIG LOOP
-				// ========================================================================
+				// ==================================================================
 
 
 			}) // files.map
@@ -116,22 +117,17 @@ class FileSet {
 
 		console.log('dumping FileSet Map: ===============================');
 
-		for (var [key, value] of this._families) {
-			console.log(key + ' = ' + value);
-		}
-		console.log('singles');
-		for (var [key, value] of this._singles) {
-			console.log(key + ' = ' + value);
-		}
-
-
+		// for (var [key, value] of this._families) {
+		// 	console.log(key + ' = ' + value);
+		// }
+		// console.log('singles');
+		// for (var [key, value] of this._singles) {
+		// 	console.log(key + ' = ' + value);
+		// }
 
 
 		return;
 	} // constructor
-
-
-
 
 
 } // class

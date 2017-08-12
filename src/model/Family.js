@@ -40,11 +40,17 @@ import config from '../../config';
  */
 class Family {
 
-	constructor(foo = undefined) {
+	constructor(core) {
+		enforce( typeof core === 'string', 'invalid core argument');
+		this._core = core;
+		this._map = new Map();
 		console.log('Family constructed');
 	}
 
-
+	add(member) {
+		console.log('adding member ');
+		this._map.set(member.name, member);
+	}
 
 
 } // Family
