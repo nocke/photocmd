@@ -1,11 +1,15 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Photo as command",
+			"name": "Photo as command2",
 			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceRoot}/build/**/*.js"
+			],
 			"program": "${workspaceRoot}/build/index.js",
 			"protocol": "legacy",
 			"cwd": "${workspaceRoot}",

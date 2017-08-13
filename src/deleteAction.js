@@ -7,18 +7,6 @@ import {enforce, fail} from './helpers';
 
 import {FileSet, Family, Member} from './model';
 
-// ----------------------------
-
-/**
- * parses array of directories
- *
- * returns Array of Families
- */
-function parseDirs(dirs) {
-
-	let fileSet = new FileSet(dirs);
-
-}
 
 // -----------------------------
 
@@ -31,7 +19,9 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	let dirs = [firstDir, ...moreDirs];
 	enforce(!!dirs,'no directory');
 
-	parseDirs(dirs);
+	let fileSet = new FileSet(dirs);
+
+	console.log('deleteAction End.');
 }
 
 export default deleteAction;

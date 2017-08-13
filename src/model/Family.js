@@ -65,8 +65,6 @@ class Family {
 		// at least one raw file qualifies as 'not lonely'
 		if (member.type === 'raw')
 			this._isLonely = false;
-		debugger;
-
 	}
 
 } // Family

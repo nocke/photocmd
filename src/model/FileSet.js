@@ -109,25 +109,13 @@ class FileSet {
 		}, this); // forEach
 
 
-		console.log('dumping FileSet Map: ===============================');
-
-
 		for( var [key, value] of this._families) {
 			console.log(`key: ${key} ---------------------`);
-			console.dir(value)
+			console.dir(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
 		}
-		// for (var [key, value] of this._families) {
-		// 	console.log(key + ' = ' + value);
-		// }
-		// console.log('singles');
-		// for (var [key, value] of this._singles) {
-		// 	console.log(key + ' = ' + value);
-		// }
-
 
 		return;
 	} // constructor
-
 
 } // class
 
