@@ -37,7 +37,6 @@ class FileSet {
 		return null;
 	}
 
-
 	constructor(dirs) {
 
 		enforce(Array.isArray(dirs), 'not an array');
@@ -58,7 +57,6 @@ class FileSet {
 				// =====================================
 				// BIG LOOP
 				// =====================================
-
 				const p = path.parse(filepath);
 
 				// use dir path from above, so far, relative subdir is empty
@@ -100,7 +98,6 @@ class FileSet {
 				const f = this._families.get(p.core);
 				f.add(member);
 
-
 				// =====================================
 				// BIG LOOP
 				// =====================================
@@ -116,6 +113,17 @@ class FileSet {
 
 		return;
 	} // constructor
+
+	// public instance methods --------------------------------------
+
+	delete(lonely, starred, liveMode) {
+
+		console.log("delete..........");
+
+
+
+	}
+
 
 } // class
 

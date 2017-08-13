@@ -16,7 +16,8 @@
 			"args": [
         		"delete",
         		"sample1",
-        		"-lv"
+				"-lv",
+				"--lonely"
     		]
 		}
 	]

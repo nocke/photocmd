@@ -15,12 +15,18 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	let liveMode    = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
 
-	// simply merge all dirs, treat each one seperately
+	// TODO verboseMode must set global state in some type of logger
+
+	debugger;
+
+	// simply merge all dirs together
+	// COULDDO: support wildcards, too.
 	let dirs = [firstDir, ...moreDirs];
 	enforce(!!dirs,'no directory');
 
 	let fileSet = new FileSet(dirs);
 
+	fileSet.delete()
 	console.log('deleteAction End.');
 }
 

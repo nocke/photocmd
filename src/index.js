@@ -11,10 +11,29 @@ program.version( pjson.version );   // .version('0.0.1');
 
 program
 	.command('delete <dir> [moreDirs...]') // optional and mandatory params
-	.description('delete \"lonely\" images of sorts')
+	.alias('del')
+	.description('delete \"lonely\" or \"unstarred" families of images')
 	.option('-v, --verbose', 'log more details')
 	.option('-l, --live', 'actually do it')
+	.option('-o, --lonely', 'delete lone images')
 	.action( deleteAction );
+
+// moot git style option (as a blueprint)
+program
+	.command('moot')
+	.description('do nothing')
+	.option('-v, --verbose', 'log more details')
+	.option('-l, --live', 'actually do it')
+	.option('--banana', 'pointless parameter')
+	.action( function(){console.log('moot command "executed".')} );
+
+program.on('--help', function(){
+	console.log([
+		'  Use photo [command] --help for more options on the command',
+		'  e.g. photo delete --help'
+	].join("\n"));
+});
+
 
 // if no params, output help:
 if (process.argv.length == 2 )
