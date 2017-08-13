@@ -111,6 +111,11 @@ class FileSet {
 
 		console.log('dumping FileSet Map: ===============================');
 
+
+		for( var [key, value] of this._families) {
+			console.log(`key: ${key} ---------------------`);
+			console.dir(value)
+		}
 		// for (var [key, value] of this._families) {
 		// 	console.log(key + ' = ' + value);
 		// }

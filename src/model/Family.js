@@ -47,13 +47,22 @@ class Family {
 	 */
 	constructor(core) {
 		enforce( typeof core === 'string', 'invalid core argument');
+
+		// properties ============================
 		this._core = core;
 		this._map = new Map();
+
+		// family flags
+		this._isLonely = true;
+		this._isStarred = false;
+
 	}
 
 	add(member) {
 		enforce( member instanceof Member, 'can only add members');
 		this._map.set(member.name, member);
+
+		debugger;
 	}
 
 } // Family
