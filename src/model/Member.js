@@ -16,7 +16,7 @@ import {enforce, fail} from '../helpers';
 			case 'jpg':
 			case 'tif':
 			case 'xmp':
-				this.type=this.ext.toLowerCase;
+				this.type=this.ext.toLowerCase();
 				break;
 
 			// special cases
@@ -33,7 +33,15 @@ import {enforce, fail} from '../helpers';
 			case 'raw':
 				this.type='raw';
 				break;
-		}
+		} // switch
+
+		// TODO:
+		//   exiftool parse-file
+		//   title, caption
+		//   dates (and file-date)
+		//   star status
+
+
 	}
 
 }

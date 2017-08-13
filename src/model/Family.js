@@ -62,7 +62,11 @@ class Family {
 		enforce( member instanceof Member, 'can only add members');
 		this._map.set(member.name, member);
 
+		// at least one raw file qualifies as 'not lonely'
+		if (member.type === 'raw')
+			this._isLonely = false;
 		debugger;
+
 	}
 
 } // Family

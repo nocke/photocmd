@@ -4,7 +4,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Photo as command 3",
+			"name": "Photo as command",
 			"sourceMaps": true,
 			"program": "${workspaceRoot}/build/index.js",
 			"protocol": "legacy",
