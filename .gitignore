@@ -24,6 +24,14 @@ sample?/
 !.editorconfig
 !.babelrc
 
+# permit specific vscode ones
+# (stackoverflow.com/a/5534865/444255)
+!.vscode
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+
+
 # versioning
 .svn
 
