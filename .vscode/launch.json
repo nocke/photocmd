@@ -1,0 +1,19 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Photo as command 3",
+			"sourceMaps": true,
+			"program": "${workspaceRoot}/build/index.js",
+			"protocol": "legacy",
+			"cwd": "${workspaceRoot}",
+			"args": [
+        		"delete",
+        		"sample1",
+        		"-lv"
+    		]
+		}
+	]
+}
