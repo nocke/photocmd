@@ -37,12 +37,17 @@ class FileSet {
 		return null;
 	}
 
-	constructor(dirs) {
+	constructor(dirs = undefined) {
+
+		this._families = new Map();
+
+		if ( typeof dirs === 'undefined' ) {
+			console.log('constructing empty fileSet');
+			return;
+		}
 
 		enforce(Array.isArray(dirs), 'not an array');
 
-		this._families = new Map();
-		this._singles = new Map();
 
 		// parsing each dir:
 		dirs.forEach(function (dir) {
@@ -114,15 +119,52 @@ class FileSet {
 		return;
 	} // constructor
 
-	// public instance methods --------------------------------------
-
-	delete(lonely, starred, liveMode) {
-
-		console.log("delete..........");
+	// =====================================
+	// public instance methods
+	// =====================================
 
 
+	filter(cb) {
+		const r = new FileSet();
 
+		for (var [key,value] of this._families) {
+			if (cb(value)) r._families.set(key, value);
+		}
+
+		return r;
 	}
+
+	/**
+	 * @return {Map} all lonely families
+	 */
+	getLonely() {
+		return this.filter( (f)=> f._isLonely );
+	}
+
+	/**
+	 * @return {Map} all unstarred families
+	 */
+	getUnstarred() {
+		// TODO
+	}
+
+
+
+	// delete(lonely, unstarred, liveMode) {
+	// 	console.log("delete..........");
+	// 	this.getLonely();
+	// }
+
+	dump() {
+		console.log('== fileSet dump ===========================');
+
+		for( let [k,f] of this._families) {
+			console.log (`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
+		}
+
+		console.log('==========================================');
+	}
+
 
 
 } // class

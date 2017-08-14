@@ -15,9 +15,11 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	let liveMode    = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
 
-	// TODO verboseMode must set global state in some type of logger
+	let lonely      = cmd.lonely || false;
+	let unstarred   = cmd.unstarred || false;
 
-	debugger;
+	// TODO verboseMode should set global state in some type of logger,
+	// that is then used throughout...
 
 	// simply merge all dirs together
 	// COULDDO: support wildcards, too.
@@ -26,7 +28,15 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 
 	let fileSet = new FileSet(dirs);
 
-	fileSet.delete()
+
+	let loneFiles =	fileSet.getLonely();
+
+	loneFiles.dump();
+	// fileSet.dump( fileSet.getLonely() );
+	// fileSet.dump( fileSet.getUnstarred() );
+
+
+
 	console.log('deleteAction End.');
 }
 

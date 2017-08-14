@@ -12,27 +12,7 @@ import {Member} from '.';
  * maintains a family of images
  * - images and sidecars belonging together, based on naming
  *
- * parsing is king
- * direct access, no privacy fiddling
- * re-used from various commands
- *
- * a) data structure of Family (these are groups, not individual pictures)
- *    path - directory relative to caller path
- *          This still allows to have cross-directory Family-Sets
- *          thus uses can use a multitude of dirs (later: wildcard settings)
- *          even potentially overlapping
- *
- *    core - the core, identifying this family,
- *           i.e. PM5A3135 or IMG_1251 or DSC09470
- *           this is not a full filename, not even the full name
- *           (not normalized to lowercase, but comparision happens normalized)
- *    corenumber - the isolated upcounting part as a number, i.e.
- *           3135, 1251, 9470
- *
- *  b) data structure of (family) Members
- *     basename - i.e.  DSC09470_retouche.jpg
- *     stem     - basename w/o extension, i.e. DSC09470_retouche
- *     ext      - extension, i.e. jpg
+ * data structure of (family) Members
  *
  *    Hidden files beginning with a dot are never part of a family
  *    In case of multiple dots, the last one splits the extension
@@ -55,7 +35,6 @@ class Family {
 		// family flags
 		this._isLonely = true;
 		this._isStarred = false;
-
 	}
 
 	add(member) {

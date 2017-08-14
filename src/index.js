@@ -16,6 +16,7 @@ program
 	.option('-v, --verbose', 'log more details')
 	.option('-l, --live', 'actually do it')
 	.option('-o, --lonely', 'delete lone images')
+	.option('-s, --unstarred', 'delete unstarred images')
 	.action( deleteAction );
 
 // moot git style option (as a blueprint)
