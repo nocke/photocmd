@@ -46,6 +46,17 @@ class Family {
 			this._isLonely = false;
 	}
 
+
+	/**
+	 * output some core info, for debug purposes
+	 */
+	dump(ret=false) {
+		if (ret)
+			return `${this._core} ||  ◌: ${this._isLonely}  || ★: ${this._isStarred} ||  ${this._map.size}`;
+		console.log(`${this._core} ||  ◌: ${this._isLonely}  || ★: ${this._isStarred} ||  ${this._map.size}`);
+	}
+
+
 } // Family
 
 export default Family;
