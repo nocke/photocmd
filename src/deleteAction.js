@@ -32,6 +32,8 @@ function deleteAction( firstDir, moreDirs, cmd ) {
 	let loneFiles =	fileSet.getLonely();
 
 	loneFiles.dump();
+	loneFiles.delete(liveMode);
+
 	// fileSet.dump( fileSet.getLonely() );
 	// fileSet.dump( fileSet.getUnstarred() );
 

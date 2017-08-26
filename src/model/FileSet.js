@@ -7,7 +7,10 @@ import {
 	enforce,
 	fail
 } from '../helpers';
-import {Family, Member} from '.';
+import {
+	Family,
+	Member
+} from '.';
 
 /*
  *  data structure of FileSet
@@ -41,7 +44,7 @@ class FileSet {
 
 		this._families = new Map();
 
-		if ( typeof dirs === 'undefined' ) {
+		if (typeof dirs === 'undefined') {
 			console.log('constructing empty fileSet');
 			return;
 		}
@@ -90,8 +93,7 @@ class FileSet {
 				// construct Member
 				const member = new Member(p);
 
-				if ( p.core === null )
-				{
+				if (p.core === null) {
 					// treat singles just like families
 					// with the exception, that p.core is defined by the full p.name...
 					p.core = p.name;
@@ -111,7 +113,7 @@ class FileSet {
 		}, this); // forEach
 
 
-		for( var [key, value] of this._families) {
+		for (var [key, value] of this._families) {
 			console.log(`key: ${key} ---------------------`);
 			console.dir(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
 		}
@@ -127,7 +129,7 @@ class FileSet {
 	filter(cb) {
 		const r = new FileSet();
 
-		for (var [key,value] of this._families) {
+		for (var [key, value] of this._families) {
 			if (cb(value)) r._families.set(key, value);
 		}
 
@@ -138,7 +140,7 @@ class FileSet {
 	 * @return {Map} all lonely families
 	 */
 	getLonely() {
-		return this.filter( (f)=> f._isLonely );
+		return this.filter((f) => f._isLonely);
 	}
 
 	/**
@@ -148,18 +150,38 @@ class FileSet {
 		// TODO
 	}
 
+	/**
+	 *
+	 * @param {boolean} liveMode simulate, unless set to true
+	 * @param {force} force if true: actually delete. move-to-recycle otherwise
+	 */
+	delete(liveMode = false, force = false) {
+		console.log("delete..........");
+		this.getLonely();
 
+		liveMode = liveMode === true; // all else is false
+		force = force === true; // all else is false
 
-	// delete(lonely, unstarred, liveMode) {
-	// 	console.log("delete..........");
-	// 	this.getLonely();
-	// }
+		for (var [key, value] of this._families) {
+			if (!liveMode) {
+				console.log('mock delete ' + value.dump());
+				continue;
+			}
+
+			if (force === true) {
+				console.log('TODO hard delete');
+				continue;
+			}
+
+			console.log('TODO move to recycle');
+		}
+	}
 
 	dump() {
 		console.log('== fileSet dump ===========================');
 
-		for( let [k,f] of this._families) {
-			console.log (`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
+		for (let [k, f] of this._families) {
+			console.log(`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
 		}
 
 		console.log('==========================================');
