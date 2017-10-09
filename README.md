@@ -67,7 +67,7 @@ More to be done...
 
 The bin-section of the [package.json](package.json) defines it as a command line command:
 
-— DRAFT, work in progress, DRAFT —
+— DRAFT, work in progress, DRAFT ... —
 
 ```
 
