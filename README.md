@@ -93,7 +93,7 @@ The bin-section of the [package.json](package.json) defines it as a command line
 
 `npm install` – before all else. naturally.
 
-Most ofthe time you will just want:
+Most of the time you will just want:
 
 `npm start` – starts watching (`src/` and `test/` folder), rebuilds and tests on change.
 
