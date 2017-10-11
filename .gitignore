@@ -7,9 +7,9 @@
 tmp
 
 # folders
+PREP
 cache/
 log/
-PREP/
 [Bb]uild/
 
 # sample image folder
