@@ -1,63 +1,54 @@
-'use strict'
+'use strict';
 
 import chai from 'chai';
 import path from 'path';
 
-// shorthand
-const assert = chai.assert;
+const assert = chai.assert; // shorthand
 
 // async function x(aPromise) {
 // 	await aPromise
 // }
 
 // a simple promise function
-function get42() {
-	return new Promise(function (fulfill, reject) {
-		console.log('entering...');
-		setTimeout( ()=>{
-			console.log('about to resolve...');
-			resolve(42);
-		}, 500);
-	});
+function promised42() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(42), 50);
+  });
+}
+
+function alwaysReject() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject('duh'), 50);
+  });
 }
 
 
 describe('ES6 self-test', () => {
+  it('Array', () => {
+    var a = [1, 2, 3];
+    assert(a.includes(2), 'one');
+    assert(!a.includes(4), 'two');
+  });
 
-	it('Array', () => {
+  it('Set', () => {
+    var mySet = new Set();
+    mySet.add(1); // Set { 1 }
+    mySet.add(5); // Set { 1, 5 }
 
-		var a = [1, 2, 3];
-		assert( a.includes(2),'one' );
-		assert( !a.includes(4), 'two' );
-	});
+    assert(mySet.has(1));
+    assert(!mySet.has(3));
+    assert(mySet.size === 2);
+  });
 
-	it('Set', () => {
-
-		var mySet = new Set();
-		mySet.add(1); // Set { 1 }
-		mySet.add(5); // Set { 1, 5 }
-
-		assert( mySet.has(1) );
-		assert( !mySet.has(3) );
-		assert( mySet.size === 2 );
-	});
-
-
-
-	it('Async - Await', () => {
-
-		// await 'Hello';
-		get42()
-		.then((v) =>
-			console.log('now got'+v)
-		)
-		.catch((reason) =>
-			console.error(reason)
-		);
-
-		// TODO testing promise is not really happening
-
-	});
-
-
+  // testing the new ES7 functions
+  // and promises
+  it('Async - Await', () => {
+    return promised42() // return leads to guarantee that we wait for promise
+      .then(v => {
+        assert.equal(v, 42);
+      })
+      .catch(reason => {
+        throw new Error('was not supposed to fail'+reason);
+      });
+  });
 });
