@@ -2,6 +2,7 @@
 
 import chai from 'chai';
 import path from 'path';
+import sinon from 'sinon';
 
 const assert = chai.assert; // shorthand
 
@@ -10,18 +11,17 @@ const assert = chai.assert; // shorthand
 // }
 
 // a simple promise function
-function promised42() {
+async function promised42() {
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(42), 50);
   });
 }
 
-function alwaysReject() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => reject('duh'), 50);
-  });
-}
-
+// function alwaysReject() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => reject('duh'), 50);
+//   });
+// }
 
 describe('ES6 self-test', () => {
   it('Array', () => {
@@ -40,15 +40,32 @@ describe('ES6 self-test', () => {
     assert(mySet.size === 2);
   });
 
-  // testing the new ES7 functions
-  // and promises
+  // classic promise testing:
   it('Async - Await', () => {
-    return promised42() // return leads to guarantee that we wait for promise
+	let promiseWrap = sinon.spy(promised42);
+	assert(promiseWrap.notCalled);
+
+    return promiseWrap() // return leads to guarantee that we wait for promise
       .then(v => {
         assert.equal(v, 42);
+        console.log( promiseWrap.callCount )
+        assert(promiseWrap.calledOnce); // property!
       })
       .catch(reason => {
-        throw new Error('was not supposed to fail'+reason);
+        throw new Error('was not supposed to fail' + reason);
       });
   });
+
+  // same stuff with asyn/await →  http://rossboucher.com/await/
+  it('Async - Await', () => {
+
+	await promised42();
+
+
+	// NEXT: http://2ality.com/2016/10/async-function-tips.html
+
+  });
+
+
+
 });
