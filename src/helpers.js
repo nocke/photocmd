@@ -94,7 +94,7 @@ async function removeFolder(dir) {
             }
         );
     }).then(() => {
-        console.log('deleted!'); // just verifies order
+        // console.log('deleted!'); // just verifies order
     });
 
 
@@ -146,7 +146,7 @@ async function trashSync(...args) {
 			else resolve(true);
 
 		}).then(() => {
-			console.log('trashed!'); // just verifies order
+			// console.log('trashed!'); // just verifies order
 		});
 	});
 }
