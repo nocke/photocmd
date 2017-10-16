@@ -8,5 +8,8 @@ indent_style = tab
 indent_size = 4
 insert_final_newline = true
 
+[*.{sh}]
+indent_style = space
+
 [*.{js,jsx,css,less,sass,scss,styl,html}]
 trim_trailing_whitespace = true
