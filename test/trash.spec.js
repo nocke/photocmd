@@ -1,11 +1,10 @@
 'use strict';
 
-import { assert, fail } from 'chai';
+import { assert, fail, expect } from 'chai';
 import path from 'path';
 import fs from 'fs';
 
-import trash from 'trash';
-import config from './config';
+import {mockfile, config} from './common';
 const testDir = config.testDir;
 
 import helpers from '../src/helpers';
@@ -15,6 +14,8 @@ const errCB = err => {
   if (err) fail('callback failed');
   else console.log('ok');
 };
+
+
 
 describe('trash module', () => {
   beforeEach(async () => {
@@ -37,15 +38,28 @@ describe('trash module', () => {
     fs.writeFileSync(
       path.join(config.testDir, 'foo.jpg'), //
       'mock content'
-    );
+    ); 
   });
   //   //
 
-  it('test removeFolder', async () => {
-    await helpers.removeFolder(testDir);
-    console.log('going on');
+  it.only('test removeFolder', async () => {
 
-    // one after Promisify:
-    //assert(!fs.existsSync(testDir),'directory not gone!');
+	assert(fs.existsSync(testDir),'directory not gone!');
+
+	const mock1 = path.join(testDir, 'mock1.jpg');
+	const mock2 = path.join(testDir, 'mock2.jpg');
+	const mock3 = path.join(testDir, 'mock3.jpg');
+
+	mockfile( mock1, mock2, mock3 );
+
+	await helpers.trashSync( mock1, mock3 );
+
+	assert(!fs.existsSync(mock1));
+	assert(fs.existsSync(mock2));
+	assert(!fs.existsSync(mock3));
+
+	await helpers.removeFolder(testDir);
+	assert(!fs.existsSync(testDir),'directory not gone!');
+
   });
 });

@@ -4,7 +4,9 @@
  */
 import path from 'path';
 import fs from 'fs';
+
 import rimraf from 'rimraf';
+import trash from 'trash';
 
 function enforce(expr, msg = 'enforce failed', ...args) {
     if (expr !== true) {
@@ -53,6 +55,8 @@ function move(oldPath, newPath, callback) {
     }
 }
 
+// TODO enforceSafePath Function (for delete, trash, ...)
+
 // https://stackoverflow.com/a/25069828/444255
 async function removeFolder(dir) {
     function getUserHome() {
@@ -86,47 +90,72 @@ async function removeFolder(dir) {
             }, //
             err => {
                 if (err) reject(err);
-                else resolve();
+                else resolve(true);
             }
         );
     }).then(() => {
         console.log('deleted!'); // just verifies order
     });
 
-    //   fs.readdir(location, function(err, files) {
-    //     async.each(
-    //       files,
-    //       function(file, cb) {
-    //         file = location + '/' + file;
-    //         fs.stat(file, function(err, stat) {
-    //           if (err) {
-    //             return cb(err);
-    //           }
-    //           if (stat.isDirectory()) {
-    //             removeFolder(file, cb);
-    //           } else {
-    //             fs.unlink(file, function(err) {
-    //               if (err) {
-    //                 return cb(err);
-    //               }
-    //               return cb();
-    //             });
-    //           }
-    //         });
-    //       },
-    //       function(err) {
-    //         if (err) return next(err);
-    //         fs.rmdir(location, function(err) {
-    //           return next(err);
-    //         });
-    //       }
-    //     );
-    //   });
+
+    // TODO: promisify and async this one:
+    // https://stackoverflow.com/a/25069828/444255
+    /*
+      fs.readdir(location, function(err, files) {
+        async.each(
+          files,
+          function(file, cb) {
+            file = location + '/' + file;
+            fs.stat(file, function(err, stat) {
+              if (err) {
+                return cb(err);
+              }
+              if (stat.isDirectory()) {
+                removeFolder(file, cb);
+              } else {
+                fs.unlink(file, function(err) {
+                  if (err) {
+                    return cb(err);
+                  }
+                  return cb();
+                });
+              }
+            });
+          },
+          function(err) {
+            if (err) return next(err);
+            fs.rmdir(location, function(err) {
+              return next(err);
+            });
+          }
+        );
+	  });
+	  */
+
+
+} // removeFolder
+
+async function trashSync(...args) {
+	return new Promise((resolve, reject) => {
+		trash([...args],{glob: false}).then((err) => {
+			/* linux: function returns an object with 
+			 { info: a .trashinfo pointing to original, undeleted file position,
+			   path: the path to the trashed file (“inside the can”) }
+			*/
+			if (typeof err !== 'object') reject(err);
+			else resolve(true);
+
+		}).then(() => {
+			console.log('trashed!'); // just verifies order
+		});
+	});
 }
+
 
 export default {
     enforce,
     fail,
     move,
-    removeFolder
+	removeFolder,
+	trashSync
 };
