@@ -24,7 +24,7 @@ const errCB = err => {
 
 
 describe('trash module', () => {
-    beforeEach(async() => {
+    beforeEach(async () => {
         await helpers.removeFolder(testDir);
 
         assert.isFalse(fs.existsSync(testDir));
@@ -34,7 +34,7 @@ describe('trash module', () => {
         // assert.isTrue(fs.existsSync(dir));
     });
 
-    it('trash test with removeFolder', async() => {
+    it('trash test with removeFolder', async () => {
         assert(fs.existsSync(testDir), 'directory not gone!');
 
         const mockFiles = [1, 2, 'A', 'B'].map(

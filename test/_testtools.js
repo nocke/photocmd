@@ -19,7 +19,7 @@ export const config = {
 /**
  * creates a number of mockfiles (just tiny text content)
  */
-export const mockfile = async(...files) => {
+export const mockfile = async (...files) => {
 
     files.forEach(v => {
         fs.writeFileSync(v, 'mock content');

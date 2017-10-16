@@ -4,12 +4,12 @@ import path from 'path';
 
 import config from '../../config';
 import {
-	enforce,
-	fail
+    enforce,
+    fail
 } from '../helpers';
 import {
-	Family,
-	Member
+    Family,
+    Member
 } from '.';
 
 /*
@@ -20,173 +20,172 @@ import {
  */
 class FileSet {
 
-	static getCore(p) {
-		let exp,
-			match = null;
+    static getCore(p) {
+        let exp,
+            match = null;
 
-		// look for match
-		config.coreMatches.find(function (expCandidate) {
-			exp = expCandidate;
-			match = p.name.match(exp);
-			return match !== null; // no match → false → keep on searching
-		});
+        // look for match
+        config.coreMatches.find(function(expCandidate) {
+            exp = expCandidate;
+            match = p.name.match(exp);
+            return match !== null; // no match → false → keep on searching
+        });
 
-		// found a match
-		if (match !== null) {
-			enforce(match.length === 3, 'match exprssion length');
-			return match[1];
-		}
-		// else: a single
-		return null;
-	}
+        // found a match
+        if (match !== null) {
+            enforce(match.length === 3, 'match exprssion length');
+            return match[1];
+        }
+        // else: a single
+        return null;
+    }
 
-	constructor(dirs = undefined) {
+    constructor(dirs = undefined) {
 
-		this._families = new Map();
+        this._families = new Map();
 
-		if (typeof dirs === 'undefined') {
-			console.log('constructing empty fileSet');
-			return;
-		}
+        if (typeof dirs === 'undefined') {
+            console.log('constructing empty fileSet');
+            return;
+        }
 
-		enforce(Array.isArray(dirs), 'not an array');
-
-
-		// parsing each dir:
-		dirs.forEach(function (dir) {
-
-			enforce(fs.existsSync(dir), `no directory or file ${dir}`);
-			enforce(fs.statSync(dir).isDirectory(), 'single File – not handled yet');
-
-			let files = fs.readdirSync(dir);
-
-			files.map((filepath) => {
-
-				// =====================================
-				// BIG LOOP
-				// =====================================
-				const p = path.parse(filepath);
-
-				// use dir path from above, so far, relative subdir is empty
-				enforce(p.dir === '', 'no relative subDirs (for now)');
-				p.dir = dir;
-
-				enforce(p.name.length > 0, 'sanity: no empty filenames');
-				// skipping hidden
-				if (p.name[0] === '.')
-					return;
-
-				// remove leading dot on ext (always, unless extensionless)
-				if (p.ext.length > 0) {
-					enforce(p.ext[0] === '.', 'sanity');
-					p.ext = p.ext.substr(1);
-				}
-
-				// filter for supported filetypes
-				// TODO supported sidecars, etc
-				if (!config.extensions.includes(p.ext.toLowerCase()))
-					return;
-
-				// figure out Core
-				p.core = FileSet.getCore(p);
-
-				// construct Member
-				const member = new Member(p);
-
-				if (p.core === null) {
-					// treat singles just like families
-					// with the exception, that p.core is defined by the full p.name...
-					p.core = p.name;
-				}
-
-				if (!this._families.has(p.core))
-					this._families.set(p.core, new Family(p.core));
-
-				const f = this._families.get(p.core);
-				f.add(member);
-
-				// =====================================
-				// BIG LOOP
-				// =====================================
-
-			}) // files.map
-		}, this); // forEach
+        enforce(Array.isArray(dirs), 'not an array');
 
 
-		for (var [key, value] of this._families) {
-			console.log(`key: ${key} ---------------------`);
-			console.dir(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
-		}
+        // parsing each dir:
+        dirs.forEach(function(dir) {
 
-		return;
-	} // constructor
+            enforce(fs.existsSync(dir), `no directory or file ${dir}`);
+            enforce(fs.statSync(dir).isDirectory(), 'single File – not handled yet');
 
-	// =====================================
-	// public instance methods
-	// =====================================
+            let files = fs.readdirSync(dir);
+
+            files.map((filepath) => {
+
+                // =====================================
+                // BIG LOOP
+                // =====================================
+                const p = path.parse(filepath);
+
+                // use dir path from above, so far, relative subdir is empty
+                enforce(p.dir === '', 'no relative subDirs (for now)');
+                p.dir = dir;
+
+                enforce(p.name.length > 0, 'sanity: no empty filenames');
+                // skipping hidden
+                if (p.name[0] === '.')
+                    return;
+
+                // remove leading dot on ext (always, unless extensionless)
+                if (p.ext.length > 0) {
+                    enforce(p.ext[0] === '.', 'sanity');
+                    p.ext = p.ext.substr(1);
+                }
+
+                // filter for supported filetypes
+                // TODO supported sidecars, etc
+                if (!config.extensions.includes(p.ext.toLowerCase()))
+                    return;
+
+                // figure out Core
+                p.core = FileSet.getCore(p);
+
+                // construct Member
+                const member = new Member(p);
+
+                if (p.core === null) {
+                    // treat singles just like families
+                    // with the exception, that p.core is defined by the full p.name...
+                    p.core = p.name;
+                }
+
+                if (!this._families.has(p.core))
+                    this._families.set(p.core, new Family(p.core));
+
+                const f = this._families.get(p.core);
+                f.add(member);
+
+                // =====================================
+                // BIG LOOP
+                // =====================================
+
+            }) // files.map
+        }, this); // forEach
 
 
-	filter(cb) {
-		const r = new FileSet();
+        for (var [key, value] of this._families) {
+            console.log(`key: ${key} ---------------------`);
+            console.dir(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
+        }
 
-		for (var [key, value] of this._families) {
-			if (cb(value)) r._families.set(key, value);
-		}
+        return;
+    } // constructor
 
-		return r;
-	}
+    // =====================================
+    // public instance methods
+    // =====================================
 
-	/**
-	 * @return {Map} all lonely families
-	 */
-	getLonely() {
-		return this.filter((f) => f._isLonely);
-	}
 
-	/**
-	 * @return {Map} all unstarred families
-	 */
-	getUnstarred() {
-		// TODO
-	}
+    filter(cb) {
+        const r = new FileSet();
 
-	/**
-	 *
-	 * @param {boolean} liveMode simulate, unless set to true
-	 * @param {force} force if true: actually delete. move-to-recycle otherwise
-	 */
-	delete(liveMode = false, force = false) {
-		console.log("delete..........");
-		this.getLonely();
+        for (var [key, value] of this._families) {
+            if (cb(value)) r._families.set(key, value);
+        }
 
-		liveMode = liveMode === true; // all else is false
-		force = force === true; // all else is false
+        return r;
+    }
 
-		for (var [key, value] of this._families) {
-			if (!liveMode) {
-				console.log('mock delete ' + value.dump());
-				continue;
-			}
+    /**
+     * @return {Map} all lonely families
+     */
+    getLonely() {
+        return this.filter((f) => f._isLonely);
+    }
 
-			if (force === true) {
-				console.log('TODO hard delete');
-				continue;
-			}
+    /**
+     * @return {Map} all unstarred families
+     */
+    getUnstarred() {
+        // TODO
+    }
 
-			console.log('TODO move to recycle');
-		}
-	}
+    /**
+     *
+     * @param {boolean} liveMode simulate, unless set to true
+     * @param {force} force if true: actually delete. move-to-recycle otherwise
+     */
+    delete(liveMode = false, force = false) {
+        console.log("delete..........");
+        this.getLonely();
 
-	dump() {
-		console.log('== fileSet dump ===========================');
+        liveMode = liveMode === true; // all else is false
+        force = force === true; // all else is false
 
-		for (let [k, f] of this._families) {
-			console.log(`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
-		}
+        for (var [key, value] of this._families) {
+            if (!liveMode) {
+                console.log('mock delete ' + value.dump());
+                continue;
+            }
 
-		console.log('==========================================');
-	}
+            if (force === true) {
+                console.log('TODO hard delete');
+                continue;
+            }
 
+            console.log('TODO move to recycle');
+        }
+    }
+
+    dump() {
+        console.log('== fileSet dump ===========================');
+
+        for (let [k, f] of this._families) {
+            console.log(`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
+        }
+
+        console.log('==========================================');
+    }
 
 
 } // class

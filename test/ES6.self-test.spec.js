@@ -48,7 +48,7 @@ describe('ES6 self-test', () => {
     });
 
     // same stuff with asyn/await →  http://rossboucher.com/await/
-    it('Async - Await', async() => {
+    it('Async - Await', async () => {
         let promiseWrap = sinon.spy(promised42);
         assert(promiseWrap.notCalled);
 
