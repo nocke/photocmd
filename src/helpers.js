@@ -136,19 +136,21 @@ async function removeFolder(dir) {
 } // removeFolder
 
 async function trashSync(...args) {
-	return new Promise((resolve, reject) => {
-		trash([...args],{glob: false}).then((err) => {
-			/* linux: function returns an object with 
-			 { info: a .trashinfo pointing to original, undeleted file position,
-			   path: the path to the trashed file (“inside the can”) }
-			*/
-			if (typeof err !== 'object') reject(err);
-			else resolve(true);
+    return new Promise((resolve, reject) => {
+        trash([...args], {
+            glob: false
+        }).then((err) => {
+            /* linux: function returns an object with 
+             { info: a .trashinfo pointing to original, undeleted file position,
+               path: the path to the trashed file (“inside the can”) }
+            */
+            if (typeof err !== 'object') reject(err);
+            else resolve(true);
 
-		}).then(() => {
-			// console.log('trashed!'); // just verifies order
-		});
-	});
+        }).then(() => {
+            // console.log('trashed!'); // just verifies order
+        });
+    });
 }
 
 
@@ -156,6 +158,6 @@ export default {
     enforce,
     fail,
     move,
-	removeFolder,
-	trashSync
+    removeFolder,
+    trashSync
 };

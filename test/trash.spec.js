@@ -11,7 +11,7 @@ import fs from 'fs';
 import {
     mockfile,
     config
-} from './common';
+} from './_testtools';
 const testDir = config.testDir;
 
 import helpers from '../src/helpers';

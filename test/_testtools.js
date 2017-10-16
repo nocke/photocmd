@@ -22,7 +22,7 @@ export const config = {
 export const mockfile = async(...files) => {
 
     files.forEach(v => {
-        fs.writeFileSync( v, 'mock content' );
+        fs.writeFileSync(v, 'mock content');
     });
 
 }
