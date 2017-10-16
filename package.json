@@ -11,6 +11,7 @@
     "test": "mocha ./test/**/*.spec.js",
     "test-watch": "mocha -R list -w ./test/**/*.spec.js",
     "test-single": "mocha -- $1",
+    "test-single-watch": "mocha -R list -w -- $1",
 
     "paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
     "test-and-build": "npm run build && npm run test",
