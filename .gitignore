@@ -23,17 +23,15 @@ sample?/
 !.htpasswd
 !.editorconfig
 !.babelrc
+!.jsbeautifyrc
 
-# permit specific vscode ones
-# (stackoverflow.com/a/5534865/444255)
+## permit specific vscode ones
+## (stackoverflow.com/a/5534865/444255)
 !.vscode
 .vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
-
-
-# versioning
-.svn
+!.vscode/settings.json
 
 
 ######################
