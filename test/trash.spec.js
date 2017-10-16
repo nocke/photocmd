@@ -26,8 +26,7 @@ describe('trash module', () => {
 
     // //
     // assert.isFalse(fs.existsSync(dir));
-    if (!fs.existsSync(testDir))
-    {
+    if (!fs.existsSync(testDir)) {
       console.log('creating!');
       fs.mkdirSync(testDir);
     }
@@ -42,12 +41,11 @@ describe('trash module', () => {
   });
   //   //
 
-  it.only('test removeFolder', async () => {
+  it('test removeFolder', async () => {
     await helpers.removeFolder(testDir);
     console.log('going on');
 
     // one after Promisify:
     //assert(!fs.existsSync(testDir),'directory not gone!');
-
   });
 });

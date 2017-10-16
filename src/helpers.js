@@ -1,19 +1,19 @@
 /*
-* Franks small set of little helpers.
-* i.e. sanity checks
-*/
+ * Franks small set of little helpers.
+ * i.e. sanity checks
+ */
 import path from 'path';
 import fs from 'fs';
 import rimraf from 'rimraf';
 
 function enforce(expr, msg = 'enforce failed', ...args) {
-  if (expr !== true) {
-    throw new Error(msg, args);
-  }
+    if (expr !== true) {
+        throw new Error(msg, args);
+    }
 }
 
 function fail(msg = 'failing', ...args) {
-  throw new Error(msg, args);
+    throw new Error(msg, args);
 }
 
 /**
@@ -26,101 +26,107 @@ function fail(msg = 'failing', ...args) {
  * TOTEST
  */
 function move(oldPath, newPath, callback) {
-  fs.rename(oldPath, newPath, function(err) {
-    if (err) {
-      if (err.code === 'EXDEV') {
-        copy();
-      } else {
-        callback(err);
-      }
-      return;
-    }
-    callback();
-  });
-
-  function copy() {
-    var readStream = fs.createReadStream(oldPath);
-    var writeStream = fs.createWriteStream(newPath);
-
-    readStream.on('error', callback);
-    writeStream.on('error', callback);
-
-    readStream.on('close', function() {
-      fs.unlink(oldPath, callback);
+    fs.rename(oldPath, newPath, function(err) {
+        if (err) {
+            if (err.code === 'EXDEV') {
+                copy();
+            } else {
+                callback(err);
+            }
+            return;
+        }
+        callback();
     });
 
-    readStream.pipe(writeStream);
-  }
+    function copy() {
+        var readStream = fs.createReadStream(oldPath);
+        var writeStream = fs.createWriteStream(newPath);
+
+        readStream.on('error', callback);
+        writeStream.on('error', callback);
+
+        readStream.on('close', function() {
+            fs.unlink(oldPath, callback);
+        });
+
+        readStream.pipe(writeStream);
+    }
 }
 
 // https://stackoverflow.com/a/25069828/444255
 async function removeFolder(dir) {
-  function getUserHome() {
-    return path.resolve(
-      process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME']
-    );
-  }
+    function getUserHome() {
+        return path.resolve(
+            process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME']
+        );
+    }
 
-  enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
+    enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
 
-  const absPath = path.resolve(dir);
-  const parentPath = path.resolve(path.join(dir, '..'));
+    const absPath = path.resolve(dir);
+    const parentPath = path.resolve(path.join(dir, '..'));
 
-  enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT');
-  enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir');
-  enforce(parentPath !== '/home', 'NOT working on user home dir');
-  enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder');
+    enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT');
+    enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir');
+    enforce(parentPath !== '/home', 'NOT working on user home dir');
+    enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder');
 
-  // precaution: stay clear of project directories and direct subdirs
-  for (let test of ['.git', 'package.json', '../.git', '../package.json']) {
-    enforce(
-      !fs.existsSync(path.join(dir, test)), //
-      `NOT deleting project dir (found "${test}")`
-    );
-  }
+    // precaution: stay clear of project directories and direct subdirs
+    for (let test of ['.git', 'package.json', '../.git', '../package.json']) {
+        enforce(!fs.existsSync(path.join(dir, test)), //
+            `NOT deleting project dir (found "${test}")`
+        );
+    }
 
-  return new Promise((resolve, reject) => {
-    rimraf(
-      dir, //
-      { disableGlob: false }, //
-      err => {
-        if (err) reject(err);
-        else resolve();
-      }
-    );
-  }).then(() => {
-    console.log('deleted!'); // just verifies order
-  });
+    return new Promise((resolve, reject) => {
+        rimraf(
+            dir, //
+            {
+                disableGlob: false
+            }, //
+            err => {
+                if (err) reject(err);
+                else resolve();
+            }
+        );
+    }).then(() => {
+        console.log('deleted!'); // just verifies order
+    });
 
-  //   fs.readdir(location, function(err, files) {
-  //     async.each(
-  //       files,
-  //       function(file, cb) {
-  //         file = location + '/' + file;
-  //         fs.stat(file, function(err, stat) {
-  //           if (err) {
-  //             return cb(err);
-  //           }
-  //           if (stat.isDirectory()) {
-  //             removeFolder(file, cb);
-  //           } else {
-  //             fs.unlink(file, function(err) {
-  //               if (err) {
-  //                 return cb(err);
-  //               }
-  //               return cb();
-  //             });
-  //           }
-  //         });
-  //       },
-  //       function(err) {
-  //         if (err) return next(err);
-  //         fs.rmdir(location, function(err) {
-  //           return next(err);
-  //         });
-  //       }
-  //     );
-  //   });
+    //   fs.readdir(location, function(err, files) {
+    //     async.each(
+    //       files,
+    //       function(file, cb) {
+    //         file = location + '/' + file;
+    //         fs.stat(file, function(err, stat) {
+    //           if (err) {
+    //             return cb(err);
+    //           }
+    //           if (stat.isDirectory()) {
+    //             removeFolder(file, cb);
+    //           } else {
+    //             fs.unlink(file, function(err) {
+    //               if (err) {
+    //                 return cb(err);
+    //               }
+    //               return cb();
+    //             });
+    //           }
+    //         });
+    //       },
+    //       function(err) {
+    //         if (err) return next(err);
+    //         fs.rmdir(location, function(err) {
+    //           return next(err);
+    //         });
+    //       }
+    //     );
+    //   });
 }
 
-export default { enforce, fail, move, removeFolder };
+export default {
+    enforce,
+    fail,
+    move,
+    removeFolder
+};
