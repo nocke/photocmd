@@ -6,22 +6,14 @@ import sinon from 'sinon';
 
 const assert = chai.assert; // shorthand
 
-// async function x(aPromise) {
-// 	await aPromise
-// }
 
 // a simple promise function
-async function promised42() {
+function promised42() {
+  console.log('promise42');
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(42), 50);
   });
 }
-
-// function alwaysReject() {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(() => reject('duh'), 50);
-//   });
-// }
 
 describe('ES6 self-test', () => {
   it('Array', () => {
@@ -42,13 +34,13 @@ describe('ES6 self-test', () => {
 
   // classic promise testing:
   it('Async - Await', () => {
-	let promiseWrap = sinon.spy(promised42);
-	assert(promiseWrap.notCalled);
+    let promiseWrap = sinon.spy(promised42);
+    assert(promiseWrap.notCalled);
 
-    return promiseWrap() // return leads to guarantee that we wait for promise
+    promiseWrap()
       .then(v => {
         assert.equal(v, 42);
-        console.log( promiseWrap.callCount )
+        console.log(promiseWrap.callCount);
         assert(promiseWrap.calledOnce); // property!
       })
       .catch(reason => {
@@ -57,15 +49,13 @@ describe('ES6 self-test', () => {
   });
 
   // same stuff with asyn/await →  http://rossboucher.com/await/
-  it('Async - Await', () => {
+  it('Async - Await', async () => {
+    let promiseWrap = sinon.spy(promised42);
+    assert(promiseWrap.notCalled);
 
-	await promised42();
+    let v = await promiseWrap();
+    assert.equal(v, 42);
 
-
-	// NEXT: http://2ality.com/2016/10/async-function-tips.html
-
+    assert(promiseWrap.calledOnce); // property!
   });
-
-
-
 });
