@@ -1,7 +1,7 @@
 {
 	"indent_size": 4,
 	"indent_with_tabs": true,
-	"indent_char": "x",
 	"max_preserve_newlines": 3,
+	"brace_style": "collapse,preserve-inline",
 	"end_with_newline": true
 }
