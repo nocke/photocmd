@@ -8,7 +8,7 @@ const assert = chai.assert; // shorthand
 
 // a simple promise function
 function promised42() {
-	console.log('promise42');
+	//console.log('promise42');
 	return new Promise((resolve, reject) => {
 		setTimeout(() => resolve(42), 50);
 	});
