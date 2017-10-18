@@ -26,7 +26,6 @@ program
 	.description('do nothing')
 	.option('-v, --verbose', 'log more details')
 	.option('-l, --live', 'actually do it')
-	.option('--banana', 'pointless parameter')
 	.action(function() {
 		console.log('moot command "executed".')
 	});
