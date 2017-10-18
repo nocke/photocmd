@@ -8,10 +8,7 @@ import {
 import path from 'path';
 import fs from 'fs';
 
-import {
-	mockfile,
-	config
-} from './_testtools';
+import { mockfile, config } from './_testtools';
 const testDir = config.testDir;
 
 import helpers from '../src/helpers';
@@ -22,9 +19,8 @@ const errCB = err => {
 	else console.log('ok');
 };
 
-
 describe('trash module', () => {
-	beforeEach(async () => {
+	beforeEach(async() => {
 		await helpers.removeFolder(testDir);
 
 		assert.isFalse(fs.existsSync(testDir));
@@ -34,7 +30,7 @@ describe('trash module', () => {
 		// assert.isTrue(fs.existsSync(dir));
 	});
 
-	it('trash test with removeFolder', async () => {
+	it('trash test with removeFolder', async() => {
 		assert(fs.existsSync(testDir), 'directory not gone!');
 
 		const mockFiles = [1, 2, 'A', 'B'].map(
