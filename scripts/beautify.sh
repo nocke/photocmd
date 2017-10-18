@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
-FILES=$(find . -type f -regextype posix-extended               \
-    -regex "^\./(src|test)/.*\.(scss|js|less)$"                 \
-    -not -regex ".*\/(\.|node_modules|scss\/bootstrap).*")
+if [ -z "$1" ]
+then
+	FILES=$(find . -type f -regextype posix-extended         \
+		-regex "^\./(src|test)/.*\.(scss|js|less)$"          \
+		-not -regex ".*\/(\.|node_modules|scss\/bootstrap).*")
+else
+  # with Parameter
+  FILES="$1"
+fi
+
 
 for f in $FILES
 do
