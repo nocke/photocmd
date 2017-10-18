@@ -10,8 +10,8 @@ import array from 'core-js/fn/array';
 
 // same basic test config
 export const config = {
-    testDir: './build/fileTests',
-    test: '1'
+	testDir: './build/fileTests',
+	test: '1'
 };
 
 // helper functions for testing -------------------------
@@ -21,14 +21,14 @@ export const config = {
  */
 export const mockfile = async (...files) => {
 
-    files.forEach(v => {
-        fs.writeFileSync(v, 'mock content');
-    });
+	files.forEach(v => {
+		fs.writeFileSync(v, 'mock content');
+	});
 
 }
 
 
 export default {
-    config,
-    mockfile
+	config,
+	mockfile
 };

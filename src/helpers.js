@@ -9,13 +9,13 @@ import rimraf from 'rimraf';
 import trash from 'trash';
 
 function enforce(expr, msg = 'enforce failed', ...args) {
-    if (expr !== true) {
-        throw new Error(msg, args);
-    }
+	if (expr !== true) {
+		throw new Error(msg, args);
+	}
 }
 
 function fail(msg = 'failing', ...args) {
-    throw new Error(msg, args);
+	throw new Error(msg, args);
 }
 
 /**
@@ -28,79 +28,79 @@ function fail(msg = 'failing', ...args) {
  * TOTEST
  */
 function move(oldPath, newPath, callback) {
-    fs.rename(oldPath, newPath, function(err) {
-        if (err) {
-            if (err.code === 'EXDEV') {
-                copy();
-            } else {
-                callback(err);
-            }
-            return;
-        }
-        callback();
-    });
+	fs.rename(oldPath, newPath, function(err) {
+		if (err) {
+			if (err.code === 'EXDEV') {
+				copy();
+			} else {
+				callback(err);
+			}
+			return;
+		}
+		callback();
+	});
 
-    function copy() {
-        var readStream = fs.createReadStream(oldPath);
-        var writeStream = fs.createWriteStream(newPath);
+	function copy() {
+		var readStream = fs.createReadStream(oldPath);
+		var writeStream = fs.createWriteStream(newPath);
 
-        readStream.on('error', callback);
-        writeStream.on('error', callback);
+		readStream.on('error', callback);
+		writeStream.on('error', callback);
 
-        readStream.on('close', function() {
-            fs.unlink(oldPath, callback);
-        });
+		readStream.on('close', function() {
+			fs.unlink(oldPath, callback);
+		});
 
-        readStream.pipe(writeStream);
-    }
+		readStream.pipe(writeStream);
+	}
 }
 
 // TODO enforceSafePath Function (for delete, trash, ...)
 
 // https://stackoverflow.com/a/25069828/444255
 async function removeFolder(dir) {
-    function getUserHome() {
-        return path.resolve(
-            process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME']
-        );
-    }
+	function getUserHome() {
+		return path.resolve(
+			process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME']
+		);
+	}
 
-    enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
+	enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
 
-    const absPath = path.resolve(dir);
-    const parentPath = path.resolve(path.join(dir, '..'));
+	const absPath = path.resolve(dir);
+	const parentPath = path.resolve(path.join(dir, '..'));
 
-    enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT');
-    enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir');
-    enforce(parentPath !== '/home', 'NOT working on user home dir');
-    enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder');
+	enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT');
+	enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir');
+	enforce(parentPath !== '/home', 'NOT working on user home dir');
+	enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder');
 
-    // precaution: stay clear of project directories and direct subdirs
-    for (let test of ['.git', 'package.json', '../.git', '../package.json']) {
-        enforce(!fs.existsSync(path.join(dir, test)), //
-            `NOT deleting project dir (found "${test}")`
-        );
-    }
+	// precaution: stay clear of project directories and direct subdirs
+	for (let test of ['.git', 'package.json', '../.git', '../package.json']) {
+		enforce(!fs.existsSync(path.join(dir, test)), //
+			`NOT deleting project dir (found "${test}")`
+		);
+	}
 
-    return new Promise((resolve, reject) => {
-        rimraf(
-            dir, //
-            {
-                disableGlob: false
-            }, //
-            err => {
-                if (err) reject(err);
-                else resolve(true);
-            }
-        );
-    }).then(() => {
-        // console.log('deleted!'); // just verifies order
-    });
+	return new Promise((resolve, reject) => {
+		rimraf(
+			dir, //
+			{
+				disableGlob: false
+			}, //
+			err => {
+				if (err) reject(err);
+				else resolve(true);
+			}
+		);
+	}).then(() => {
+		// console.log('deleted!'); // just verifies order
+	});
 
 
-    // TODO: promisify and async this one:
-    // https://stackoverflow.com/a/25069828/444255
-    /*
+	// TODO: promisify and async this one:
+	// https://stackoverflow.com/a/25069828/444255
+	/*
       fs.readdir(location, function(err, files) {
         async.each(
           files,
@@ -136,28 +136,28 @@ async function removeFolder(dir) {
 } // removeFolder
 
 async function trashSync(...args) {
-    return new Promise((resolve, reject) => {
-        trash([...args], {
-            glob: false
-        }).then((err) => {
-            /* linux: function returns an object with 
-             { info: a .trashinfo pointing to original, undeleted file position,
-               path: the path to the trashed file (“inside the can”) }
-            */
-            if (typeof err !== 'object') reject(err);
-            else resolve(true);
+	return new Promise((resolve, reject) => {
+		trash([...args], {
+			glob: false
+		}).then((err) => {
+			/* linux: function returns an object with 
+			 { info: a .trashinfo pointing to original, undeleted file position,
+			   path: the path to the trashed file (“inside the can”) }
+			*/
+			if (typeof err !== 'object') reject(err);
+			else resolve(true);
 
-        }).then(() => {
-            // console.log('trashed!'); // just verifies order
-        });
-    });
+		}).then(() => {
+			// console.log('trashed!'); // just verifies order
+		});
+	});
 }
 
 
 export default {
-    enforce,
-    fail,
-    move,
-    removeFolder,
-    trashSync
+	enforce,
+	fail,
+	move,
+	removeFolder,
+	trashSync
 };

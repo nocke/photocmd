@@ -13,29 +13,29 @@ import Family from '../src/model/Family';
 
 describe('Family Initialize', () => {
 
-    let f;
+	let f;
 
-    beforeEach(() => {
-        console.log('beforeEach123');
-    });
+	beforeEach(() => {
+		console.log('beforeEach123');
+	});
 
-    // reactivate some time
+	// reactivate some time
 
-    // it('plain initialize', () => {
-    // 	f = new Family();
-    // 	assert.typeOf(f, 'object');
-    // });
+	// it('plain initialize', () => {
+	// 	f = new Family();
+	// 	assert.typeOf(f, 'object');
+	// });
 
-    // it('array initialize', () => {
-    // 	f = new Family(['foo.jpg', 'bar.png']);
-    // 	assert.typeOf(f, 'object');
-    // 	assert.deepEqual(f._fam, ['foo.jpg', 'bar.png']);
-    // });
+	// it('array initialize', () => {
+	// 	f = new Family(['foo.jpg', 'bar.png']);
+	// 	assert.typeOf(f, 'object');
+	// 	assert.deepEqual(f._fam, ['foo.jpg', 'bar.png']);
+	// });
 
-    it('bad initialize', () => {
-        assert.throws(() => {
-            new Family(42);
-        });
-    });
+	it('bad initialize', () => {
+		assert.throws(() => {
+			new Family(42);
+		});
+	});
 
 });
