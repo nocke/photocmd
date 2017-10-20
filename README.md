@@ -89,7 +89,7 @@ The bin-section of the [package.json](package.json) defines it as a command line
 ```
 
 ----
-## Development
+## development
 
 `npm install` – before all else. naturally.
 
@@ -110,6 +110,12 @@ Most of the time you will just want:
 * smoke test
 
 `npm run test-watch` – watch source files and keep testing
+
+You can also aim for a single test:
+
+`npm run test-single <path>`
+`npm run test-single-watch <path>`
+
 
 ----
 ## License
