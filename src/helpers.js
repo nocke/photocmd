@@ -8,13 +8,13 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 import trash from 'trash';
 
-function enforce(expr, msg = 'enforce failed', ...args) {
+export function enforce(expr, msg = 'enforce failed', ...args) {
 	if (expr !== true) {
 		throw new Error(msg, args);
 	}
 }
 
-function fail(msg = 'failing', ...args) {
+export function fail(msg = 'failing', ...args) {
 	throw new Error(msg, args);
 }
 
@@ -27,7 +27,7 @@ function fail(msg = 'failing', ...args) {
  *
  * TOTEST
  */
-function move(oldPath, newPath, callback) {
+export function move(oldPath, newPath, callback) {
 	fs.rename(oldPath, newPath, function(err) {
 		if (err) {
 			if (err.code === 'EXDEV') {
@@ -58,7 +58,7 @@ function move(oldPath, newPath, callback) {
 // TODO enforceSafePath Function (for delete, trash, ...)
 
 // https://stackoverflow.com/a/25069828/444255
-async function removeFolder(dir) {
+export async function removeFolder(dir) {
 	function getUserHome() {
 		return path.resolve(
 			process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME']
@@ -135,7 +135,7 @@ async function removeFolder(dir) {
 
 } // removeFolder
 
-async function trashSync(...args) {
+export async function trashSync(...args) {
 	return new Promise((resolve, reject) => {
 		trash([...args], {
 			glob: false
