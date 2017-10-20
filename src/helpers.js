@@ -8,6 +8,13 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 import trash from 'trash';
 
+// --------------------------------------------------------
+
+// NEXT console log  with static-ish verbosity state
+
+
+// --------------------------------------------------------
+
 export function enforce(expr, msg = 'enforce failed', ...args) {
 	if (expr !== true) {
 		throw new Error(msg, args);
