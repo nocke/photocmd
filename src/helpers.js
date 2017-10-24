@@ -50,7 +50,11 @@ export function move(oldPath, newPath, callback) {
 
 // TODO enforceSafePath Function (for delete, trash, ...)
 
-// https://stackoverflow.com/a/25069828/444255
+/**
+ * a promisified (async/await compatible) folder removal function
+ *
+ * REF → stackoverflow.com/a/25069828/444255
+ */
 export async function removeFolder(dir) {
 	function getUserHome() {
 		return path.resolve(
@@ -58,17 +62,18 @@ export async function removeFolder(dir) {
 		);
 	}
 
+	// precaution:
+	// stay clear of very basic folders (you can thank me later)
 	enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
-
 	const absPath = path.resolve(dir);
 	const parentPath = path.resolve(path.join(dir, '..'));
-
 	enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT');
 	enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir');
 	enforce(parentPath !== '/home', 'NOT working on user home dir');
 	enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder');
 
-	// precaution: stay clear of project directories and direct subdirs
+	// precaution:
+	// stay clear of project directories and direct subdirs
 	for (let test of ['.git', 'package.json', '../.git', '../package.json']) {
 		enforce(!fs.existsSync(path.join(dir, test)), //
 			`NOT deleting project dir (found "${test}")`
@@ -133,23 +138,21 @@ export async function trashSync(...args) {
 		trash([...args], {
 			glob: false
 		}).then((err) => {
-			/* linux: function returns an object with 
-			 { info: a .trashinfo pointing to original, undeleted file position,
-			   path: the path to the trashed file (“inside the can”) }
-			*/
-			if (typeof err !== 'object') reject(err);
-			else resolve(true);
+			// linux: function returns an object with
+			//	 info: a .trashinfo pointing to original, undeleted file position,
+			//	 path: the path to the trashed file (“inside the can”) }
+			if (typeof err !== 'object')
+				reject(err);
+			else
+				resolve(true);
 
 		}).then(() => {
-			// console.log('trashed!'); // just verifies order
+			// console.log('trashed!'); // just verifies sync order
 		});
 	});
 }
 
-
 export default {
-	enforce,
-	fail,
 	move,
 	removeFolder,
 	trashSync

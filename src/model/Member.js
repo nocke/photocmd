@@ -10,7 +10,7 @@ class Member {
 
 		// create type
 		switch (this.ext.toLowerCase()) {
-			// regular
+			// regular extensions - just lowercase
 			case 'png':
 			case 'psd':
 			case 'jpg':

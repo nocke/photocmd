@@ -17,26 +17,24 @@ import {
 function deleteAction(firstDir, moreDirs, cmd) {
 	let liveMode = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
-	
+
 	if (verboseMode) logLevel(LEVELS.INFO);
-	
+
 	let lonely = cmd.lonely || false;
 	let unstarred = cmd.unstarred || false;
-	
+
 	log('Delete Action ===============');
 	
-
-
 	// simply merge all dirs together
 	// COULDDO: support wildcards, too.
 	let dirs = [firstDir, ...moreDirs];
 	enforce(!!dirs, 'no directory');
-
+	
 	let fileSet = new FileSet(dirs);
-
-
+	
+	
+	log('Get Lonely ===============');
 	let loneFiles = fileSet.getLonely();
-
 	loneFiles.dump();
 	loneFiles.delete(liveMode);
 

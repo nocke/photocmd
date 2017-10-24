@@ -1,10 +1,6 @@
 'use strict';
 
-import {
-	assert,
-	fail,
-	expect
-} from 'chai';
+import { assert, fail, expect } from 'chai';
 import path from 'path';
 import fs from 'fs';
 
@@ -23,11 +19,12 @@ describe('trash module', () => {
 	beforeEach(async() => {
 		await helpers.removeFolder(testDir);
 
+		// assured testDir recreation
 		assert.isFalse(fs.existsSync(testDir));
 		if (!fs.existsSync(testDir)) {
 			fs.mkdirSync(testDir);
 		}
-		// assert.isTrue(fs.existsSync(dir));
+		assert.isTrue(fs.existsSync(testDir));
 	});
 
 	it('trash test with removeFolder', async() => {

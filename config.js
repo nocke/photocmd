@@ -8,6 +8,7 @@ config.extensions_raw = ['cr', 'raw', 'cr2', 'cr3', 'nef'];
 // tag-alongs: adobe sidecar, dxo sidecar
 config.sidecars = ['xmp', 'dop'];
 
+// COULDDO: wellknown temp files (see .gitignore), still counting as empty dir (thumbsdb, etc)
 
 // list of core matchers.
 // Priority does matter, first one winds (i.e Android-date before Android-generic).

@@ -42,7 +42,7 @@ class FileSet {
 		this._families = new Map();
 
 		if (typeof dirs === 'undefined') {
-			console.log('constructing empty fileSet');
+			info('constructing empty fileSet');
 			return;
 		}
 
@@ -153,35 +153,38 @@ class FileSet {
 	 * @param {force} force if true: actually delete. move-to-recycle otherwise
 	 */
 	delete(liveMode = false, force = false) {
-		console.log("delete..........");
+		log("delete..........");
 		this.getLonely();
 
-		liveMode = liveMode === true; // all else is false
-		force = force === true; // all else is false
+		// all but true shall be false
+		liveMode = liveMode === true;
+		force = force === true;
 
 		for (var [key, value] of this._families) {
 			if (!liveMode) {
-				console.log('mock delete ' + value.dump());
+				info('mock delete ' + value.dump());
 				continue;
 			}
 
 			if (force === true) {
-				console.log('TODO hard delete');
+				info('TODO hard delete');
+				continue;
+			} else {
+				info('TODO move to recycle');
 				continue;
 			}
 
-			console.log('TODO move to recycle');
 		}
 	}
 
 	dump() {
-		console.log('== fileSet dump ===========================');
+		info('== fileSet dump ===========================');
 
 		for (let [k, f] of this._families) {
-			console.log(`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
+			info(`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
 		}
 
-		console.log('==========================================');
+		info('==========================================');
 	}
 
 
