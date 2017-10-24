@@ -1,3 +1,4 @@
+'use strict';
 /*
  * Franks small set of little helpers.
  * i.e. sanity checks
@@ -8,22 +9,7 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 import trash from 'trash';
 
-// --------------------------------------------------------
-
-// NEXT console log  with static-ish verbosity state
-
-
-// --------------------------------------------------------
-
-export function enforce(expr, msg = 'enforce failed', ...args) {
-	if (expr !== true) {
-		throw new Error(msg, args);
-	}
-}
-
-export function fail(msg = 'failing', ...args) {
-	throw new Error(msg, args);
-}
+import { enforce, fail } from './log';
 
 /**
  * A move() function that renames, if possible, or falls back to copying

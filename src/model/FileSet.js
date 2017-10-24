@@ -3,10 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import config from '../../config';
-import {
-	enforce,
-	fail
-} from '../helpers';
+import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../log';
 import {
 	Family,
 	Member
@@ -114,8 +111,8 @@ class FileSet {
 
 
 		for (var [key, value] of this._families) {
-			console.log(`key: ${key} ---------------------`);
-			console.dir(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
+			info(`key: ${key} ---------------------`);
+			info(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
 		}
 
 		return;

@@ -2,10 +2,8 @@
 import array from 'core-js/fn/array';
 
 import assert from 'assert';
-import {
-	enforce,
-	fail
-} from './helpers';
+
+import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from './log';
 
 import {
 	FileSet,
@@ -17,15 +15,17 @@ import {
 // -----------------------------
 
 function deleteAction(firstDir, moreDirs, cmd) {
-
 	let liveMode = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
-
+	
+	if (verboseMode) logLevel(LEVELS.INFO);
+	
 	let lonely = cmd.lonely || false;
 	let unstarred = cmd.unstarred || false;
+	
+	log('Delete Action ===============');
+	
 
-	// TODO verboseMode should set global state in some type of logger,
-	// that is then used throughout...
 
 	// simply merge all dirs together
 	// COULDDO: support wildcards, too.
@@ -44,7 +44,7 @@ function deleteAction(firstDir, moreDirs, cmd) {
 	// fileSet.dump( fileSet.getUnstarred() );
 
 
-	console.log('deleteAction End.');
+	log('deleteAction End.');
 }
 
 export default deleteAction;

@@ -1,9 +1,6 @@
 'use strict'
 
-import {
-	enforce,
-	fail
-} from '../helpers';
+import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../log';
 import config from '../../config';
 
 import {
