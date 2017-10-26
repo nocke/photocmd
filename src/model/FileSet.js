@@ -28,6 +28,7 @@ class FileSet {
 			return match !== null; // no match → false → keep on searching
 		});
 
+
 		// found a match
 		if (match !== null) {
 			enforce(match.length === 3, 'match exprssion length');
@@ -73,14 +74,13 @@ class FileSet {
 				if (p.name[0] === '.')
 					return;
 
-				// remove leading dot on ext (always, unless extensionless)
+				// remove leading dot on ext, except extensionless:
 				if (p.ext.length > 0) {
 					enforce(p.ext[0] === '.', 'sanity');
 					p.ext = p.ext.substr(1);
 				}
 
 				// filter for supported filetypes
-				// TODO supported sidecars, etc
 				if (!config.extensions.includes(p.ext.toLowerCase()))
 					return;
 
@@ -91,8 +91,8 @@ class FileSet {
 				const member = new Member(p);
 
 				if (p.core === null) {
-					// treat singles just like families
-					// with the exception, that p.core is defined by the full p.name...
+					// treat singles just like families with the exception,
+					// that p.core is defined by full name...
 					p.core = p.name;
 				}
 
@@ -102,26 +102,21 @@ class FileSet {
 				const f = this._families.get(p.core);
 				f.add(member);
 
+
+				error('##################2');
+
 				// =====================================
-				// BIG LOOP
+				// BIG LOOP end
 				// =====================================
 
 			}) // files.map
 		}, this); // forEach
 
-
-		for (var [key, value] of this._families) {
-			info(`key: ${key} ---------------------`);
-			info(`Family: ${value._core}  ${value._isLonely}  ${value._isStarred}`);
-		}
-
-		return;
 	} // constructor
 
 	// =====================================
 	// public instance methods
 	// =====================================
-
 
 	filter(cb) {
 		const r = new FileSet();
