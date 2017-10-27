@@ -6,13 +6,15 @@
 *.bak
 tmp
 
-# folders
+
+############################
+# build and cache folders
 PREP
 cache/
 log/
 [Bb]uild/
 
-# sample image folder
+# sample image folder (too large to commit)
 sample?/
 
 # all hidden files/folders (except .gitignore, .htaccess,... )
@@ -70,8 +72,3 @@ nbproject
 # wp subfolders (might !negate own plugin again, if it happens)
 # top-level and certain subfolders, but not  /wp-config[-sample]
 
-#########################
-# output folders (generated stuff)
-/public/**/*.css
-/public/**/*.css.map
-/public/**/*.js.map
