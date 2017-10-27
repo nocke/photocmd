@@ -1,10 +1,8 @@
 'use strict'
 
-import chai from 'chai';
+import chai, {assert} from 'chai';
 import path from 'path';
-
-// shorthand
-const assert = chai.assert;
+import sinon from 'sinon';
 
 // system under test:
 import Family from '../src/model/Family';

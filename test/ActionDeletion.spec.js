@@ -1,0 +1,94 @@
+'use strict'
+
+/**
+ * testing the delete action
+ *
+ *
+ */
+
+import chai, {assert} from 'chai';
+import path from 'path';
+import sinon from 'sinon';
+import fs from 'fs';
+
+import { mockfile, config } from './_testtools';
+import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+const testDir = config.testDir;
+
+// system under test:
+import helpers from '../src/helpers';
+import Family from '../src/model/Family';
+
+// REF http://chaijs.com/api/assert/
+
+describe('ActionDeletion', () => {
+
+	beforeEach(async() => {
+		await helpers.removeFolder(testDir);
+
+		// assured testDir recreation
+		assert.isFalse(fs.existsSync(testDir));
+		if (!fs.existsSync(testDir)) {
+			fs.mkdirSync(testDir);
+		}
+		assert.isTrue(fs.existsSync(testDir));
+	});
+
+	// afterEach(() => {
+	// 	console.log('should do teardown.');
+	// });
+
+
+	// beforeEach(() => {
+	// 	console.log('beforeEach123');
+	// });
+
+	it('general trashSync test', async() => {
+		assert(fs.existsSync(testDir), 'directory not gone!');
+
+		// create a number of files, delete a subset. verify. done.
+		const mockFiles = [1, 2, 'A', 'B'].map(
+			v => path.join(testDir, `mock${v}`)
+		);
+		const mockFiles2 = [...mockFiles];
+
+		mockfile(...mockFiles);
+
+		await helpers.trashSync(mockFiles[0], mockFiles[2]);
+
+		assert(!fs.existsSync(mockFiles[0]));
+		assert(fs.existsSync(mockFiles[1]));
+		assert(!fs.existsSync(mockFiles[2]));
+		assert(fs.existsSync(mockFiles[3]));
+
+		await helpers.removeFolder(testDir);
+		assert(!fs.existsSync(testDir), 'directory not gone!');
+	});
+
+	it.only/*TEMPTEMP*/('delete lonely', () => {
+
+		mockfile(  // my breakpoint, just where I wanted to be...
+			[
+				'IMG_0634.JpG', // lonely jpg, but not a lonely raw
+				'beaches.JpG',  // single jpg
+				'IMG_0636.nef', // lonely raw → DELETE
+				'PM5A2087.cr2', // Family, not lonely
+				'PM5A2087.cr2.dop',
+				'PM5A2087_DXs2.jpg',
+				'PM5A2087_Photoshop.jpg',
+				'PM5A3095.CR2', // lonely raw → DELETE
+				'PM5A3096.cr3', // lonely raw → DELETE
+				'DSCN123.cR2',  // Family, not lonely
+				'DSCN123.jpeg'  //   jpeg with 'e'
+			]
+		)
+
+
+
+
+
+
+	});
+
+
+});

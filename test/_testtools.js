@@ -21,7 +21,15 @@ export const config = {
  */
 export const mockfile = async (...files) => {
 
+	// allow rest parameter as well as a simple, single object
+	if (files.length === 1 && Array.isArray(files[0]))
+	{
+		console.log('switching');
+		files = files[0];
+	}
+
 	files.forEach(v => {
+		console.log('creating: '+v);
 		fs.writeFileSync(v, 'mock content');
 	});
 

@@ -1,10 +1,8 @@
 'use strict';
 
-import chai from 'chai';
+import chai, {assert} from 'chai';
 import path from 'path';
 import sinon from 'sinon';
-
-const assert = chai.assert; // shorthand
 
 // a simple promise function
 function promised42() {
