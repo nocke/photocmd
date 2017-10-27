@@ -7,9 +7,10 @@
 import path from 'path';
 import fs from 'fs';
 import array from 'core-js/fn/array';
+import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
 // same basic test config
-export const config = {
+export const testconfig = {
 	testDir: './build/fileTests',
 	test: '1'
 };
@@ -19,24 +20,21 @@ export const config = {
 /**
  * creates a number of mockfiles (just tiny text content)
  */
-export const mockfile = async (...files) => {
+export const mockfile = async (basedir, files) => {
 
-	// allow rest parameter as well as a simple, single object
-	if (files.length === 1 && Array.isArray(files[0]))
-	{
-		console.log('switching');
-		files = files[0];
-	}
+	enforce(typeof basedir==='string', 'baseDir must be string');
+	enforce(Array.isArray(files),'Files must be array')
 
-	files.forEach(v => {
-		console.log('creating: '+v);
-		fs.writeFileSync(v, 'mock content');
+	files.forEach(file => {
+		const filepath = path.join(basedir,file);
+		console.log('creating: '+file);
+		fs.writeFileSync(file, 'mock content');
 	});
 
 }
 
 
 export default {
-	config,
+	testconfig,
 	mockfile
 };

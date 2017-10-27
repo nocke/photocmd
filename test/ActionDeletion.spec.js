@@ -11,9 +11,9 @@ import path from 'path';
 import sinon from 'sinon';
 import fs from 'fs';
 
-import { mockfile, config } from './_testtools';
+import { mockfile, testconfig } from './_testtools';
 import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
-const testDir = config.testDir;
+const testDir = testconfig.testDir;
 
 // system under test:
 import helpers from '../src/helpers';
@@ -47,12 +47,9 @@ describe('ActionDeletion', () => {
 		assert(fs.existsSync(testDir), 'directory not gone!');
 
 		// create a number of files, delete a subset. verify. done.
-		const mockFiles = [1, 2, 'A', 'B'].map(
-			v => path.join(testDir, `mock${v}`)
-		);
-		const mockFiles2 = [...mockFiles];
+		const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`);
 
-		mockfile(...mockFiles);
+		mockfile(testDir, mockFiles);
 
 		await helpers.trashSync(mockFiles[0], mockFiles[2]);
 
@@ -65,9 +62,10 @@ describe('ActionDeletion', () => {
 		assert(!fs.existsSync(testDir), 'directory not gone!');
 	});
 
-	it.only/*TEMPTEMP*/('delete lonely', () => {
+	it/*TEMPTEMP*/('delete lonely', () => {
 
 		mockfile(  // my breakpoint, just where I wanted to be...
+			testDir,
 			[
 				'IMG_0634.JpG', // lonely jpg, but not a lonely raw
 				'beaches.JpG',  // single jpg
