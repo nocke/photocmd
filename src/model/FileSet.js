@@ -28,7 +28,6 @@ class FileSet {
 			return match !== null; // no match → false → keep on searching
 		});
 
-
 		// found a match
 		if (match !== null) {
 			enforce(match.length === 3, 'match exprssion length');
@@ -60,9 +59,9 @@ class FileSet {
 
 			files.map((filepath) => {
 
-				// =====================================
-				// BIG LOOP
-				// =====================================
+				// ============================================
+				// parse Files, segmentize, group into families
+				// ============================================
 				const p = path.parse(filepath);
 
 				// use dir path from above, so far, relative subdir is empty
@@ -82,9 +81,9 @@ class FileSet {
 
 				// filter for supported filetypes
 				if (!config.extensions.includes(p.ext.toLowerCase()))
-					return;
+					return; // skip nonsupported
 
-				// figure out Core
+				// extract Core
 				p.core = FileSet.getCore(p);
 
 				// construct Member
@@ -96,20 +95,14 @@ class FileSet {
 					p.core = p.name;
 				}
 
+				// open new Family if needed
 				if (!this._families.has(p.core))
 					this._families.set(p.core, new Family(p.core));
 
 				const f = this._families.get(p.core);
 				f.add(member);
 
-
-				error('##################2');
-
-				// =====================================
-				// BIG LOOP end
-				// =====================================
-
-			}) // files.map
+			}) // files.map ======================
 		}, this); // forEach
 
 	} // constructor
@@ -161,11 +154,13 @@ class FileSet {
 				continue;
 			}
 
+			// delete the entire family
 			if (force === true) {
 				info('TODO hard delete');
 				continue;
 			} else {
-				info('TODO move to recycle');
+				info(`TODO move ${key}, ${value} to recycle`);
+				console.dir(value);
 				continue;
 			}
 

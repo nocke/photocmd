@@ -21,14 +21,14 @@ program
 	.action(deleteAction);
 
 // moot git style option (as a blueprint)
-program
-	.command('moot')
-	.description('do nothing')
-	.option('-v, --verbose', 'log more details')
-	.option('-l, --live', 'actually do it')
-	.action(function() {
-		console.log('moot command "executed".')
-	});
+// program
+// 	.command('moot')
+// 	.description('do nothing')
+// 	.option('-v, --verbose', 'log more details')
+// 	.option('-l, --live', 'actually do it')
+// 	.action(function() {
+// 		console.log('moot command "executed".')
+// 	});
 
 program.on('--help', function() {
 	console.log([
@@ -37,18 +37,18 @@ program.on('--help', function() {
 	].join("\n"));
 });
 
-
 // if no params, output help:
 if (process.argv.length == 2)
 	process.argv.push('--help');
 
-// in help case, parse exits ( .outputHelp() would avoid this )
-try {
-	program.parse(process.argv);
-} catch (err) {
-	console.error('Error: \"%s\n\nStacktrace: %s\"', err.message, err.stack)
-	process.exit(6);
-}
+	// in help case, parse exits ( .outputHelp() would avoid this )
+	try {
+		// the actual command execution:
+		program.parse(process.argv);
+	} catch (err) {
+		console.error('Error: \"%s\n\nStacktrace: %s\"', err.message, err.stack)
+		process.exit(6);
+	}
 
 // did any command run? if not, output help
 const noRun = 'string' === typeof program.args[program.args.length - 1];
