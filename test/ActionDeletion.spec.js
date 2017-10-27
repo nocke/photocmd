@@ -18,6 +18,7 @@ const testDir = testconfig.testDir;
 // system under test:
 import helpers from '../src/helpers';
 import Family from '../src/model/Family';
+import deleteAction from '../src/deleteAction';
 
 // REF http://chaijs.com/api/assert/
 
@@ -62,7 +63,7 @@ describe('ActionDeletion', () => {
 		assert(!fs.existsSync(testDir), 'directory not gone!');
 	});
 
-	it/*TEMPTEMP*/('delete lonely', () => {
+	it.only/*TEMPTEMP*/('delete lonely', () => {
 
 		mockfile(  // my breakpoint, just where I wanted to be...
 			testDir,
@@ -81,7 +82,7 @@ describe('ActionDeletion', () => {
 			]
 		)
 
-
+		deleteAction(testDir,[],{ live: true, lonely: true});
 
 
 

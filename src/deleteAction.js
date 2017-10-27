@@ -30,9 +30,7 @@ function deleteAction(firstDir, moreDirs, cmd) {
 	let dirs = [firstDir, ...moreDirs];
 	enforce(!!dirs, 'no directory specified');
 
-	
 	let fileSet = new FileSet(dirs);
-
 
 	log('Get Lonely ===============');
 	let loneFiles = fileSet.getLonely();
@@ -41,7 +39,6 @@ function deleteAction(firstDir, moreDirs, cmd) {
 
 	// fileSet.dump( fileSet.getLonely() );
 	// fileSet.dump( fileSet.getUnstarred() );
-
 
 	log('deleteAction End.');
 }

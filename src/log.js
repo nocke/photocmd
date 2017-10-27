@@ -36,7 +36,7 @@ function _log(level, msg) {
 	let out = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`;
 
 	if (level < logLevel) {
-		out = 'SKIPPING ' + out;
+		return; // skip
 	}
 
 	if (coloring) {

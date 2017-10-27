@@ -32,7 +32,7 @@ class Family {
 		this._map = new Map();
 
 		// family flags
-		this._isLonely = true;
+		this._isLonely = true; // assume for now
 		this._isStarred = false;
 	}
 
@@ -40,8 +40,10 @@ class Family {
 		enforce(member instanceof Member, 'can only add members');
 		this._map.set(member.name, member);
 
-		// at least one raw file qualifies as 'not lonely'
-		if (member.type === 'raw')
+		// NONSENSE: at least one raw file qualifies as 'not lonely'
+		// TRUE: at least one IMAGE file (jpg, tiff...) qualifies as 'not lonely'
+
+		if (config.extensions_image.includes(member.type))
 			this._isLonely = false;
 	}
 

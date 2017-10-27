@@ -27,8 +27,8 @@ export const mockfile = async (basedir, files) => {
 
 	files.forEach(file => {
 		const filepath = path.join(basedir,file);
-		console.log('creating: '+file);
-		fs.writeFileSync(file, 'mock content');
+		info('creating: '+filepath);
+		fs.writeFileSync(filepath, 'mock content');
 	});
 
 }
