@@ -84,7 +84,14 @@ describe('ActionDeletion', () => {
 
 		deleteAction(testDir,[],{ live: true, lonely: true});
 
+		// NEXT: assertfile(  // assert file existence
+			testDir,
+			[
+				{ 'IMG_0634.JpG' : true },
 
+				
+			]
+		)
 
 
 	});
