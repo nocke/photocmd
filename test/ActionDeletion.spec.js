@@ -11,7 +11,7 @@ import path from 'path';
 import sinon from 'sinon';
 import fs from 'fs';
 
-import { mockfile, testconfig } from './_testtools';
+import { mockfile, assertFiles, testconfig } from './_testtools';
 import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 const testDir = testconfig.testDir;
 
@@ -78,19 +78,27 @@ describe('ActionDeletion', () => {
 				'PM5A3095.CR2', // lonely raw → DELETE
 				'PM5A3096.cr3', // lonely raw → DELETE
 				'DSCN123.cR2',  // Family, not lonely
-				'DSCN123.jpeg'  //   jpeg with 'e'
+				'DSCN123.jpeg'  // testing: jpeg with 'e'
 			]
 		)
 
 		deleteAction(testDir,[],{ live: true, lonely: true});
 
-		// NEXT: assertfile(  // assert file existence
+		assertFiles(  // assert file existence
 			testDir,
-			[
-				{ 'IMG_0634.JpG' : true },
-
-				
-			]
+			{
+				'IMG_0634.JpG' : true,
+				'beaches.JpG' : true,
+				'IMG_0636.nef' : false, // lonely raw → DELETE
+				'PM5A2087.cr2' : true,
+				'PM5A2087.cr2.dop' : true,
+				'PM5A2087_DXs2.jpg' : true,
+				'PM5A2087_Photoshop.jpg' : true,
+				'PM5A3095.CR2' : false, // lonely raw → DELETE
+				'PM5A3096.cr3' : false, // lonely raw → DELETE
+				'DSCN123.cR2' : true,
+				'DSCN123.jpeg' : true
+			}
 		)
 
 

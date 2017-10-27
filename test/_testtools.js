@@ -4,6 +4,7 @@
 // TODO: name this testtools.js
 
 // needed for all testing
+import chai, { assert } from 'chai';
 import path from 'path';
 import fs from 'fs';
 import array from 'core-js/fn/array';
@@ -20,15 +21,28 @@ export const testconfig = {
 /**
  * creates a number of mockfiles (just tiny text content)
  */
-export const mockfile = async (basedir, files) => {
+export const mockfile = async(basedir, files) => {
 
-	enforce(typeof basedir==='string', 'baseDir must be string');
-	enforce(Array.isArray(files),'Files must be array')
+	// TODO: assert wäre hier besser!
+	enforce(typeof basedir === 'string', 'baseDir must be string');
+	enforce(Array.isArray(files), 'Files must be array')
 
 	files.forEach(file => {
-		const filepath = path.join(basedir,file);
-		info('creating: '+filepath);
+		const filepath = path.join(basedir, file);
+		info('creating: ' + filepath);
 		fs.writeFileSync(filepath, 'mock content');
+	});
+
+}
+
+export const assertFiles = async(basedir, fileObj) => {
+
+	// NEXT: 
+
+	Object.keys(fileObj).forEach((file) => {
+		const filepath = path.join(basedir, file);
+		log(`${filepath}   ${fileObj[file]}`);
+		assert.equal(fs.existsSync(filepath), fileObj[file]);
 	});
 
 }
