@@ -13,6 +13,9 @@ import fs from 'fs';
 
 import { mockfile, assertFiles, testconfig } from './_testtools';
 import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+
+// test config
+logLevel(LEVELS.INFO);
 const testDir = testconfig.testDir;
 
 // system under test:
@@ -20,7 +23,6 @@ import helpers from '../src/helpers';
 import Family from '../src/model/Family';
 import deleteAction from '../src/deleteAction';
 
-// REF http://chaijs.com/api/assert/
 
 describe('ActionDeletion', () => {
 
@@ -63,39 +65,48 @@ describe('ActionDeletion', () => {
 		assert(!fs.existsSync(testDir), 'directory not gone!');
 	});
 
-	it.only/*TEMPTEMP*/('delete lonely', () => {
 
-		mockfile(  // my breakpoint, just where I wanted to be...
+	it('delete lonely', async () => {
+
+		// create files
+		await mockfile(
 			testDir,
 			[
 				'IMG_0634.JpG', // lonely jpg, but not a lonely raw
 				'beaches.JpG',  // single jpg
 				'IMG_0636.nef', // lonely raw → DELETE
 				'PM5A2087.cr2', // Family, not lonely
-				'PM5A2087.cr2.dop',
+				'PM5A2087.dop',
 				'PM5A2087_DXs2.jpg',
 				'PM5A2087_Photoshop.jpg',
 				'PM5A3095.CR2', // lonely raw → DELETE
+				'PM5A3095.xmp', // /(verify, entire family gets wiped)
+				'PM5A3095.dop', //
 				'PM5A3096.cr3', // lonely raw → DELETE
 				'DSCN123.cR2',  // Family, not lonely
 				'DSCN123.jpeg'  // testing: jpeg with 'e'
 			]
 		)
 
+		// COULDDO: wicked test case (real?) 'PM5A2087.cr2.dop',
+
 		deleteAction(testDir,[],{ live: true, lonely: true});
 
-		assertFiles(  // assert file existence
+		// assert file existence
+		await assertFiles(
 			testDir,
 			{
 				'IMG_0634.JpG' : true,
 				'beaches.JpG' : true,
-				'IMG_0636.nef' : false, // lonely raw → DELETE
+				'IMG_0636.nef' : false, // false, must delete lonely raw → DELETE
 				'PM5A2087.cr2' : true,
-				'PM5A2087.cr2.dop' : true,
+				'PM5A2087.dop' : true,
 				'PM5A2087_DXs2.jpg' : true,
 				'PM5A2087_Photoshop.jpg' : true,
 				'PM5A3095.CR2' : false, // lonely raw → DELETE
-				'PM5A3096.cr3' : false, // lonely raw → DELETE
+				'PM5A3095.xmp' : false,
+				'PM5A3095.dop' : false,
+				'PM5A3096.cr3' : false, // false  lonely raw → DELETE
 				'DSCN123.cR2' : true,
 				'DSCN123.jpeg' : true
 			}

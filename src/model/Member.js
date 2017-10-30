@@ -5,7 +5,7 @@ import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../log'
 class Member {
 
 	constructor(pathObj) {
-		// copy 'em all
+		// copy 'em all (much preparation already happens one level up in Family)
 		Object.assign(this, pathObj);
 
 		// create type

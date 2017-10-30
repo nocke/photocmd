@@ -38,11 +38,10 @@ class Family {
 
 	add(member) {
 		enforce(member instanceof Member, 'can only add members');
-		this._map.set(member.name, member);
+		// base (full name) → member object
+		this._map.set(member.base, member);
 
-		// NONSENSE: at least one raw file qualifies as 'not lonely'
 		// TRUE: at least one IMAGE file (jpg, tiff...) qualifies as 'not lonely'
-
 		if (config.extensions_image.includes(member.type))
 			this._isLonely = false;
 	}

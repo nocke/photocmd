@@ -1,39 +1,110 @@
 'use strict'
 
-import chai, {assert} from 'chai';
+import chai, { assert } from 'chai';
 import path from 'path';
 import sinon from 'sinon';
+import fs from 'fs';
+
+import { mockfile, assertFiles, testconfig } from './_testtools';
+import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+
+// test config
+logLevel(LEVELS.INFO);
+const testDir = testconfig.testDir;
 
 // system under test:
+import helpers from '../src/helpers';
 import Family from '../src/model/Family';
+// testing has to go through FileSet anyway
+import FileSet from '../src/model/FileSet';
+
 
 // REF http://chaijs.com/api/assert/
 
 describe('Family Initialize', () => {
 
-	let f;
+	beforeEach(async() => {
+		await helpers.removeFolder(testDir);
+		fs.mkdirSync(testDir);
 
-	beforeEach(() => {
-		console.log('beforeEach123');
 	});
 
-	// reactivate some time
-
-	// it('plain initialize', () => {
-	// 	f = new Family();
-	// 	assert.typeOf(f, 'object');
-	// });
-
-	// it('array initialize', () => {
-	// 	f = new Family(['foo.jpg', 'bar.png']);
-	// 	assert.typeOf(f, 'object');
-	// 	assert.deepEqual(f._fam, ['foo.jpg', 'bar.png']);
-	// });
 
 	it('bad initialize', () => {
 		assert.throws(() => {
 			new Family(42);
 		});
+	});
+
+	it('simple Family', async() => {
+
+		await mockfile(
+			testDir, [
+				'DSCN00248.cr2',
+				'DSCN00248.dop',
+				'DSCN00248.xmp',
+				'DSCN00248_DXs2.jpg', // test: also non-obvious jpg makes it non-lonely
+				'DSCN00248_Photoshop.jpg',
+				// testing android cores (aka Families based on iso-dates)
+				'2017-10-25_01234567.jpg',
+				'2017-10-25_01234567_crop.jpg',
+				'2017-10-25_01234567_colorcorrect.tiff'
+			]
+		)
+
+		const fileSet = new FileSet([testDir]);
+		// console.dir(fileSet._families);
+
+		const family1 = fileSet._families.get('DSCN00248');
+
+		assert.equal(family1._core, 'DSCN00248', 'family core name');
+		assert.equal(family1._map.size, 5, 'family member count mismatch');
+		assert.isFalse(family1._isLonely, 'family not lonely');
+
+
+		const family2 = fileSet._families.get('2017-10-25_01234567');
+		assert.equal(family2._core, '2017-10-25_01234567', 'family core name');
+		assert.equal(family2._map.size, 3, 'family member count mismatch');
+		assert.isFalse(family2._isLonely, 'family not lonely');
+
+	});
+
+	it('single jpg', async() => {
+
+		await mockfile(
+			testDir, [
+				'Beach-somewhere_foo.jpg' // no detectable pattern
+			]
+		)
+
+		const fileSet = new FileSet([testDir]);
+		const family = fileSet._families.get('Beach-somewhere_foo');
+
+		assert.equal(family._core, 'Beach-somewhere_foo', 'family core name');
+		assert.equal(family._map.size, 1, 'family member count mismatch');
+		assert.isFalse(family._isLonely, 'family not lonely');
+	});
+
+	it('two lonely RAWs', async() => {
+
+		await mockfile(
+			testDir, [
+				'single-named.cr2',
+				'IMGSX00000012.cr'
+			]
+		);
+
+		const fileSet = new FileSet([testDir]);
+		const family1 = fileSet._families.get('single-named');
+		const family2 = fileSet._families.get('IMGSX00000012');
+
+		assert.equal(family1._core, 'single-named', 'family core name');
+		assert.equal(family1._map.size, 1, 'family member count mismatch');
+		assert.isTrue(family1._isLonely, 'yes, a raw –is– lonely');
+
+		assert.equal(family2._core, 'IMGSX00000012', 'family core name');
+		assert.equal(family2._map.size, 1, 'family member count mismatch');
+		assert.isTrue(family2._isLonely, 'yes, a raw –is– lonely');
 	});
 
 });

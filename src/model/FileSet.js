@@ -8,6 +8,7 @@ import {
 	Family,
 	Member
 } from '.';
+import helpers from '../helpers';
 
 /*
  *  data structure of FileSet
@@ -70,8 +71,7 @@ class FileSet {
 
 				enforce(p.name.length > 0, 'sanity: no empty filenames');
 				// skipping hidden
-				if (p.name[0] === '.')
-					return;
+				if (p.name[0] === '.') return;
 
 				// remove leading dot on ext, except extensionless:
 				if (p.ext.length > 0) {
@@ -160,7 +160,11 @@ class FileSet {
 				continue;
 			} else {
 				info(`TODO move ${key}, ${value} to recycle`);
-				console.dir(value);
+				console.dir(value._map);
+
+				//for(value.)
+				// await helpers.trashSync
+
 				continue;
 			}
 

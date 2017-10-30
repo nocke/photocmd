@@ -29,7 +29,7 @@ export const mockfile = async(basedir, files) => {
 
 	files.forEach(file => {
 		const filepath = path.join(basedir, file);
-		info('creating: ' + filepath);
+		// info('creating: ' + filepath);
 		fs.writeFileSync(filepath, 'mock content');
 	});
 
@@ -37,12 +37,13 @@ export const mockfile = async(basedir, files) => {
 
 export const assertFiles = async(basedir, fileObj) => {
 
-	// NEXT: 
-
 	Object.keys(fileObj).forEach((file) => {
 		const filepath = path.join(basedir, file);
-		log(`${filepath}   ${fileObj[file]}`);
-		assert.equal(fs.existsSync(filepath), fileObj[file]);
+		assert(
+			fs.existsSync(filepath) == fileObj[file],
+			`${filepath} expected to be ${fs.existsSync(filepath) ? 'missing' : 'present'}`
+		);
+		log(`found ${filepath}   ${fileObj[file]} ✓`);
 	});
 
 }
