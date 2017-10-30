@@ -51,6 +51,11 @@ function _log(level, msg) {
 	// • ...REST parameters (and doing that for each of those)
 }
 
+export function _error(msg, ...args) {
+	_log(4, msg);
+	throw new Error(msg, args);
+}
+
 export const LEVELS = Object.freeze({
 	INFO: 1,
 	LOG: 2,
@@ -84,18 +89,17 @@ export function warn(msg) {
 }
 
 export function error(msg, ...args) {
-	_log(4, msg);
-	throw new Error(msg, args);
+	_error(msg, ...args);
 }
 
 // ======================================
 
 export function fail(msg = 'failing', ...args) {
-	this.error(msg, args);
+	_error(msg, ...args);
 }
 
 export function enforce(expr, msg = 'enforce failed', ...args) {
 	if (expr !== true) {
-		this.error(msg, args);
+		_error(msg, ...args);
 	}
 }
