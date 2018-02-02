@@ -3,7 +3,7 @@ import array from 'core-js/fn/array';
 
 import assert from 'assert';
 
-import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from './log';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from './log';
 
 import {
 	FileSet,
@@ -20,7 +20,7 @@ function deleteAction(firstDir, moreDirs, cmd) {
 	let liveMode = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
 
-	if (verboseMode) logLevel(LEVELS.INFO);
+	if (verboseMode) setLevel(LEVELS.INFO);
 
 	let lonely = cmd.lonely || false;
 	let unstarred = cmd.unstarred || false;

@@ -6,16 +6,16 @@
  *
  */
 
-import chai, {assert} from 'chai';
+import chai, { assert } from 'chai';
 import path from 'path';
 import sinon from 'sinon';
 import fs from 'fs';
 
 import { mockfile, assertFiles, testconfig } from './_testtools';
-import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
 // test config
-logLevel(LEVELS.INFO);
+setLevel(LEVELS.INFO);
 const testDir = testconfig.testDir;
 
 // system under test:
@@ -26,7 +26,7 @@ import deleteAction from '../src/deleteAction';
 
 describe('ActionDeletion', () => {
 
-	beforeEach(async() => {
+	beforeEach(async () => {
 		await helpers.removeFolder(testDir);
 
 		// assured testDir recreation
@@ -46,7 +46,7 @@ describe('ActionDeletion', () => {
 	// 	console.log('beforeEach123');
 	// });
 
-	it('general trashSync test', async() => {
+	it('general trashSync test', async () => {
 		assert(fs.existsSync(testDir), 'directory not gone!');
 
 		// create a number of files, delete a subset. verify. done.
@@ -70,10 +70,9 @@ describe('ActionDeletion', () => {
 
 		// create files
 		await mockfile(
-			testDir,
-			[
+			testDir, [
 				'IMG_0634.JpG', // lonely jpg, but not a lonely raw
-				'beaches.JpG',  // single jpg
+				'beaches.JpG', // single jpg
 				'IMG_0636.nef', // lonely raw → DELETE
 				'PM5A2087.cr2', // Family, not lonely
 				'PM5A2087.dop',
@@ -83,32 +82,31 @@ describe('ActionDeletion', () => {
 				'PM5A3095.xmp', // /(verify, entire family gets wiped)
 				'PM5A3095.dop', //
 				'PM5A3096.cr3', // lonely raw → DELETE
-				'DSCN123.cR2',  // Family, not lonely
-				'DSCN123.jpeg'  // testing: jpeg with 'e'
+				'DSCN123.cR2', // Family, not lonely
+				'DSCN123.jpeg' // testing: jpeg with 'e'
 			]
 		)
 
 		// COULDDO: wicked test case (real?) 'PM5A2087.cr2.dop',
 
-		deleteAction(testDir,[],{ live: true, lonely: true});
+		deleteAction(testDir, [], { live: true, lonely: true });
 
 		// assert file existence
 		await assertFiles(
-			testDir,
-			{
-				'IMG_0634.JpG' : true,
-				'beaches.JpG' : true,
-				'IMG_0636.nef' : false, // false, must delete lonely raw → DELETE
-				'PM5A2087.cr2' : true,
-				'PM5A2087.dop' : true,
-				'PM5A2087_DXs2.jpg' : true,
-				'PM5A2087_Photoshop.jpg' : true,
-				'PM5A3095.CR2' : false, // lonely raw → DELETE
-				'PM5A3095.xmp' : false,
-				'PM5A3095.dop' : false,
-				'PM5A3096.cr3' : false, // false  lonely raw → DELETE
-				'DSCN123.cR2' : true,
-				'DSCN123.jpeg' : true
+			testDir, {
+				'IMG_0634.JpG': true,
+				'beaches.JpG': true,
+				'IMG_0636.nef': false, // false, must delete lonely raw → DELETE
+				'PM5A2087.cr2': true,
+				'PM5A2087.dop': true,
+				'PM5A2087_DXs2.jpg': true,
+				'PM5A2087_Photoshop.jpg': true,
+				'PM5A3095.CR2': false, // lonely raw → DELETE
+				'PM5A3095.xmp': false,
+				'PM5A3095.dop': false,
+				'PM5A3096.cr3': false, // false  lonely raw → DELETE
+				'DSCN123.cR2': true,
+				'DSCN123.jpeg': true
 			}
 		)
 

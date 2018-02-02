@@ -1,6 +1,6 @@
 'use strict';
 
-import chai, {assert} from 'chai';
+import chai, { assert } from 'chai';
 import path from 'path';
 import sinon from 'sinon';
 

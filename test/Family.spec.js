@@ -6,10 +6,11 @@ import sinon from 'sinon';
 import fs from 'fs';
 
 import { mockfile, assertFiles, testconfig } from './_testtools';
-import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
 // test config
-logLevel(LEVELS.INFO);
+setLevel(LEVELS.INFO);
+
 const testDir = testconfig.testDir;
 
 // system under test:
@@ -23,7 +24,7 @@ import FileSet from '../src/model/FileSet';
 
 describe('Family Initialize', () => {
 
-	beforeEach(async() => {
+	beforeEach(async () => {
 		await helpers.removeFolder(testDir);
 		fs.mkdirSync(testDir);
 
@@ -36,7 +37,7 @@ describe('Family Initialize', () => {
 		});
 	});
 
-	it('simple Family', async() => {
+	it('simple Family', async () => {
 
 		await mockfile(
 			testDir, [
@@ -69,7 +70,7 @@ describe('Family Initialize', () => {
 
 	});
 
-	it('single jpg', async() => {
+	it('single jpg', async () => {
 
 		await mockfile(
 			testDir, [
@@ -85,7 +86,7 @@ describe('Family Initialize', () => {
 		assert.isFalse(family._isLonely, 'family not lonely');
 	});
 
-	it('two lonely RAWs', async() => {
+	it('two lonely RAWs', async () => {
 
 		await mockfile(
 			testDir, [

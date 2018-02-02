@@ -8,7 +8,7 @@ import chai, { assert } from 'chai';
 import path from 'path';
 import fs from 'fs';
 import array from 'core-js/fn/array';
-import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
 // same basic test config
 export const testconfig = {

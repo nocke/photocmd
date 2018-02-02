@@ -24,12 +24,12 @@ let coloring = true; // COULDDO: getter/setter
 let logLevel = 2;
 
 const color = [
-	"\x1b[0m",  // 0 → reset
+	"\x1b[0m", // 0 → reset
 	"\x1b[1;34m", // 1 → info:  light blue(34) cyan(36) white(37)
 	"\x1b[1;32m", // 2 → log:   green
 	"\x1b[1;33m", // 3 → warn:  yellow
 	"\x1b[1;31m", // 4 → error: red
-	"\x1b[1;31m"  // 5 → fail:   also red
+	"\x1b[1;31m" // 5 → fail:   also red
 ]
 
 function _log(level, msg) {
@@ -64,11 +64,13 @@ export const LEVELS = Object.freeze({
 	FAIL: 5
 });
 
+export function howdy(){console.log('howdy')};
+
 /**
  * Setting (or just getting) the current logLevel
  * @param {number} level
  */
-export function logLevel(level = undefined) {
+export function setLevel(level) {
 	if (level !== undefined) {
 		enforce(typeof level === 'number');
 		logLevel = level;

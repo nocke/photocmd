@@ -1,6 +1,6 @@
 'use strict'
 
-import { logLevel, LEVELS, info, log, warn, error, enforce, fail } from '../log';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../log';
 import config from '../../config';
 
 import {
