@@ -29,21 +29,16 @@ const createWindow = () => {
 
 	// single-Instance snippet __________________________________
 	let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
-
-		console.log('AAAAAAAAAAB');
-		console.log('commmandLine '+commandLine);
-		console.log('workingDirectory '+workingDirectory);
-
-		// Someone tried to run a secon instance, we should focus our window.
+		// someone tried to run a second instance, restore+focus ours
 		if (win) {
 			if (win.isMinimized()) win.restore();
 			win.focus();
-			win.reload(); // evenlt dev TEMP
+			win.reload(); // eventl. dev TEMP
 		}
 	});
 
+	// 2nd window gets this message
 	if (shouldQuit) {
-		console.log('quitting... (double instance detected');
 		app.quit();
 		return;
 	}
