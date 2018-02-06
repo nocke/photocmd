@@ -38,6 +38,7 @@ const createWindow = () => {
 		if (win) {
 			if (win.isMinimized()) win.restore();
 			win.focus();
+			win.reload(); // evenlt dev TEMP
 		}
 	});
 
