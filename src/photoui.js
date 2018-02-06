@@ -14,16 +14,40 @@ let win
 
 const createWindow = () => {
 
+	console.log('starting ...');
+
 	win = new BrowserWindow({
 		title: 'egal 12345678',
 		width: 800,
 		height: 800,
 
-		// just coincidentally fits at WORK TODO: flexible detection
+		// HACK, TODO: flexible detection
 		x: 3800,
 		y: 200
 
 	})
+
+	// single-Instance snippet __________________________________
+	let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
+
+		console.log('AAAAAAAAAAB');
+		console.log('commmandLine '+commandLine);
+		console.log('workingDirectory '+workingDirectory);
+
+		// Someone tried to run a secon instance, we should focus our window.
+		if (win) {
+			if (win.isMinimized()) win.restore();
+			win.focus();
+		}
+	});
+
+	if (shouldQuit) {
+		console.log('quitting... (double instance detected');
+		app.quit();
+		return;
+	}
+	// _________________________________
+
 
 	// and load the index.html of the app.
 	win.loadURL(url.format({
@@ -37,9 +61,6 @@ const createWindow = () => {
 
 	// Emitted when the window is closed.
 	win.on('closed', () => {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
 		win = null
 	})
 }
