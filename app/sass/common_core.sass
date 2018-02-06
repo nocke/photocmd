@@ -1,0 +1,138 @@
+html, body
+  margin: 0
+  padding: 0
+  background: #181818
+
+html
+  font-size: 62.5% // 1rem <:=> 10px
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+body
+  position: relative
+  font-weight: normal
+  font-family: Ubuntu, Arial, Helvetica, sans-serif
+  padding-top: $headerHeight+$halfpad
+  &.tpad0 // nice bodyclass
+    padding-top: $headerHeight !important
+
+  padding-bottom: $footerHeight // reserved for footer
+  +below(s-m)
+    padding-bottom: $footerHeightSM // reserved for footer
+  +below(s)
+    padding-bottom: $footerHeightS // reserved for footer
+
+  box-sizing: border-box // so padding reserved for footer does not add up
+  background: #151515 url('./bkg.png') 0 0
+
+  color: white
+  min-height: 100vh
+  line-height: 1.6em
+
+  font-size: 20px // common base font size
+  +below(m)
+    font-size: 18px
+  +below(s-m)
+    font-size: 17px
+
+
+body.hide-header
+  padding-top: 0
+
+// common block level elements ____________________________
+header, footer, main, nav, section, div, blockquote, pre
+  position: relative
+  margin: 0
+  padding: 0
+
+p
+  margin: .4em 0 1.2em
+
+section
+  display: block
+  margin: 0 0 20px 0
+
+blockquote
+  color: #aaa
+  padding-left: 10px
+  border-left: 1px dotted #666
+
+pre
+  background: rgba(0, 0, 0, 0.9)
+  border: 1px solid rgba(255, 255, 255, 0.15)
+  padding: 10px
+  font-size: 16px
+  color: $hackerGreen
+  border-radius: 2px
+  text-wrap: normal
+  overflow: auto
+  overflow-y: hidden
+
+hr
+  margin: 2*$pad 0 // “padding”
+  border: 0
+  border-bottom: 2px solid rgba( $hackerGreen, .4)
+  color: $hackerGreen
+
+// inline source-code _____________________________
+code.highlighter-rouge
+  font-family: Courier New, Courier, monospace
+  color: $hackerGreen
+  background: rgba( white, .05 )
+  padding: 2px 4px
+  margin-left: 2px
+  margin-right: 2px
+  text-decoration: none
+  +radiusS
+
+// to switch the underline from blue to green
+a code.highlighter-rouge
+  display: inline-block
+  line-height: normal
+
+a > code.highlighter-rouge // only direct, not as part of a bigger link
+  text-decoration: underline
+
+
+// TODO Quote styles? (mit den „“ aus dem Symbolfont?)
+
+
+// useful bodyclasses __________________________________________
+
+// corner pin _____________________________________________
+
+body.cornerpin-center
+  main
+    +border-box
+    @extend .clearfix
+    margin: 0 !important // win over any .wrap
+    max-width: none
+    overflow: hidden // only y scrolling, if any (important also for anim)
+    overflow-y: auto
+
+body.cornerpin-center
+  display: table
+  padding-top: $headerHeight // just without the +$pad
+  // padding-bottom (incl. responsive steps) is fine, as above
+
+  width: 100%
+  main
+    display: table-cell
+    vertical-align: middle
+    // debug
+    // +border-box
+    // border: 10px solid rgba(red, .3)
+  footer
+    position: absolute
+    left: 0
+    width: 100%
+    bottom: 0
+
+// useful mainclasses __________________________________________
+
+// only justify above reasonably wide widths
+// (small widths may generate unreasonable spacing)
+.justify-wide
+  +above(m-l)
+    text-align: justify !important
+
