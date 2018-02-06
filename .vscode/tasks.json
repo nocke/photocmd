@@ -9,7 +9,7 @@
 			"problemMatcher": []
 		},
 		{
-			"taskName": "Run Sample",
+			"label": "Run Sample",
 			"type": "shell",
 			"command": "photo delete sample1 -lv",
 			"presentation": {
@@ -17,6 +17,11 @@
 				"reveal": "always",
 				"panel": "dedicated"
 			}
+		},
+		{
+			"label": "ui",
+			"type": "npm",
+			"script": "ui"
 		}
 	]
 }
