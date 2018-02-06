@@ -13,12 +13,15 @@ console.log('Photo UI 234\n' + path.join(__dirname, 'app', 'index.html'));
 let win
 
 const createWindow = () => {
-	// Create the browser window.
+
 	win = new BrowserWindow({
 		title: 'egal 12345678',
 		width: 800,
-		height: 600,
+		height: 800,
 
+		// just coincidentally fits at WORK TODO: flexible detection
+		x: 3800,
+		y: 200
 
 	})
 
