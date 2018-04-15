@@ -5,18 +5,23 @@
   "main": "build/index.js",
   "scripts": {
     "ui": "electron build/photoui.js",
-	
+
     "clean": "rm -rf build && mkdir build",
     "build": "babel src -d build -s",
-    "watch": "babel src -d build -s -w ",
-    "beautify": "scripts/beautify.sh",
+	"watch": "babel src -d build -s -w ",
+
     "test": "mocha ./test/**/*.spec.js",
-    "test-watch": "mocha -R list -w ./test/**/*.spec.js",
+	"test-watch": "mocha -R list -w ./test/**/*.spec.js",
+
     "test-single": "mocha $1",
-    "test-single-watch": "mocha -R list -w $1",
-    "paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
+	"test-single-watch": "mocha -R list -w $1",
+
+	"paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
+
     "test-and-build": "npm run build && npm run test",
-    "start": "watch 'npm run test-and-build' ./src/ ./test/ --interval=.2"
+	"start": "watch 'npm run test-and-build' ./src/ ./test/ --interval=.2",
+
+	"beautify": "scripts/beautify.sh"
   },
   "keywords": [
     "photo",
