@@ -30,53 +30,35 @@ import deleteAction from '../src/deleteAction';
 describe('ActionDeletion', () => {
 
 	beforeEach(async () => {
-		// await helpers.removeFolder(testDir);
+		log('beforeEach');
+		await helpers.removeFolder(testDir);
 
-		// // assured testDir recreation
-		// assert.isFalse(fs.existsSync(testDir));
-		// if (!fs.existsSync(testDir)) {
-		// 	fs.mkdirSync(testDir);
-		// }
-		// assert.isTrue(fs.existsSync(testDir));
+		// ensured fully fresh testDir creation
+		assert.isFalse(fs.existsSync(testDir));
+		fs.mkdirSync(testDir);
+		assert.isTrue(fs.existsSync(testDir));
 	});
 
 
 	it('general trashSync test', async () => {
-		// assert(fs.existsSync(testDir), 'directory not gone!');
-
-
-		// log('ja123');
 		// // create a number of files, delete a subset. verify. done.
-		// const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`);
+		const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`);
+		mockfile(testDir, mockFiles);
 
-		// mockfile(testDir, mockFiles);
+		// just to add path in front
+		const trashFiles = [];
+		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) );
 
-		// const trashFiles = [];
-		// mockFiles.forEach(file => {
-		// 	trashFiles.push( path.join(testDir, file) );
-		// });
+		await helpers.trashSync(trashFiles);
+		await helpers.trashSync('banana');
 
-		// await helpers.trashSync(trashFiles);
+		mockFiles.forEach(file =>
+			assert(!fs.existsSync(file))
+		);
 
-
-		// trash('/depot/own/photocmd/build/fileTests/mockeC')
-		// .then( ()=> log('Yo, done!'))
-		// .catch( (error) => error(error));
-
-		await helpers.trashSync([
-			'build/fileTests/mockeH',
-			'build/fileTests/mockeI'
-		]);
-		log('outer DONE!');
-
-		// assert(!fs.existsSync(mockFiles[0]));
-		// assert(fs.existsSync(mockFiles[1]));
-		// assert(!fs.existsSync(mockFiles[2]));
-		// assert(fs.existsSync(mockFiles[3]));
-
-		// await helpers.removeFolder(testDir);
-		// assert(!fs.existsSync(testDir), 'directory not gone!');
-	}); // trashtest Sync
+		await helpers.removeFolder(testDir);
+		assert(!fs.existsSync(testDir), 'directory not gone!');
+	});
 
 
 	// it('delete lonely', async () => {

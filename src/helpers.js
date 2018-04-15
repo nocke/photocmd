@@ -140,11 +140,8 @@ export async function trashSync(filesArray) {
 			// under linux returns an object with
 			//	 path: the path to the trashed file location (“inside the can”)
 			//	 info: pointing to original, undeleted file position
-			log('inner DONE!');
 			resolve(true);
-		}).then(() => {
-			console.log(filesArray ,'trashed!'); // just verifies sync order
-		});
+		})
 	});
 }
 
