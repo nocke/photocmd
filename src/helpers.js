@@ -9,7 +9,7 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 import trash from 'trash';
 
-import { enforce, fail } from './log';
+import { enforce, fail, log } from './log';
 
 /**
  * A move() function that renames, if possible, or falls back to copying
@@ -62,8 +62,7 @@ export async function removeFolder(dir) {
 		);
 	}
 
-	// precaution:
-	// stay clear of very basic folders (you can thank me later)
+	// precaution: stay clear of common folders (you can thank me later)
 	enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
 	const absPath = path.resolve(dir);
 	const parentPath = path.resolve(path.join(dir, '..'));
@@ -133,21 +132,18 @@ export async function removeFolder(dir) {
 
 } // removeFolder
 
-export async function trashSync(...args) {
+export async function trashSync(filesArray) {
 	return new Promise((resolve, reject) => {
-		trash([...args], {
+		trash(filesArray, {
 			glob: false
 		}).then((err) => {
-			// linux: function returns an object with
-			//	 info: a .trashinfo pointing to original, undeleted file position,
-			//	 path: the path to the trashed file (“inside the can”) }
-			if (typeof err !== 'object')
-				reject(err);
-			else
-				resolve(true);
-
+			// under linux returns an object with
+			//	 path: the path to the trashed file location (“inside the can”)
+			//	 info: pointing to original, undeleted file position
+			log('inner DONE!');
+			resolve(true);
 		}).then(() => {
-			// console.log('trashed!'); // just verifies sync order
+			console.log(filesArray ,'trashed!'); // just verifies sync order
 		});
 	});
 }

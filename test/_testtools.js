@@ -29,7 +29,7 @@ export const mockfile = async(basedir, files) => {
 
 	files.forEach(file => {
 		const filepath = path.join(basedir, file);
-		// info('creating: ' + filepath);
+		info('creating: ' + filepath);
 		fs.writeFileSync(filepath, 'mock content');
 	});
 
