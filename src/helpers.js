@@ -9,7 +9,7 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 import trash from 'trash';
 
-import { enforce, fail, log } from './log';
+import { enforce, fail, log, error } from './log';
 
 /**
  * A move() function that renames, if possible, or falls back to copying
@@ -133,14 +133,27 @@ export async function removeFolder(dir) {
 } // removeFolder
 
 export async function trashSync(filesArray) {
+	enforce(Array.isArray(filesArray), 'not an array');
+
 	return new Promise((resolve, reject) => {
+
+		log('preparing to delete');
+		log(filesArray);
+
+
 		trash(filesArray, {
 			glob: false
-		}).then((err) => {
+		}).then(() => {
 			// under linux returns an object with
 			//	 path: the path to the trashed file location (“inside the can”)
 			//	 info: pointing to original, undeleted file position
+			log('goood fork, DONE deleting');
+			log(filesArray);
+
 			resolve(true);
+		}).catch((err) =>  {
+			error(err);
+			return err;
 		})
 	});
 }

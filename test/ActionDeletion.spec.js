@@ -50,7 +50,9 @@ describe('ActionDeletion', () => {
 		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) );
 
 		await helpers.trashSync(trashFiles);
-		await helpers.trashSync('banana');
+
+		// TODO: warn when trasshing non-existing
+		// await helpers.trashSync('banana');
 
 		mockFiles.forEach(file =>
 			assert(!fs.existsSync(file))
@@ -61,29 +63,29 @@ describe('ActionDeletion', () => {
 	});
 
 
-	// it('delete lonely', async () => {
+	it /* TEMPTEMP */('delete lonely', async () => {
 
-	// 	// create files
-	// 	await mockfile(
-	// 		testDir, [
-	// 			'IMG_0634.JpG', // lonely jpg, but not a lonely raw
-	// 			'beaches.JpG', // single jpg
-	// 			'IMG_0636.nef', // lonely raw → DELETE
-	// 			'PM5A2087.cr2', // Family, not lonely
-	// 			'PM5A2087.dop',
-	// 			'PM5A2087_DXs2.jpg',
-	// 			'PM5A2087_Photoshop.jpg',
-	// 			'PM5A3095.CR2', // lonely raw → DELETE
-	// 			'PM5A3095.xmp', // /(verify, entire family gets wiped)
-	// 			'PM5A3095.dop', //
-	// 			'PM5A3096.cr3', // lonely raw → DELETE
-	// 			'DSCN123.cR2', // Family, not lonely
-	// 			'DSCN123.jpeg' // testing: jpeg with 'e'
-	// 		]
-	// 	)
+		// create files
+		await mockfile(
+			testDir, [
+				// 'IMG_0634.JpG', // lonely jpg, but not a lonely raw
+				// 'beaches.JpG', // single jpg
+				// 'IMG_0636.nef', // lonely raw → DELETE
+				// 'PM5A2087.cr2', // Family, not lonely
+				// 'PM5A2087.dop',
+				// 'PM5A2087_DXs2.jpg',
+				// 'PM5A2087_Photoshop.jpg',
+				// 'PM5A3095.CR2', // lonely raw → DELETE
+				// 'PM5A3095.xmp', // /(verify, entire family gets wiped)
+				// 'PM5A3095.dop', //
+				'PM5A3096.cr3', // lonely raw → DELETE
+				'DSCN123.cR2', // Family, not lonely
+				'DSCN123.jpeg' // testing: jpeg with 'e'
+			]
+		);
 
 	// 	// COULDDO: wicked test case (real?) 'PM5A2087.cr2.dop',
-	// 	deleteAction(testDir, [], { live: true, lonely: true });
+	deleteAction(testDir, [], { live: true, lonely: true });
 
 	// 	// assert file existence
 	// 	await assertFiles(
@@ -104,6 +106,6 @@ describe('ActionDeletion', () => {
 	// 		}
 	// 	)
 
-	// }); // delete lonely
+	}); // delete lonely
 
 });

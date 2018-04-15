@@ -137,51 +137,32 @@ class FileSet {
 
 	/**
 	 *
-	 * @param {boolean} liveMode simulate, unless set to true
+	 * @param {boolean} live simulate, unless set to true
 	 * @param {force} force if true: actually delete. move-to-recycle otherwise
 	 */
-	delete(liveMode = false, force = false) {
+	delete(live = false, force = false) {
 		log("delete..........");
-		this.getLonely();
 
-		// all but true shall be false
-		liveMode = liveMode === true;
+		live = live === true; // (all but true shall be false)
 		force = force === true;
 
-		for (var [key, value] of this._families) {
-			if (!liveMode) {
-				info('mock delete ' + value.dump());
-				continue;
-			}
-
-			// delete the entire family
-			if (force === true) {
-				info('TODO hard delete');
-				continue;
-			} else {
-				info(`TODO move ${key}, ${value} to recycle`);
-				console.dir(value._map);
-
-				//for(value.)
-				// await helpers.trashSync
-
-				continue;
-			}
-
+		for (var [core, family] of this._families) {
+			family.empty(live, force);
 		}
 	}
 
-	dump() {
+	dump(ret = false, detailed = false) {
 		info('== fileSet dump ===========================');
-
-		for (let [k, f] of this._families) {
-			info(`${k} ->  ${f._core} ||  ◌: ${f._isLonely}  || ★: ${f._isStarred} ||  ${f._map.size}`);
+		for (let [core, family] of this._families) {
+			enforce(core === family._core); // sanity
+			info(`${core} ->  lone◌: ${family._isLonely}  || star★: ${family._isStarred} || num: ${family._map.size}`);
 		}
 
-		info('==========================================');
+		info(' ');
 	}
 
 
 } // class
 
 export default FileSet;
+

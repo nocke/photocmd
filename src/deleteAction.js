@@ -2,7 +2,6 @@
 import array from 'core-js/fn/array';
 
 import assert from 'assert';
-
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from './log';
 
 import {
@@ -13,8 +12,7 @@ import {
 
 
 // -----------------------------
-
-function deleteAction(firstDir, moreDirs, cmd) {
+function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
 	log('Delete Action ===============');
 
 	let liveMode = cmd.live || false;
@@ -26,15 +24,16 @@ function deleteAction(firstDir, moreDirs, cmd) {
 	let unstarred = cmd.unstarred || false;
 
 	// merge all dirs together
-	// COULDDO: support wildcards, too.
 	let dirs = [firstDir, ...moreDirs];
 	enforce(!!dirs, 'no directory specified');
 
 	let fileSet = new FileSet(dirs);
+	
+	// TODO: force lonely only   or   starred ony   or  …else…
 
 	log('Get Lonely ===============');
 	let loneFiles = fileSet.getLonely();
-	loneFiles.dump();
+	//loneFiles.dump();
 	loneFiles.delete(liveMode);
 
 	// fileSet.dump( fileSet.getLonely() );
