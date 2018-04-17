@@ -43,12 +43,10 @@ class FileSet {
 		this._families = new Map();
 
 		if (typeof dirs === 'undefined') {
-			info('constructing empty fileSet');
 			return;
 		}
 
 		enforce(Array.isArray(dirs), 'not an array');
-
 
 		// parsing each dir:
 		dirs.forEach(function(dir) {
@@ -140,8 +138,6 @@ class FileSet {
 	 * @param {force} force if true: actually delete. move-to-recycle otherwise
 	 */
 	async delete(live = false, force = false) {
-		log("delete..........");
-
 		live = live === true; // (all but true shall be false)
 		force = force === true;
 
@@ -156,7 +152,6 @@ class FileSet {
 			enforce(core === family._core); // sanity
 			info(`${core} ->  lone◌: ${family._isLonely}  || star★: ${family._isStarred} || num: ${family._map.size}`);
 		}
-
 		info(' ');
 	}
 

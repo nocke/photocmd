@@ -129,31 +129,24 @@ export async function removeFolder(dir) {
 	  });
 	  */
 
-
 } // removeFolder
 
 export async function trashSync(filesArray) {
 	enforce(Array.isArray(filesArray), 'not an array');
 
 	return new Promise((resolve, reject) => {
-
-		log('preparing to delete');
-		log(filesArray);
-
-
 		trash(filesArray, {
 			glob: false
 		})
 		.then(() => {
 			// under linux returns an object with
-			//	 path: the path to the trashed file location (“inside the can”)
+			//	 path: path to trashed file location (“inside the can”)
 			//	 info: pointing to original, undeleted file position
-			log('goood fork, DONE deleting');
 			log(filesArray);
-			
+
 			resolve(true);
 		}).catch((err) =>  {
-			log('baad fork, ERROR deleting');
+			// TODO leave to higher level (or use reject?)
 			error(err);
 			return err;
 		})

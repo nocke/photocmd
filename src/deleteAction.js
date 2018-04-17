@@ -31,15 +31,10 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	// TODO: force lonely only   or   starred ony   or  …else…
 
-	log('Get Lonely ===============');
 	let loneFiles = fileSet.getLonely();
 	//loneFiles.dump();
 	await loneFiles.delete(liveMode);
 
-	// fileSet.dump( fileSet.getLonely() );
-	// fileSet.dump( fileSet.getUnstarred() );
-
-	log('Delete Action END************************');
 }
 
 export default deleteAction;

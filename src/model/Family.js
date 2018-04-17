@@ -26,8 +26,6 @@ class Family {
 	 * @param {Family} family
 	 */
 	async empty(live, force) {
-		log('\n\nFamily empty START '+ this._core);
-
 		enforce(typeof live === 'boolean', 'invalid live argument');
 		enforce(typeof force === 'boolean', 'invalid force argument');
 
@@ -53,8 +51,6 @@ class Family {
 		// family flags
 		this._isLonely = true; // assume for now
 		this._isStarred = false;
-
-		log('Family empty DONE');
 }
 
 
