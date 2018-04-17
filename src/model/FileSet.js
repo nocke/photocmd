@@ -136,18 +136,17 @@ class FileSet {
 	}
 
 	/**
-	 *
 	 * @param {boolean} live simulate, unless set to true
 	 * @param {force} force if true: actually delete. move-to-recycle otherwise
 	 */
-	delete(live = false, force = false) {
+	async delete(live = false, force = false) {
 		log("delete..........");
 
 		live = live === true; // (all but true shall be false)
 		force = force === true;
 
 		for (var [core, family] of this._families) {
-			family.empty(live, force);
+			await family.empty(live, force);
 		}
 	}
 

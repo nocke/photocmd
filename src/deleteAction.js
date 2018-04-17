@@ -12,7 +12,7 @@ import {
 
 
 // -----------------------------
-function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
+async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
 	log('Delete Action ************************');
 
 	let liveMode = cmd.live || false;
@@ -34,7 +34,7 @@ function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLon
 	log('Get Lonely ===============');
 	let loneFiles = fileSet.getLonely();
 	//loneFiles.dump();
-	loneFiles.delete(liveMode);
+	await loneFiles.delete(liveMode);
 
 	// fileSet.dump( fileSet.getLonely() );
 	// fileSet.dump( fileSet.getUnstarred() );

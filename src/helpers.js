@@ -150,9 +150,10 @@ export async function trashSync(filesArray) {
 			//	 info: pointing to original, undeleted file position
 			log('goood fork, DONE deleting');
 			log(filesArray);
-
+			
 			resolve(true);
 		}).catch((err) =>  {
+			log('baad fork, ERROR deleting');
 			error(err);
 			return err;
 		})

@@ -63,7 +63,7 @@ describe('ActionDeletion', () => {
 	});
 
 
-	it /* TEMPTEMP */('delete lonely', async () => {
+	it.only/* TEMPTEMP */('delete lonely', async () => {
 
 		// create files
 		await mockfile(
@@ -77,7 +77,10 @@ describe('ActionDeletion', () => {
 				// 'PM5A2087_Photoshop.jpg',
 				// 'PM5A3095.CR2', // lonely raw → DELETE
 				// 'PM5A3095.xmp', // /(verify, entire family gets wiped)
-				// 'PM5A3095.dop', //
+				// 'PM5A3095.dop',    // lone helper file
+				// 'PM5A3095.cr.dop', // lone helper file double-ext
+				'mockA.jpg', // TEMP
+				'PM5A1234.cr2', // TEMP
 				'PM5A3096.cr3', // lonely raw → DELETE
 				'banana.cr3',   // lonely raw → DELETE
 				'DSCN123.cR2',  // Family, not lonely
@@ -85,8 +88,8 @@ describe('ActionDeletion', () => {
 			]
 		);
 
-	// 	// COULDDO: wicked test case (real?) 'PM5A2087.cr2.dop',
-		deleteAction(testDir, [], { live: true, lonely: true });
+
+	await deleteAction(testDir, [], { live: true, lonely: true });
 
 	// 	// assert file existence
 	// 	await assertFiles(
