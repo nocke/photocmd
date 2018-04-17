@@ -79,13 +79,14 @@ describe('ActionDeletion', () => {
 				// 'PM5A3095.xmp', // /(verify, entire family gets wiped)
 				// 'PM5A3095.dop', //
 				'PM5A3096.cr3', // lonely raw → DELETE
-				'DSCN123.cR2', // Family, not lonely
-				'DSCN123.jpeg' // testing: jpeg with 'e'
+				'banana.cr3',   // lonely raw → DELETE
+				'DSCN123.cR2',  // Family, not lonely
+				'DSCN123.jpeg'  // testing: jpeg with 'e'
 			]
 		);
 
 	// 	// COULDDO: wicked test case (real?) 'PM5A2087.cr2.dop',
-	deleteAction(testDir, [], { live: true, lonely: true });
+		deleteAction(testDir, [], { live: true, lonely: true });
 
 	// 	// assert file existence
 	// 	await assertFiles(
@@ -105,6 +106,8 @@ describe('ActionDeletion', () => {
 	// 			'DSCN123.jpeg': true
 	// 		}
 	// 	)
+			log('end of test ___________________________');
+
 
 	}); // delete lonely
 

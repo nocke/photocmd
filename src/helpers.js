@@ -143,7 +143,8 @@ export async function trashSync(filesArray) {
 
 		trash(filesArray, {
 			glob: false
-		}).then(() => {
+		})
+		.then(() => {
 			// under linux returns an object with
 			//	 path: the path to the trashed file location (“inside the can”)
 			//	 info: pointing to original, undeleted file position

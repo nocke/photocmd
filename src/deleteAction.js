@@ -13,7 +13,7 @@ import {
 
 // -----------------------------
 function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
-	log('Delete Action ===============');
+	log('Delete Action ************************');
 
 	let liveMode = cmd.live || false;
 	let verboseMode = cmd.verbose || false;
@@ -28,7 +28,7 @@ function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLon
 	enforce(!!dirs, 'no directory specified');
 
 	let fileSet = new FileSet(dirs);
-	
+
 	// TODO: force lonely only   or   starred ony   or  …else…
 
 	log('Get Lonely ===============');
@@ -39,7 +39,7 @@ function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLon
 	// fileSet.dump( fileSet.getLonely() );
 	// fileSet.dump( fileSet.getUnstarred() );
 
-	log('deleteAction End.');
+	log('Delete Action END************************');
 }
 
 export default deleteAction;
