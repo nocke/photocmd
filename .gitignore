@@ -16,6 +16,8 @@ log/
 
 # sample image folder (too large to commit)
 sample?/
+# sample zips (copy placed in /depot/own/LARGEFILES)
+sample?.zip
 
 # all hidden files/folders (except .gitignore, .htaccess,... )
 # there might be .htaccess on multiple levels...

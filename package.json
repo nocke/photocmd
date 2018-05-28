@@ -5,23 +5,17 @@
   "main": "build/index.js",
   "scripts": {
     "ui": "electron build/photoui.js",
-
     "clean": "rm -rf build && mkdir build",
     "build": "babel src -d build -s",
-	"watch": "babel src -d build -s -w ",
-
+    "watch": "babel src -d build -s -w ",
     "test": "mocha ./test/**/*.spec.js",
-	"test-watch": "mocha -R list -w ./test/**/*.spec.js",
-
+    "test-watch": "mocha -R list -w ./test/**/*.spec.js",
     "test-single": "mocha $1",
-	"test-single-watch": "mocha -R list -w $1",
-
-	"paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
-
+    "test-single-watch": "mocha -R list -w $1",
+    "paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
     "test-and-build": "npm run build && npm run test",
-	"start": "watch 'npm run test-and-build' ./src/ ./test/ --interval=.2",
-
-	"beautify": "scripts/beautify.sh"
+    "start": "watch 'npm run test-and-build' ./src/ ./test/ --interval=.2",
+    "beautify": "scripts/beautify.sh"
   },
   "keywords": [
     "photo",
@@ -58,6 +52,7 @@
     "babel-preset-es2015": "^6.24.1",
     "chai": "^3.5.0",
     "electron": "^1.7.12",
+    "extract-zip": "^1.6.7",
     "gulp": "^4.0.0",
     "js-beautify": "^1",
     "mocha": "^3.3.0",

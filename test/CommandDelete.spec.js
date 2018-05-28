@@ -8,14 +8,36 @@
  *
  */
 
-import chai, { assert } from 'chai';
-import path from 'path';
-import sinon from 'sinon';
-import fs from 'fs';
+import chai, { assert } from 'chai'
+import path from 'path'
+import sinon from 'sinon'
+import fs from 'fs'
 
-import { mockfile, assertFiles, testconfig } from './_testtools';
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import extract from 'extract-zip'
+
+import { mockfile, assertFiles, testconfig } from './_testtools'
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
 // test config
-setLevel(LEVELS.INFO);
-const testDir = testconfig.testCommandDir;
+setLevel(LEVELS.INFO)
+const testDir = testconfig.testCommandDir
+
+// system under test:
+import helpers from '../src/helpers'
+
+
+beforeEach(async () => {
+	// ensured fully fresh testDir creation
+	await helpers.removeFolder(testDir)
+	assert.isFalse(fs.existsSync(testDir))
+	fs.mkdirSync(testDir)
+	assert.isTrue(fs.existsSync(testDir))
+})
+
+it('preview and real Delete', async () => {
+
+	console.log('test 1')
+
+	// npm run test-single -- test/CommandDelete.spec.js
+
+})
