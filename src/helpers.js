@@ -11,6 +11,10 @@ import trash from 'trash';
 
 import { enforce, fail, log, error } from './log';
 
+// global app root ( stackoverflow.com/a/18721515/444255 )
+global.app = {} // I rather open my own subspace
+global.app.root = path.resolve(__dirname,'..')
+
 /**
  * A move() function that renames, if possible, or falls back to copying
  * https://stackoverflow.com/a/29105404/444255

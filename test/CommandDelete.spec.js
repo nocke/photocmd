@@ -26,6 +26,13 @@ const testDir = testconfig.testCommandDir
 import helpers from '../src/helpers'
 
 
+const extractSample = () => {
+
+	// extract('sample'
+	console.log( path.resolve(app.root,'sample1.zip'))
+
+}
+
 beforeEach(async () => {
 	// ensured fully fresh testDir creation
 	await helpers.removeFolder(testDir)
@@ -38,6 +45,9 @@ it('preview and real Delete', async () => {
 
 	console.log('test 1')
 
+	extractSample()
 	// npm run test-single -- test/CommandDelete.spec.js
+
+	
 
 })
