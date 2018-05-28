@@ -12,7 +12,8 @@ import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/
 
 // same basic test config
 export const testconfig = {
-	testDir: './build/fileTests',
+	testDir: './build/actionTests',
+	testCommandDir: './build/commandTests',
 	test: '1'
 };
 

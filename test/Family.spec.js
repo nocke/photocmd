@@ -8,9 +8,8 @@ import fs from 'fs';
 import { mockfile, assertFiles, testconfig } from './_testtools';
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
-// test config
+// test config _______________________
 setLevel(LEVELS.INFO);
-
 const testDir = testconfig.testDir;
 
 // system under test:

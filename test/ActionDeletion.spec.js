@@ -49,7 +49,7 @@ describe('ActionDeletion', () => {
 
 		await helpers.trashSync(trashFiles);
 
-		// TODO: warn when trasshing non-existing
+		// TODO: warn when trashing non-existing
 		// await helpers.trashSync('banana');
 
 		mockFiles.forEach(file =>

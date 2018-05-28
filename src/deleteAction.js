@@ -11,7 +11,7 @@ import {
 } from './model';
 
 
-// -----------------------------
+// ↓ extremely important ________________________
 async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
 	log('Delete Action ************************');
 
