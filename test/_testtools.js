@@ -10,10 +10,14 @@ import fs from 'fs';
 import array from 'core-js/fn/array';
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
+// set here, unless already set elsewhere
+global.app = global.app || {} // I rather open my own subspace
+global.app.root = global.app.root || path.resolve(__dirname, '..')
+
 // same basic test config
 export const testconfig = {
-	testDir: './build/actionTests',
-	testCommandDir: './build/commandTests',
+	testDir: path.resolve(global.app.root, 'build/actionTests'),
+	testCommandDir: path.resolve(global.app.root, 'build/commandTests'),
 	test: '1'
 };
 
@@ -22,7 +26,7 @@ export const testconfig = {
 /**
  * creates a number of mockfiles (just tiny text content)
  */
-export const mockfile = async(basedir, files) => {
+export const mockfile = async (basedir, files) => {
 
 	// TODO: assert wäre hier besser!
 	enforce(typeof basedir === 'string', 'baseDir must be string');
@@ -35,7 +39,7 @@ export const mockfile = async(basedir, files) => {
 
 }
 
-export const assertFiles = async(basedir, fileObj) => {
+export const assertFiles = async (basedir, fileObj) => {
 	let numErrors = 0;
 
 	Object.keys(fileObj).forEach((file) => {
@@ -46,7 +50,7 @@ export const assertFiles = async(basedir, fileObj) => {
 		}
 	});
 
-	assert(numErrors === 0,`found ${numErrors} missing/surplus files`);
+	assert(numErrors === 0, `found ${numErrors} missing/surplus files`);
 
 }
 
