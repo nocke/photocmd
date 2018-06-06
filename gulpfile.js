@@ -26,6 +26,7 @@ const del = require('del')
 
 //logging - stackoverflow.com/q/27975129
 const gutil = require('gulp-util')
+const through = require('through2');
 
 // shorthands
 const green = gutil.colors.green
@@ -33,7 +34,7 @@ const red = gutil.colors.red
 
 const src = {
 	cssTargetDir: 'app',
-	sassOutputName: './styles123.css',
+	sassOutputName: 'styles123.css',
 
 	html: 'public/*.html'
 }
@@ -67,6 +68,14 @@ function compile(sources, production, outputFolder, outputFile) {
 	 */
 
 	const sassCmd = sass({ style: 'compact', sourcemap: true }).on('error', sass.logError) // ¹
+
+	return gulp.src(sources)
+			.pipe(sass())
+			.pipe(concat('banane123.css'))
+			.pipe(gulp.dest('app'))
+
+	console.log('UNREACHABLE ------------------------------')
+
 
 	return gulp.src(sources)
 		.pipe(sourcemaps.init({
@@ -123,20 +132,23 @@ function compile(sources, production, outputFolder, outputFile) {
 // Compile sass into CSS ==================================
 gulp.task('sass', function() {
 
-	console.dir("src.sassOutputName")
-	console.dir(src.sassOutputName)
+	gulp.src('./app/sass/main.sass')
+	.pipe(sass().on('error', sass.logError))
+	.pipe(concat('styles.css'))
+	.pipe(gulp.dest('./app'))
 
-	compile(
-        [
-			'app/sass/_main.sass'
-            // 'more/stuff/**/*.sass',
-            // '!but/not/thisone/*.sass'
-        ],
-		false,
-		src.cssTargetDir,
-		src.sassOutputName
-	)
-	return
+
+	// compile(
+    //     [
+	// 		'app/sass/_main.sass'
+    //         // 'more/stuff/**/*.sass',
+    //         // '!but/not/thisone/*.sass'
+    //     ],
+	// 	false,
+	// 	src.cssTargetDir,
+	// 	src.sassOutputName
+	// )
+	// return
 
 }) // task: sass
 
