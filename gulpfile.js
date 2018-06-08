@@ -32,15 +32,8 @@ const through = require('through2');
 const green = gutil.colors.green
 const red = gutil.colors.red
 
-const src = {
-	cssTargetDir: 'app',
-	sassOutputName: 'styles123.css',
-
-	html: 'public/*.html'
-}
 
 // overriding gulp.src for (slightly) better error messages → www.timroes.de/2015/01/06/proper-error-handling-in-gulp-js/
-
 var gulp_src = gulp.src
 
 gulp.src = function() {
@@ -55,108 +48,68 @@ gulp.src = function() {
 			this.emit('end') // emit the end event, to properly end the task
 		}))
 }
-// gulp.src override ----------------------------------------------------
-
-// Compilation common code (sass and stylus) ==================================
-function compile(sources, production, outputFolder, outputFile) {
-
-	/**
-	 * @param {array} sources
-	 * @param {boolean} production
-	 * @param {string} outputFolder
-	 * @param {string} outputFile
-	 */
-
-	const sassCmd = sass({ style: 'compact', sourcemap: true }).on('error', sass.logError) // ¹
-
-	return gulp.src(sources)
-			.pipe(sass())
-			.pipe(concat('banane123.css'))
-			.pipe(gulp.dest('app'))
-
-	console.log('UNREACHABLE ------------------------------')
+// gulp.src override ----------------------------------------------
 
 
-	return gulp.src(sources)
-		.pipe(sourcemaps.init({
-			largeFile: true // TOTEST effect
-		}))
-		.pipe(plumber()) // prevent premature errors
-		// ¹ sass built-in plumber
-		// - github.com/dlmanning/gulp-sass/issues/90#issuecomment-89066953
-		// -> might make plumber superficious
-		.pipe(sassCmd)
-
-		// plugins __________________________________________________________________
-		.pipe(postcss([autoprefixer({ // new autoprefixer (gulp-autoprefix broke sourcemaps)
-			// see autoprefixer browser params: https://prepros.io/help/autoprefixer
-			// see autofixer other params: https://github.com/postcss/autoprefixer
-			browsers: ['iOS >= 5', 'ie 7', 'safari 7', 'Firefox >= 46'],
-			cascade: true, // nicer browser-prefix indentation
-			remove: true
-		})]))
-
-		.pipe(
-			(production) ?
-			cleanCSS({ // REF:   stackoverflow.com/a/39688471/444255
-					debug: true, // REF github.com/jakubpawlowicz/clean-css#using-api
-					removeDuplicateMediaQueries: true,
-					mergeMediaQueries: true,
-					advanced: true
-				},
-				(details) => {
-					console.log(green(
-						'    ' + details.name + ': ' + details.stats.minifiedSize +
-						' (original: ' + details.stats.originalSize + ')'))
-				}) :
-			gutil.noop() // https://github.com/gulpjs/gulp-util#noop
-
-		)
-
-		// output _____________________________________________________________________
-		.pipe(concat(outputFile)) // covers rename
-		.pipe(sourcemaps.write('../maps', {
-			includeContent: false,
-			sourceRoot: '../'
-		}))
-
-		.pipe(gulp.dest(outputFolder))
-		.pipe(livereload()) // OLD: .pipe(reload({stream: true}))
-		.on('end',
-			() => gutil.log('sass done ' +
-				green(outputFolder + '/' + outputFile))
-		)
-
-} // compile()
-
-// Compile sass into CSS ==================================
-gulp.task('sass', function() {
-
-	gulp.src('./app/sass/main.sass')
-	.pipe(sass().on('error', sass.logError))
-	.pipe(concat('styles.css'))
-	.pipe(gulp.dest('./app'))
+const sassMaster = 'app/sass/master.sass'
+const outputFolder = 'app'
+const outputFile = 'styles.css'
+const sassDir = 'app/sass/**/*.sass' // only needed for watch
 
 
-	// compile(
-    //     [
-	// 		'app/sass/_main.sass'
-    //         // 'more/stuff/**/*.sass',
-    //         // '!but/not/thisone/*.sass'
-    //     ],
-	// 	false,
-	// 	src.cssTargetDir,
-	// 	src.sassOutputName
-	// )
-	// return
-
-}) // task: sass
+	// Compile sass into CSS ==================================
+	gulp.task('sass', function() {
 
 
-gulp.task('watch-sass', ['sass'], function() { // (ensure one initial compilation)
+		const sassCmd = sass({ style: 'compact', sourcemap: true }).on('error', sass.logError) // ¹
+
+
+		return gulp.src(sassMaster)
+
+			.pipe(sourcemaps.init({
+				largeFile: true // TOTEST effect
+			}))
+			.pipe(plumber()) // prevent premature errors
+			// ¹ sass built-in plumber
+			// - github.com/dlmanning/gulp-sass/issues/90#issuecomment-89066953
+			// -> might make plumber superficious
+			.pipe(sassCmd)
+
+			// plugins __________________________________
+			.pipe(postcss([autoprefixer({ // new autoprefixer (gulp-autoprefix broke sourcemaps)
+				// see autoprefixer browscodeer params: https://prepros.io/help/autoprefixer
+				// see autofixer other params: https://github.com/postcss/autoprefixer
+				browsers: ['iOS >= 5', 'ie 7', 'safari 7', 'Firefox >= 46'],
+				cascade: true, // nicer browser-prefix indentation
+				remove: true
+			})]))
+
+			// COULDO   Prod-Piping (minify etc) reinhängen
+			// also doch wieder compile() Funktion…
+
+
+			// output _____________________________________________
+			.pipe(concat(outputFile)) // covers rename
+			.pipe(sourcemaps.write('../maps', {
+				includeContent: false,
+				sourceRoot: '../'
+			}))
+
+			.pipe(gulp.dest(outputFolder))
+			.pipe(livereload()) // OLD: .pipe(reload({stream: true}))
+			.on('end',
+				() => gutil.log('sass done ' +
+					green(outputFolder + '/' + outputFile))
+			)
+
+
+	}) // task: sass
+
+
+gulp.task('watch', ['sass'], function() { // (ensure one initial compilation)
 
 	livereload.listen()
-	gulp.watch(src.stylusDir, ['sass'])
+	gulp.watch(sassDir, ['sass'])
 
 })
 
