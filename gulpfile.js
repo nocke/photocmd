@@ -90,9 +90,9 @@ const sassDir = 'app/sass/**/*.sass' // only needed for watch
 
 			// output _____________________________________________
 			.pipe(concat(outputFile)) // covers rename
-			.pipe(sourcemaps.write('../maps', {
+			.pipe(sourcemaps.write('./maps', {
 				includeContent: false,
-				sourceRoot: '../'
+				sourceRoot: './'
 			}))
 
 			.pipe(gulp.dest(outputFolder))
