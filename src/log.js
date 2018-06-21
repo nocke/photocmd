@@ -39,11 +39,23 @@ function _log(level, msg) {
 		return; // skip
 	}
 
+	// make more readabile
+	switch( typeof out ) {
+		default:
+		case 'string':
+			break
+
+		case 'object':
+			out = JSON.stringify(out)
+			break
+	}
+
 	if (coloring) {
 		out = color[level] + out + color[0];
 	}
 
 	console.log(out);
+	
 	// COULDDO:
 	// • different output targets (logfile, ...)
 	// • type detection
