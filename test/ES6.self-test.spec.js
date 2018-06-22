@@ -55,4 +55,33 @@ describe('ES6 self-test', () => {
 
 		assert(promiseWrap.calledOnce); // property!
 	});
+
+	// Promises recap ( → https://stackoverflow.com/a/50986732/444255 )
+	const timeoutPromise = (time) => {
+		return new Promise((resolve, reject) => {
+			if (time === 0)
+				reject({ 'message': 'invalid time 0' })
+			setTimeout(() => resolve('done', time))
+		})
+	}
+
+	it('promise selftest', async () => {
+
+		// positive test
+		let r = await timeoutPromise(500)
+		assert.equal(r, 'done')
+
+		// negative test
+		try {
+			await timeoutPromise(0)
+			// a failing assert here is a bad idea, since it would lead into the catch clause…
+		} catch (err) {
+			// optional, check for specific error (or error.type, error. message to contain …)
+			assert.deepEqual(err, { 'message': 'invalid time 0' })
+			return  // this is important
+		}
+		assert.isOk(false, 'timeOut must throw')
+		log('last')
+	})
+
 });

@@ -28,7 +28,6 @@ import helpers from '../src/helpers'
 
 const extractSample = () => {
 
-
 	// extract(source, {dir: dest}, function (err, results) {
 	// 	if (err) {
 	// 	  console.error('error!', err)
@@ -42,13 +41,14 @@ const extractSample = () => {
 	const source = path.resolve(app.root, 'sample1_ABCD.zip')
 	const target = path.resolve(testDir)
 
+	log('abc')
 	log(source)
 	log(target)
 
 	return new Promise((resolve, reject) => {
 
 		resolve('foo bar doo')
-		
+
 		// extract(source, { dir: target }, (err) => {
 		// 	warn('is there an error?')
 		// 	return reject(err)
@@ -82,13 +82,4 @@ it('preview and real delete from command line', async () => {
 	log(x)
 	log('test 1 done')
 })
-
-// seufz, erstmal wieder Promises schnallen
-it('promise selftest', async () => {
-
-	log('Ja')
-
-
-})
-
 
