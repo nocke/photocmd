@@ -61,7 +61,7 @@ describe('ES6 self-test', () => {
 		return new Promise((resolve, reject) => {
 			if (time === 0)
 				reject({ 'message': 'invalid time 0' })
-			setTimeout(() => resolve('done', time))
+			setTimeout(() => resolve('done'), time)
 		})
 	}
 
