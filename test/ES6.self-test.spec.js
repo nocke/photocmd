@@ -8,9 +8,8 @@ import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/
 
 // a simple promise function
 function promised42() {
-	//console.log('promise42');
 	return new Promise((resolve, reject) => {
-		setTimeout(() => resolve(42), 50);
+		setTimeout(() => resolve(42), 20);
 	});
 }
 
@@ -32,14 +31,14 @@ describe('ES6 self-test', () => {
 	});
 
 	// classic promise testing:
-	it('Async - Await', () => {
+	it('Async - Await I', () => {
 		let promiseWrap = sinon.spy(promised42);
 		assert(promiseWrap.notCalled);
 
 		promiseWrap()
 			.then(v => {
 				assert.equal(v, 42);
-				console.log(promiseWrap.callCount);
+				//console.log(promiseWrap.callCount);
 				assert(promiseWrap.calledOnce); // property!
 			})
 			.catch(reason => {
@@ -48,13 +47,12 @@ describe('ES6 self-test', () => {
 	});
 
 	// same stuff with asyn/await →  http://rossboucher.com/await/
-	it('Async - Await', async () => {
+	it('Async - Await II', async () => {
 		let promiseWrap = sinon.spy(promised42);
 		assert(promiseWrap.notCalled);
 
 		let v = await promiseWrap();
 		assert.equal(v, 42);
-
 		assert(promiseWrap.calledOnce); // simple property (no fn call needed)
 	});
 
@@ -70,7 +68,7 @@ describe('ES6 self-test', () => {
 	it('promise selftest', async () => {
 
 		// positive test
-		let r = await timeoutPromise(500)
+		let r = await timeoutPromise(20)
 		assert.equal(r, 'done')
 
 		// negative test
