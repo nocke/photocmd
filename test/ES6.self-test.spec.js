@@ -3,6 +3,8 @@
 import chai, { assert } from 'chai';
 import path from 'path';
 import sinon from 'sinon';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+
 
 // a simple promise function
 function promised42() {
@@ -53,7 +55,7 @@ describe('ES6 self-test', () => {
 		let v = await promiseWrap();
 		assert.equal(v, 42);
 
-		assert(promiseWrap.calledOnce); // property!
+		assert(promiseWrap.calledOnce); // simple property (no fn call needed)
 	});
 
 	// Promises recap ( → https://stackoverflow.com/a/50986732/444255 )
@@ -80,8 +82,8 @@ describe('ES6 self-test', () => {
 			assert.deepEqual(err, { 'message': 'invalid time 0' })
 			return  // this is important
 		}
-		assert.isOk(false, 'timeOut must throw')
-		log('last')
+
+		assert(false,'timeOut must throw')
 	})
 
 });

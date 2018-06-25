@@ -39,6 +39,7 @@ const color = [
 	// • smart (legible) dumping of objects, arrays
 	// • ...REST parameters (and doing that for each of those)
 
+	// snooze( number ) - function, supress exactly n error/warn messages (for smoother testing)
 
 // TODO:  any number of arguments...    log ('the foo object', fooObj, `someValue: ${someValue}`)
 // TODO:  mute() / unmute() (no output, especiall no throwing on .error, for testing)

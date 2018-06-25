@@ -21,7 +21,20 @@ export const testconfig = {
 	test: '1'
 };
 
+import helpers from '../src/helpers';
+
 // helper functions for testing -------------------------
+
+
+export const recreateDirectory = async (dirName) => {
+
+		// ensured fully fresh testDir creation
+		await helpers.removeFolder(dirName);
+		assert.isFalse(fs.existsSync(dirName));
+		fs.mkdirSync(dirName);
+		assert.isTrue(fs.existsSync(dirName));
+}
+
 
 /**
  * creates a number of mockfiles (just tiny text content)
@@ -50,8 +63,7 @@ export const assertFiles = async (basedir, fileObj) => {
 		}
 	});
 
-	assert(numErrors === 0, `found ${numErrors} missing/surplus files`);
-
+	assert(numErrors === 0, `found ${numErrors} missing/surplus files`)
 }
 
 

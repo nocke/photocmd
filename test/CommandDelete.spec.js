@@ -15,7 +15,7 @@ import fs from 'fs'
 
 import extract from 'extract-zip'
 
-import { mockfile, assertFiles, testconfig } from './_testtools'
+import { recreateDirectory, mockfile, assertFiles, testconfig } from './_testtools'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
 // test config
@@ -49,9 +49,20 @@ const extractSample = () => {
 	})
 }
 
-it('preview and real delete from command line', async () => {
 
-	const x = await extractSample()
-	log('test 1 done')
+describe('ActionDeletion', () => {
+
+	beforeEach(async () => {
+		await recreateDirectory(testDir)
+	});
+
+
+	it('preview and real delete from command line', async () => {
+
+		const x = await extractSample()
+		log('test 1 done')
+
+	})
 
 })
+

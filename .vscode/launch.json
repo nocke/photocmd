@@ -46,7 +46,7 @@
 				"--timeout",
 				"999999",
 				"--colors",
-				"${workspaceFolder}/test/ActionDeletion.spec.js"
+				"${workspaceFolder}/test/CommandDelete.spec.js"
 			],
 			"internalConsoleOptions": "openOnSessionStart"
 		}

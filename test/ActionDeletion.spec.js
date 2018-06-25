@@ -11,7 +11,7 @@ import path from 'path';
 import sinon from 'sinon';
 import fs from 'fs';
 
-import { mockfile, assertFiles, testconfig } from './_testtools';
+import { mockfile, assertFiles, testconfig, recreateDirectory } from './_testtools';
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
 
 // test config
@@ -30,11 +30,7 @@ import deleteAction from '../src/deleteAction';
 describe('ActionDeletion', () => {
 
 	beforeEach(async () => {
-		// ensured fully fresh testDir creation
-		await helpers.removeFolder(testDir);
-		assert.isFalse(fs.existsSync(testDir));
-		fs.mkdirSync(testDir);
-		assert.isTrue(fs.existsSync(testDir));
+		await recreateDirectory(testDir)
 	});
 
 
