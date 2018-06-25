@@ -32,6 +32,18 @@ const color = [
 	"\x1b[1;31m" // 5 → fail:   also red
 ]
 
+
+	// COULDDO:
+	// • different output targets (logfile, ...), also multiple, thus:  ARRAY (or variadic...)
+	// • type detection
+	// • smart (legible) dumping of objects, arrays
+	// • ...REST parameters (and doing that for each of those)
+
+
+// TODO:  any number of arguments...    log ('the foo object', fooObj, `someValue: ${someValue}`)
+// TODO:  mute() / unmute() (no output, especiall no throwing on .error, for testing)
+
+
 function _log(level, msg) {
 	let out = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`;
 
@@ -55,13 +67,7 @@ function _log(level, msg) {
 	}
 
 	console.log(out);
-	
-	// COULDDO:
-	// • different output targets (logfile, ...)
-	// • type detection
-	// • smart (legible) dumping of objects, arrays
-	// • ...REST parameters (and doing that for each of those)
-}
+	}
 
 export function _error(msg, ...args) {
 	_log(4, msg);
