@@ -35,17 +35,18 @@ const extractSample = () => {
 
 		extract(source, { dir: target }, (err) => {
 
-			log('err:')
-			warn(err)
-			// 	warn('is there an error?')
-			// 	return reject(err)
-			reject(err)
-
+			if (err) {
+				if (err instanceof Error)
+					warn(err.name + ' *** : ' + err.message);
+				else
+					warn('a DIFFERENT error?')
+				reject(err)
+			} else {
+				resolve('done')
+			}
 		})
-		log('unreachable?')
-		resolve('done')
+		// this line reached in both cases
 	})
-
 }
 
 it('preview and real delete from command line', async () => {
