@@ -28,58 +28,29 @@ import helpers from '../src/helpers'
 
 const extractSample = () => {
 
-	// extract(source, {dir: dest}, function (err, results) {
-	// 	if (err) {
-	// 	  console.error('error!', err)
-	// 	  process.exit(1)
-	// 	} else {
-	// 	  process.exit(0)
-	// 	}
-	//   })
-
-
-	const source = path.resolve(app.root, 'sample1_ABCD.zip')
+	const source = path.resolve(app.root, 'sample1.zip')
 	const target = path.resolve(testDir)
-
-	log('abc')
-	log(source)
-	log(target)
 
 	return new Promise((resolve, reject) => {
 
-		resolve('foo bar doo')
+		extract(source, { dir: target }, (err) => {
 
-		// extract(source, { dir: target }, (err) => {
-		// 	warn('is there an error?')
-		// 	return reject(err)
-		// })
-		// warn('log: unzip worked')
-		// resolve('res: unzip worked')
+			log('err:')
+			warn(err)
+			// 	warn('is there an error?')
+			// 	return reject(err)
+			reject(err)
 
-
+		})
+		log('unreachable?')
+		resolve('done')
 	})
 
 }
 
-// beforeEach(async () => {
-// 	// ensured fully fresh testDir creation
-// 	await helpers.removeFolder(testDir)
-// 	assert.isFalse(fs.existsSync(testDir))
-// 	fs.mkdirSync(testDir)
-// 	assert.isTrue(fs.existsSync(testDir))
-
-// 	log('beforeeach happend')
-// })
-
 it('preview and real delete from command line', async () => {
 
-	log('test 1')
-
-	extractSample()
-	// npm run test-single -- test/CommandDelete.spec.js
-
-	const x = await extractSample
-	log(x)
+	const x = await extractSample()
 	log('test 1 done')
-})
 
+})
