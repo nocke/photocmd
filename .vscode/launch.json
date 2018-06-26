@@ -46,7 +46,7 @@
 				"--timeout",
 				"999999",
 				"--colors",
-				"${workspaceFolder}/test/CommandDelete.spec.js"
+				"${workspaceFolder}/test/Family.spec.js"
 			],
 			"internalConsoleOptions": "openOnSessionStart"
 		}

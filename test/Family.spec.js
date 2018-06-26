@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import fs from 'fs';
 
 import { mockfile, assertFiles, testconfig } from './_testtools';
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../src/log';
 
 // test config _______________________
 setLevel(LEVELS.INFO);
@@ -30,10 +30,17 @@ describe('Family Initialize', () => {
 	});
 
 
-	it('bad initialize', () => {
+	it.only('bad initialize', () => {
+
+		log('normal log')
+		log.info('just info I')
+		info('just info II')
+		log.warn('foo')
+
 		assert.throws(() => {
 			new Family(42);
 		});
+
 	});
 
 	it('simple Family', async () => {

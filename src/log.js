@@ -124,3 +124,14 @@ export function enforce(expr, msg = 'enforce failed', ...args) {
 		_error(msg, ...args);
 	}
 }
+
+// log('foo') as the basic function (like chai assert)
+// all else contained \o/
+export default Object.assign( log, {
+	info,
+	log,
+	warn,
+	error,
+	fail,
+	enforce
+})
