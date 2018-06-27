@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-'use strict';
+'use strict'
 
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import url from 'url'
 
-console.log('Photo UI 234\n' + path.join(__dirname, 'app', 'index.html'));
+console.log('Photo UI 234\n' + path.join(__dirname, 'app', 'index.html'))
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -14,7 +14,7 @@ let win
 
 const createWindow = () => {
 
-	console.log('starting ...');
+	console.log('starting ...')
 
 	win = new BrowserWindow({
 		title: 'egal 12345678',
@@ -31,16 +31,16 @@ const createWindow = () => {
 	let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
 		// someone tried to run a second instance, restore+focus ours
 		if (win) {
-			if (win.isMinimized()) win.restore();
-			win.focus();
-			win.reload(); // eventl. dev TEMP
+			if (win.isMinimized()) win.restore()
+			win.focus()
+			win.reload() // eventl. dev TEMP
 		}
-	});
+	})
 
 	// 2nd window gets this message
 	if (shouldQuit) {
-		app.quit();
-		return;
+		app.quit()
+		return
 	}
 	// _________________________________
 

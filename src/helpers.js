@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 /*
  * Franks small set of little helpers.
  * i.e. sanity checks
  */
-import path from 'path';
-import fs from 'fs';
+import path from 'path'
+import fs from 'fs'
 
-import rimraf from 'rimraf';
-import trash from 'trash';
+import rimraf from 'rimraf'
+import trash from 'trash'
 
-import { enforce, fail, log, error } from './log';
+import { enforce, fail, log, error } from './log'
 
 // global app root ( stackoverflow.com/a/18721515/444255 )
 global.app = global.app || {} // I rather open my own subspace
@@ -28,27 +28,27 @@ export function move(oldPath, newPath, callback) {
 	fs.rename(oldPath, newPath, function(err) {
 		if (err) {
 			if (err.code === 'EXDEV') {
-				copy();
+				copy()
 			} else {
-				callback(err);
+				callback(err)
 			}
-			return;
+			return
 		}
-		callback();
-	});
+		callback()
+	})
 
 	function copy() {
-		var readStream = fs.createReadStream(oldPath);
-		var writeStream = fs.createWriteStream(newPath);
+		var readStream = fs.createReadStream(oldPath)
+		var writeStream = fs.createWriteStream(newPath)
 
-		readStream.on('error', callback);
-		writeStream.on('error', callback);
+		readStream.on('error', callback)
+		writeStream.on('error', callback)
 
 		readStream.on('close', function() {
-			fs.unlink(oldPath, callback);
-		});
+			fs.unlink(oldPath, callback)
+		})
 
-		readStream.pipe(writeStream);
+		readStream.pipe(writeStream)
 	}
 }
 
@@ -63,24 +63,24 @@ export async function removeFolder(dir) {
 	function getUserHome() {
 		return path.resolve(
 			process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME']
-		);
+		)
 	}
 
 	// precaution: stay clear of common folders (you can thank me later)
-	enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!');
-	const absPath = path.resolve(dir);
-	const parentPath = path.resolve(path.join(dir, '..'));
-	enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT');
-	enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir');
-	enforce(parentPath !== '/home', 'NOT working on user home dir');
-	enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder');
+	enforce(dir.trim() != '/', 'MUST NOT be root. DANGEROUS!')
+	const absPath = path.resolve(dir)
+	const parentPath = path.resolve(path.join(dir, '..'))
+	enforce(absPath != path.parse(absPath).root, 'NOT working on ROOT')
+	enforce(parentPath != path.parse(absPath).root, 'NOT working top-level-dir')
+	enforce(parentPath !== '/home', 'NOT working on user home dir')
+	enforce(parentPath !== getUserHome(), 'NOT working on user top-level folder')
 
 	// precaution:
 	// stay clear of project directories and direct subdirs
 	for (let test of ['.git', 'package.json', '../.git', '../package.json']) {
 		enforce(!fs.existsSync(path.join(dir, test)), //
 			`NOT deleting project dir (found "${test}")`
-		);
+		)
 	}
 
 	return new Promise((resolve, reject) => {
@@ -90,13 +90,13 @@ export async function removeFolder(dir) {
 				disableGlob: false
 			}, //
 			err => {
-				if (err) reject(err);
-				else resolve(true);
+				if (err) reject(err)
+				else resolve(true)
 			}
-		);
+		)
 	}).then(() => {
-		// console.log('deleted!'); // just verifies order
-	});
+		// console.log('deleted!') // just verifies order
+	})
 
 
 	// TODO: promisify and async this one:
@@ -106,37 +106,37 @@ export async function removeFolder(dir) {
         async.each(
           files,
           function(file, cb) {
-            file = location + '/' + file;
+            file = location + '/' + file
             fs.stat(file, function(err, stat) {
               if (err) {
-                return cb(err);
+                return cb(err)
               }
               if (stat.isDirectory()) {
-                removeFolder(file, cb);
+                removeFolder(file, cb)
               } else {
                 fs.unlink(file, function(err) {
                   if (err) {
-                    return cb(err);
+                    return cb(err)
                   }
-                  return cb();
-                });
+                  return cb()
+                })
               }
-            });
+            })
           },
           function(err) {
-            if (err) return next(err);
+            if (err) return next(err)
             fs.rmdir(location, function(err) {
-              return next(err);
-            });
+              return next(err)
+            })
           }
-        );
-	  });
+        )
+	  })
 	  */
 
 } // removeFolder
 
 export async function trashSync(filesArray) {
-	enforce(Array.isArray(filesArray), 'not an array');
+	enforce(Array.isArray(filesArray), 'not an array')
 
 	return new Promise((resolve, reject) => {
 		trash(filesArray, {
@@ -146,19 +146,19 @@ export async function trashSync(filesArray) {
 			// under linux returns an object with
 			//	 path: path to trashed file location (“inside the can”)
 			//	 info: pointing to original, undeleted file position
-			log(filesArray);
+			log(filesArray)
 
-			resolve(true);
+			resolve(true)
 		}).catch((err) =>  {
 			// TODO leave to higher level (or use reject?)
-			error(err);
-			return err;
+			error(err)
+			return err
 		})
-	});
+	})
 }
 
 export default {
 	move,
 	removeFolder,
 	trashSync
-};
+}

@@ -37,7 +37,7 @@ const extractSample = () => {
 
 			if (err) {
 				if (err instanceof Error)
-					warn(err.name + ' *** : ' + err.message);
+					warn(err.name + ' *** : ' + err.message)
 				else
 					warn('a DIFFERENT error?')
 				reject(err)
@@ -54,7 +54,7 @@ describe('ActionDeletion', () => {
 
 	beforeEach(async () => {
 		await recreateDirectory(testDir)
-	});
+	})
 
 
 	it('preview and real delete from command line', async () => {

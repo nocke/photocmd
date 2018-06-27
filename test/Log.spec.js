@@ -1,13 +1,13 @@
 'use strict'
 
-import chai, { assert } from 'chai';
-import sinon from 'sinon';
+import chai, { assert } from 'chai'
+import sinon from 'sinon'
 
 // system under test:
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
 // test config
-setLevel(LEVELS.INFO);
+setLevel(LEVELS.INFO)
 
 
 //const testString =
@@ -26,19 +26,19 @@ describe('pretest', () => {
 	it('pretest it', () => {
 		log('Log')
 		warn('Warn')
-	});
+	})
 
-}); // describe
+}) // describe
 
 describe('testing log', () => {
 
 	beforeEach(function() {
-		logSpy = sinon.spy(console, 'log');
-	});
+		logSpy = sinon.spy(console, 'log')
+	})
 
 	afterEach(function() {
-		console.log.restore();
-	});
+		console.log.restore()
+	})
 
 	it('simple log', () => {
 		// works !!  console.log(testString)

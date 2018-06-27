@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 /**
  * usage:
  *
- * 	info('trace() Eins');
- *	log('log() Zwei');
- *  warn('warn() Drei');
- *  error('error() Vier');
+ * 	info('trace() Eins')
+ *	log('log() Zwei')
+ *  warn('warn() Drei')
+ *  error('error() Vier')
  *
- *	logLevel(LEVELS.WARN);
+ *	logLevel(LEVELS.WARN)
  *
  * TODO error/fail distinction (catchable-per-item vs. fatal) isn't there yet
  *
@@ -21,8 +21,8 @@
  */
 
  // state ---------------------------
-let coloring = true; // COULDDO: getter/setter
-let logLevel = 2;
+let coloring = true // COULDDO: getter/setter
+let logLevel = 2
 
 // one can mute fail and failed enforce output (still throwing…)
 // null := snooze mode OFF  (default)
@@ -51,10 +51,10 @@ const color = [
 
 
 function _log(level, msg /*  TODO , ...moreArgs */ ) {
-	let out = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`;
+	let out = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`
 
 	if (level < logLevel) {
-		return; // skip
+		return // skip
 	}
 
 	// make more readabile
@@ -69,15 +69,15 @@ function _log(level, msg /*  TODO , ...moreArgs */ ) {
 	}
 
 	if (coloring) {
-		out = color[level] + out + color[0];
+		out = color[level] + out + color[0]
 	}
 
-	console.log(out);
+	console.log(out)
 	}
 
 export function _error(msg, ...args) {
 	if (snoozeCount === null) { // regular use
-		_log(4, msg);
+		_log(4, msg)
 	} else { // counting uses
 		if (snoozeCount > 0)
 		{
@@ -87,7 +87,7 @@ export function _error(msg, ...args) {
 			_log(4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******`)
 		}
 	}
-	throw new Error(msg, args);
+	throw new Error(msg, args)
 }
 
 export const LEVELS = Object.freeze({
@@ -96,7 +96,7 @@ export const LEVELS = Object.freeze({
 	WARN: 3,
 	ERROR: 4,
 	FAIL: 5
-});
+})
 
 /**
  * Setting (or just getting) the current logLevel
@@ -104,37 +104,37 @@ export const LEVELS = Object.freeze({
  */
 export function setLevel(level) {
 	if (level !== undefined) {
-		enforce(typeof level === 'number');
-		logLevel = level;
+		enforce(typeof level === 'number')
+		logLevel = level
 	}
-	return logLevel;
+	return logLevel
 }
 
 export function info(msg) {
-	_log(1, msg);
+	_log(1, msg)
 }
 
 export function log(msg) {
-	_log(2, msg);
+	_log(2, msg)
 }
 
 export function warn(msg) {
-	_log(3, msg);
+	_log(3, msg)
 }
 
 export function error(msg, ...args) {
-	_error(msg, ...args);
+	_error(msg, ...args)
 }
 
 // error handling ======================================
 
 export function fail(msg = 'failing', ...args) {
-	_error(msg, ...args);
+	_error(msg, ...args)
 }
 
 export function enforce(expr, msg = 'enforce failed', ...args) {
 	if (expr !== true) {
-		_error(msg, ...args);
+		_error(msg, ...args)
 	}
 }
 

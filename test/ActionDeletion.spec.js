@@ -6,55 +6,55 @@
  *
  */
 
-import chai, { assert } from 'chai';
-import path from 'path';
-import sinon from 'sinon';
-import fs from 'fs';
+import chai, { assert } from 'chai'
+import path from 'path'
+import sinon from 'sinon'
+import fs from 'fs'
 
-import { mockfile, assertFiles, testconfig, recreateDirectory } from './_testtools';
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log';
+import { mockfile, assertFiles, testconfig, recreateDirectory } from './_testtools'
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
 // test config
-setLevel(LEVELS.INFO);
-const testDir = testconfig.testDir;
+setLevel(LEVELS.INFO)
+const testDir = testconfig.testDir
 
-import trash from 'trash';
+import trash from 'trash'
 
 
 // system under test:
-import helpers from '../src/helpers';
-import Family from '../src/model/Family';
-import deleteAction from '../src/deleteAction';
+import helpers from '../src/helpers'
+import Family from '../src/model/Family'
+import deleteAction from '../src/deleteAction'
 
 
 describe('ActionDeletion', () => {
 
 	beforeEach(async () => {
 		await recreateDirectory(testDir)
-	});
+	})
 
 
 	it('general trashSync test', async () => {
 		// // create a number of files, delete a subset. verify. done.
-		const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`);
-		mockfile(testDir, mockFiles);
+		const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`)
+		mockfile(testDir, mockFiles)
 
 		// just to add path in front
-		const trashFiles = [];
-		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) );
+		const trashFiles = []
+		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) )
 
-		await helpers.trashSync(trashFiles);
+		await helpers.trashSync(trashFiles)
 
 		// TODO: warn when trashing non-existing
-		// await helpers.trashSync('banana');
+		// await helpers.trashSync('banana')
 
 		mockFiles.forEach(file =>
 			assert(!fs.existsSync(file))
-		);
+		)
 
-		await helpers.removeFolder(testDir);
-		assert(!fs.existsSync(testDir), 'directory not gone!');
-	});
+		await helpers.removeFolder(testDir)
+		assert(!fs.existsSync(testDir), 'directory not gone!')
+	})
 
 
 	it('delete lonely', async () => {
@@ -83,9 +83,9 @@ describe('ActionDeletion', () => {
 				'DSCN123.cR2',  // Family, not lonely
 				'DSCN123.jpeg'  // testing: jpeg with 'e'
 			]
-		);
+		)
 
-		await deleteAction(testDir, [], { live: true, lonely: true });
+		await deleteAction(testDir, [], { live: true, lonely: true })
 
 		await assertFiles(
 			testDir, {
@@ -110,9 +110,9 @@ describe('ActionDeletion', () => {
 				'DSCN123.jpeg': true
 			}
 		)
-			log('end of test ___________________________');
+			log('end of test ___________________________')
 
 
-	}); // delete lonely
+	}) // delete lonely
 
-});
+})
