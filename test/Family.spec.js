@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import fs from 'fs';
 
 import { mockfile, assertFiles, testconfig } from './_testtools';
-import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../src/log';
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnooze } from '../src/log';
 
 // test config _______________________
 setLevel(LEVELS.INFO);
@@ -26,20 +26,16 @@ describe('Family Initialize', () => {
 	beforeEach(async () => {
 		await helpers.removeFolder(testDir);
 		fs.mkdirSync(testDir);
-
 	});
 
 
-	it.only('bad initialize', () => {
+	it('bad initialize', () => {
 
-		log('normal log')
-		log.info('just info I')
-		info('just info II')
-		log.warn('foo')
-
+		snooze(1)
 		assert.throws(() => {
 			new Family(42);
 		});
+		unsnooze()
 
 	});
 

@@ -19,9 +19,16 @@
  *  5 fail  - only shows, when task completely breaks → fail()
  *
  */
-// state ---------------------------
+
+ // state ---------------------------
 let coloring = true; // COULDDO: getter/setter
 let logLevel = 2;
+
+// one can mute fail and failed enforce output (still throwing…)
+// null := snooze mode OFF  (default)
+// positive number: expecting n more uses
+// 0: used as often as possible, next fail/enforce will throw!
+let snoozeCount = null
 
 const color = [
 	"\x1b[0m", // 0 → reset
@@ -39,13 +46,11 @@ const color = [
 	// • smart (legible) dumping of objects, arrays
 	// • ...REST parameters (and doing that for each of those)
 
-	// snooze( number ) - function, supress exactly n error/warn messages (for smoother testing)
-
 // TODO:  any number of arguments...    log ('the foo object', fooObj, `someValue: ${someValue}`)
 // TODO:  mute() / unmute() (no output, especiall no throwing on .error, for testing)
 
 
-function _log(level, msg) {
+function _log(level, msg /*  TODO , ...moreArgs */ ) {
 	let out = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`;
 
 	if (level < logLevel) {
@@ -71,7 +76,17 @@ function _log(level, msg) {
 	}
 
 export function _error(msg, ...args) {
-	_log(4, msg);
+	if (snoozeCount === null) { // regular use
+		_log(4, msg);
+	} else { // counting uses
+		if (snoozeCount > 0)
+		{
+			snoozeCount--
+		}
+		else {
+			_log(4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******`)
+		}
+	}
 	throw new Error(msg, args);
 }
 
@@ -82,8 +97,6 @@ export const LEVELS = Object.freeze({
 	ERROR: 4,
 	FAIL: 5
 });
-
-export function howdy(){console.log('howdy')};
 
 /**
  * Setting (or just getting) the current logLevel
@@ -113,7 +126,7 @@ export function error(msg, ...args) {
 	_error(msg, ...args);
 }
 
-// ======================================
+// error handling ======================================
 
 export function fail(msg = 'failing', ...args) {
 	_error(msg, ...args);
@@ -125,13 +138,41 @@ export function enforce(expr, msg = 'enforce failed', ...args) {
 	}
 }
 
-// log('foo') as the basic function (like chai assert)
-// all else contained \o/
+// testing support ========================================
+
+/**
+ * mute error output (but nevertheless throw )
+ * on the next n fail() / failed enforces
+ * @param {int} n 
+ */
+export function snooze(n) {
+	enforce( Number.isInteger(n), `snooze needs an integer parameter, got ${n}`)
+	enforce( n > 0,  `snooze must be larger than zero, got ${n}`)
+	enforce( snoozeCount === null,  `snooze already activated`)
+
+	snoozeCount = n
+}
+
+/**
+ * leave the snooze mode again. MUST happen precisely when the n are used up
+ */
+export function unsnooze() {
+	enforce( snoozeCount !== null,  `snooze not activated`)
+	enforce( !(snoozeCount > 0) ,  `remaining snooze count too high`)
+	snoozeCount = null
+}
+
+
+// log('foo') as the basic function, all else contained
+// (like chai: assert(), assert.method1(),... )
 export default Object.assign( log, {
 	info,
 	log,
 	warn,
 	error,
 	fail,
-	enforce
+	enforce,
+
+	snooze,
+	unsnooze
 })
