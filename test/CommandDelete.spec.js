@@ -4,8 +4,7 @@
  * testing whole command from command line
  *
  * - first simulation
- * - then actual deleting (large files used)
- *
+ * - then actual deleting (real multi-MB files used)
  */
 
 import chai, { assert } from 'chai'
@@ -24,7 +23,6 @@ const testDir = testconfig.testCommandDir
 
 // system under test:
 import helpers from '../src/helpers'
-
 
 const extractSample = () => {
 
@@ -59,8 +57,14 @@ describe('ActionDeletion', () => {
 
 	it('preview and real delete from command line', async () => {
 
-		const x = await extractSample()
-		log('test 1 done')
+		await extractSample()
+
+		enforce(fs.existsSync(path.join(testDir, 'IMG_0634.JPG')))
+		enforce(fs.existsSync(path.join(testDir, 'PM5A3095.CR2')))
+
+		// NEXT:
+		// system call (or truly top-level "./build/index.js" ?)
+
 
 	})
 

@@ -1,13 +1,8 @@
-// import "babel-polyfill" // https://babeljs.io/docs/usage/polyfill/
-// needed?  –  require('babel-core/register')
-
-// TODO: name this testtools.js
 
 // needed for all testing
 import chai, { assert } from 'chai'
 import path from 'path'
 import fs from 'fs'
-import array from 'core-js/fn/array'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
 // set here, unless already set elsewhere
