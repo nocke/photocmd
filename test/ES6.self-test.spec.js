@@ -65,23 +65,61 @@ describe('ES6 self-test', () => {
 		})
 	}
 
-	it('promise selftest', async () => {
+	it('promise selftest – positive', async () => {
 
-		// positive test
 		let r = await timeoutPromise(20)
 		assert.equal(r, 'done')
 
-		// negative test
+	})
+
+	it('promise selftest – negative', async () => {
+
 		try {
 			await timeoutPromise(0)
 			// a failing assert here is a bad idea, since it would lead into the catch clause…
 		} catch (err) {
 			// optional, check for specific error (or error.type, error. message to contain …)
 			assert.deepEqual(err, { 'message': 'invalid time 0' })
-			return  // this is important
+			return  // this is important…
 		}
 
+		// …so this is unreachable
 		assert(false,'timeOut must throw')
+
+	})
+
+
+	it('stubbing test - stub only return', () => {
+
+		const stub = sinon.stub(log,'enforce').returns(77)
+
+		// enforce points (by above import) directly to original functionoriginal-funktion
+		// log.enforce however is now replaced by stub function
+		const r = log.enforce(false, 'test enforce')
+		assert( r === 77 )
+		assert( stub.calledOnce )
+		assert( !stub.calledTwice )
+
+		log.enforce.restore()  // crucial to avoid side-effects
+	})
+
+	it('stubbing test - stub full fake', () => {
+
+		let banana = 0
+		const replacement = (msg )=> {
+			banana++ // clojure
+			return 123
+		}
+
+		const stub = sinon.stub(log,'enforce').callsFake(replacement)
+
+		const r=log.enforce(false, 'test enforce II')
+		assert( banana === 1 )
+		assert( r === 123 )
+		assert( stub.calledOnce )
+		assert( !stub.calledTwice )
+
+		log.enforce.restore()
 	})
 
 });
