@@ -10,14 +10,14 @@
  *	logLevel(LEVELS.WARN);
  *
  * TODO error/fail distinction (catchable-per-item vs. fatal) isn't there yet
- * 
+ *
  *  1 info  - tiny process info (-v Switch activates that)
  *  2 log   - regular output (default verbosity)
  *  3 warn  - shows warnings and above
  *  4 error - shows errors (recoverable, i.e. only single item affected)
  *            throws an exception, that gets caught for 'next round'
  *  5 fail  - only shows, when task completely breaks → fail()
- * 
+ *
  */
 // state ---------------------------
 let coloring = true; // COULDDO: getter/setter
