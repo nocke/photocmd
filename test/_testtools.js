@@ -12,7 +12,6 @@ global.app.root = global.app.root || path.resolve(__dirname, '..')
 // same basic test config
 export const testconfig = {
 	testDir: path.resolve(global.app.root, 'build/actionTests'),
-	testCommandDir: path.resolve(global.app.root, 'build/commandTests'),
 	test: '1'
 }
 

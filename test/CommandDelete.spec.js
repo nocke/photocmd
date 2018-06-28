@@ -11,18 +11,17 @@ import chai, { assert } from 'chai'
 import path from 'path'
 import sinon from 'sinon'
 import fs from 'fs'
-
 import extract from 'extract-zip'
 
 import { recreateDirectory, mockfile, assertFiles, testconfig } from './_testtools'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
+import { execSync } from 'child_process'
+
 // test config
 setLevel(LEVELS.INFO)
-const testDir = testconfig.testCommandDir
+const testDir = path.resolve(global.app.root, 'build/commandTests/sample1')
 
-// system under test:
-import helpers from '../src/helpers'
 
 const extractSample = () => {
 
@@ -50,6 +49,13 @@ const extractSample = () => {
 
 describe('ActionDeletion', () => {
 
+	before( () => {
+		// sanity self-test with node version ≥ 8
+		// https://stackoverflow.com/a/28394895
+		const result = execSync('node -v').toString()
+		assert.match( result, /^v(8|9|1\d)+\.\d+\.\d+\s?$/, 'valid node version, ≥ 8' )
+	})
+
 	beforeEach(async () => {
 		await recreateDirectory(testDir)
 	})
@@ -62,9 +68,25 @@ describe('ActionDeletion', () => {
 		enforce(fs.existsSync(path.join(testDir, 'IMG_0634.JPG')))
 		enforce(fs.existsSync(path.join(testDir, 'PM5A3095.CR2')))
 
-		// NEXT:
-		// system call (or truly top-level "./build/index.js" ?)
+		// avoid all linking matters
+		const cmd= 'node ./build/index.js delete ./build/commandTests/sample1'
+		const result =  execSync(
+			'node ./build/index.js delete ./build/commandTests/sample1 -v',
+			{ cwd: global.app.root }
+		).toString()
 
+		// TODO  erstmal die nonexist-Fehler fixen
+		// photo delete nonexist -v
+
+		// dann proper testing..
+		// photo delete build/commandTests/sample1 -v
+
+		log('')
+		log(result)
+
+		// allerlei matching auf das result  → regexr.com
+
+		//  allerlei file asserts ( Gruppen-Helper-Funktion )
 
 	})
 
