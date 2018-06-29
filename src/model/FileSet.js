@@ -161,4 +161,3 @@ class FileSet {
 } // class
 
 export default FileSet
-

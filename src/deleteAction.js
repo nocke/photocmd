@@ -34,21 +34,5 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	await loneFiles.delete(liveMode)
 }
 
-function deleteActionWrap(...args) {
 
-	const cmd = args[args.length-1]
-
-	deleteAction(...args)
-	.then( result => {
-			log('confirmation message:')
-			log()
-	})
-	.catch( err => {
-		warn(err.message) // (makes log in error itself superficious)
-		if(cmd.verbose)
-			console.log(err.stack)
-	})
-
-}
-
-export default deleteActionWrap
+export default deleteAction

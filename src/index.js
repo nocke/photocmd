@@ -5,7 +5,24 @@
 import program from 'commander'
 import pjson from '../package.json'
 
+import log, { warn } from './log'
+
 import deleteAction from './deleteAction'
+
+
+const promiseWrap = (func) => (...args) => {
+
+	const cmd = args[args.length - 1]
+	func.call(null, ...args)
+		.then(result => {
+			info('OK')
+		})
+		.catch(err => {
+			warn(err.message) // (makes log in error itself superficious)
+			if (cmd.verbose)
+				log(err.stack)
+		})
+}
 
 console.log('\n')
 program.version(pjson.version); // .version('0.0.1')
@@ -18,19 +35,7 @@ program
 	.option('-l, --live', 'actually do it')
 	.option('-o, --lonely', 'delete lone images')
 	.option('-s, --unstarred', 'delete unstarred images')
-	.action(deleteAction)
-
-// moot git style option (as a blueprint)
-// program
-// 	.command('moot')
-// 	.description('do nothing')
-// 	.option('-v, --verbose', 'log more details')
-// 	.option('-l, --live', 'actually do it')
-// 	.action(function() {
-// 		console.log('moot command "executed".')
-// 	})
-
-// COULDO errorwrap all actions en block
+	.action(promiseWrap(deleteAction))
 
 program.on('--help', function() {
 	console.log([
@@ -43,19 +48,16 @@ program.on('--help', function() {
 if (process.argv.length == 2)
 	process.argv.push('--help')
 
-	// in help case, parse exits ( .outputHelp() would avoid this )
-	try {
-		// the actual command execution:
-		program.parse(process.argv)
-	} catch (err) {
-		log('############# this should be reached')
+// in help case, parse exits ( .outputHelp() would avoid this )
+try {
+	// the actual command execution:
+	program.parse(process.argv)
+} catch (err) {
+	log('############# this should NEVER be reached')
+}
 
-		console.error('Error: \"%s\n\nStacktrace: %s\"', err.message, err.stack)
-		process.exit(6)
-	}
-
-// did any command run? if not, output help
+// did command run? → if not, output help
 const noRun = 'string' === typeof program.args[program.args.length - 1]
 if (noRun) program.help()
 
-// note: an exit() here prevents command execution (async reasons?)
+// note: an exit() here prevents command execution → triggered as a promise?
