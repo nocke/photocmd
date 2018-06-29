@@ -66,6 +66,16 @@ describe('command: Delete', function () {
 
 	it('preview and real delete from command line', async () => {
 
+		// (anything but returncode 0 triggers an error,)
+		const result =  execSync(
+			'photo delete build -v',
+			{ cwd: global.app.root }
+		).toString()
+
+		assert.match(result, /succesfully/)
+	})
+
+	it('preview and real delete from command line', async () => {
 
 		await extractSample()
 
@@ -73,7 +83,6 @@ describe('command: Delete', function () {
 		enforce(fs.existsSync(path.join(testDir, 'PM5A3095.CR2')))
 
 		// avoid all linking matters
-		const cmd= 'node ./build/index.js delete ./build/commandTests/sample1'
 		const result =  execSync(
 			'node ./build/index.js delete ./build/commandTests/sample1 -v',
 			{ cwd: global.app.root }

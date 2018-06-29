@@ -16,7 +16,7 @@ const promiseWrap = (func) => (...args) => {
 	func.call(null, ...args)
 		.then(result => {
 			info('completed succesfully __________')
-			process.exit(8) // everythin ok (for now)
+			process.exitCode = 0
 		})
 		.catch(err => {
 			warn(err.message) // (makes log in error itself superficious)
@@ -54,8 +54,7 @@ if (process.argv.length == 2)
 try {
 	const r = program.parse(process.argv) // actual command execution:
 } catch (err) {
-	warn('should NEVER be reached')
-	process.exit(66)
+	error('should NEVER be reached')
 }
 
 // did command run? → if not, output help
