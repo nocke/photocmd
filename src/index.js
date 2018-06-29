@@ -4,23 +4,25 @@
 
 import program from 'commander'
 import pjson from '../package.json'
-
 import log, { info, warn } from './log'
-
 import deleteAction from './deleteAction'
 
+
+process.exitCode = 1 // catchall for general errors
 
 const promiseWrap = (func) => (...args) => {
 
 	const cmd = args[args.length - 1]
 	func.call(null, ...args)
 		.then(result => {
-			info('OK')
+			info('completed succesfully __________')
+			process.exit(8) // everythin ok (for now)
 		})
 		.catch(err => {
 			warn(err.message) // (makes log in error itself superficious)
 			if (cmd.verbose)
 				log(err.stack)
+			process.exitCode = 126 // command cannot execute
 		})
 }
 
@@ -50,14 +52,14 @@ if (process.argv.length == 2)
 
 // in help case, parse exits ( .outputHelp() would avoid this )
 try {
-	// the actual command execution:
-	program.parse(process.argv)
+	const r = program.parse(process.argv) // actual command execution:
 } catch (err) {
-	log('############# this should NEVER be reached')
+	warn('should NEVER be reached')
+	process.exit(66)
 }
 
 // did command run? → if not, output help
 const noRun = 'string' === typeof program.args[program.args.length - 1]
 if (noRun) program.help()
 
-// note: an exit() here prevents command execution → triggered as a promise?
+// nb: an exit() here prevents command execution (distinct process, and ending in promise)
