@@ -27,7 +27,7 @@ import Family from '../src/model/Family'
 import deleteAction from '../src/deleteAction'
 
 
-describe('ActionDeletion', () => {
+describe('deleteAction', () => {
 
 	beforeEach(async () => {
 		await recreateDirectory(testDir)

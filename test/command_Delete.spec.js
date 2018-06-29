@@ -47,7 +47,10 @@ const extractSample = () => {
 }
 
 
-describe('ActionDeletion', () => {
+describe('command: Delete', function () {
+	
+	// for entire describe
+	this.slow(900)
 
 	before( () => {
 		// sanity self-test with node version ≥ 8
@@ -62,6 +65,7 @@ describe('ActionDeletion', () => {
 
 
 	it('preview and real delete from command line', async () => {
+
 
 		await extractSample()
 
@@ -80,6 +84,9 @@ describe('ActionDeletion', () => {
 
 		// dann proper testing..
 		// photo delete build/commandTests/sample1 -v
+
+		// dann unit testing
+		//
 
 		log('')
 		log(result)

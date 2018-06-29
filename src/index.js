@@ -5,7 +5,7 @@
 import program from 'commander'
 import pjson from '../package.json'
 
-import log, { warn } from './log'
+import log, { info, warn } from './log'
 
 import deleteAction from './deleteAction'
 
