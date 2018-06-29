@@ -21,7 +21,7 @@
  */
 
  // state ---------------------------
-let coloring = true // COULDDO: getter/setter
+let coloring = true
 let logLevel = 2
 
 // one can mute fail and failed enforce output (still throwing…)

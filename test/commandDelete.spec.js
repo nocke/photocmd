@@ -20,13 +20,16 @@ import { execSync } from 'child_process'
 
 // test config
 setLevel(LEVELS.INFO)
-const testDir = path.resolve(global.app.root, 'build/commandTests/sample1')
+
+// local and abs path for testing
+const testDirLocal = 'build/commandTests/sample1'
+const testDirAbs = path.resolve(global.app.root, testDirLocal)
 
 
 const extractSample = () => {
 
 	const source = path.resolve(app.root, 'sample1.zip')
-	const target = path.resolve(testDir)
+	const target = path.resolve(testDirAbs)
 
 	return new Promise((resolve, reject) => {
 
@@ -47,8 +50,8 @@ const extractSample = () => {
 }
 
 
-describe('command: Delete', function () {
-	
+describe('real command-line: Delete', function () {
+
 	// for entire describe
 	this.slow(900)
 
@@ -60,49 +63,55 @@ describe('command: Delete', function () {
 	})
 
 	beforeEach(async () => {
-		await recreateDirectory(testDir)
+		await recreateDirectory(testDirAbs)
 	})
 
 
-	it('preview and real delete from command line', async () => {
+	it('command on empty folder', () => {
 
 		// (anything but returncode 0 triggers an error,)
 		const result =  execSync(
-			'photo delete build -v',
+			`photo delete ${testDirLocal} -v`,
 			{ cwd: global.app.root }
 		).toString()
 
 		assert.match(result, /succesfully/)
 	})
 
-	it('preview and real delete from command line', async () => {
+	it('command on nonexisting folder', () => {
 
+		assert.throws( () => execSync(
+			'photo delete nonexistingFolder -v',
+			{ cwd: global.app.root }
+		))
+
+	})
+
+	it.only('preview from command line', async () => {
+
+		// now with images
 		await extractSample()
-
-		enforce(fs.existsSync(path.join(testDir, 'IMG_0634.JPG')))
-		enforce(fs.existsSync(path.join(testDir, 'PM5A3095.CR2')))
+		// sanity existence
+		enforce(fs.existsSync(path.join(testDirAbs, 'IMG_0634.JPG')))
+		enforce(fs.existsSync(path.join(testDirAbs, 'PM5A3095.CR2')))
 
 		// avoid all linking matters
 		const result =  execSync(
-			'node ./build/index.js delete ./build/commandTests/sample1 -v',
+			`node ./build/index.js delete ${testDirLocal} -v`,
 			{ cwd: global.app.root }
 		).toString()
 
-		// TODO  erstmal die nonexist-Fehler fixen
-		// photo delete nonexist -v
 
-		// dann proper testing..
 		// photo delete build/commandTests/sample1 -v
 
-		// dann unit testing
+		// dann output checking
 		//
 
 		log('')
 		log(result)
 
 		// allerlei matching auf das result  → regexr.com
-
-		//  allerlei file asserts ( Gruppen-Helper-Funktion )
+		// allerlei file asserts ( Gruppen-Helper-Funktion )
 
 	})
 
