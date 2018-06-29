@@ -50,6 +50,8 @@ class FileSet {
 
 		// parsing each dir:
 		dirs.forEach(function(dir) {
+			// COULDO do a file-exist-round beforehand,
+			// so command execution is more likely all-or-nothing
 
 			enforce(fs.existsSync(dir), `no directory or file ${dir}`)
 			enforce(fs.statSync(dir).isDirectory(), 'single File – not handled yet')

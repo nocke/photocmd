@@ -30,6 +30,8 @@ program
 // 		console.log('moot command "executed".')
 // 	})
 
+// COULDO errorwrap all actions en block
+
 program.on('--help', function() {
 	console.log([
 		'  Use photo [command] --help for more options on the command',
@@ -46,6 +48,8 @@ if (process.argv.length == 2)
 		// the actual command execution:
 		program.parse(process.argv)
 	} catch (err) {
+		log('############# this should be reached')
+
 		console.error('Error: \"%s\n\nStacktrace: %s\"', err.message, err.stack)
 		process.exit(6)
 	}

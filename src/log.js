@@ -176,3 +176,4 @@ export default Object.assign( log, {
 	snooze,
 	unsnooze
 })
+

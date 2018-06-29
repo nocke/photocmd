@@ -17,24 +17,28 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	let liveMode = cmd.live || false
 	let verboseMode = cmd.verbose || false
-
 	if (verboseMode) setLevel(LEVELS.INFO)
 
-	let lonely = cmd.lonely || false
-	let unstarred = cmd.unstarred || false
+	try {
+		let lonely = cmd.lonely || false
+		let unstarred = cmd.unstarred || false
 
-	// merge all dirs together
-	let dirs = [firstDir, ...moreDirs]
-	enforce(!!dirs, 'no directory specified')
+		// merge all dirs together
+		let dirs = [firstDir, ...moreDirs]
+		enforce(!!dirs, 'no directory specified')
 
-	let fileSet = new FileSet(dirs)
+		// TODO: force lonely only   or   starred ony   or  …else…
 
-	// TODO: force lonely only   or   starred ony   or  …else…
-
-	let loneFiles = fileSet.getLonely()
-	//loneFiles.dump()
-	await loneFiles.delete(liveMode)
-
+		//loneFiles.dump()
+		let fileSet = new FileSet(dirs)
+		let loneFiles = fileSet.getLonely()
+		await loneFiles.delete(liveMode)
+	} catch(err) {
+		warn('an error occured')
+		if (verboseMode)
+			console.dir(err)
+	}
 }
+
 
 export default deleteAction
