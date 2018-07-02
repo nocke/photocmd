@@ -19,6 +19,8 @@ config.extensions = [
 
 // COULDDO: wellknown temp files (see .gitignore), still counting as empty dir (thumbsdb, etc)
 
+// COULDDO option to prune deserted sidecar files (nef, xmp, ...)
+
 // list of core matchers.
 // Priority does matter, first one winds (i.e Android-date before Android-generic).
 config.coreMatches = [

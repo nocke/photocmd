@@ -22,24 +22,24 @@ import { execSync } from 'child_process'
 setLevel(LEVELS.INFO)
 
 // local and abs path for testing
-const testDirLocal = 'build/commandTests/sample1'
+const testDirLocal = 'build/commandTests'
 const testDirAbs = path.resolve(global.app.root, testDirLocal)
 
 
-const extractSample = () => {
-
-	const source = path.resolve(app.root, 'sample1.zip')
-	const target = path.resolve(testDirAbs)
+const extractSample = (zipfile, dir) => {
+	enforce( dir && typeof dir === 'string', 'invalid directory param')
+	const source = path.resolve(app.root, zipfile)
 
 	return new Promise((resolve, reject) => {
 
-		extract(source, { dir: target }, (err) => {
+		extract(source, { dir }, (err) => {
 
 			if (err) {
 				if (err instanceof Error)
 					warn(err.name + ' *** : ' + err.message)
 				else
 					warn('a DIFFERENT error?')
+	const target = path.resolve(dir)
 				reject(err)
 			} else {
 				resolve('done')
@@ -87,19 +87,26 @@ describe('real command-line: Delete', function () {
 
 	})
 
-	it.only('preview from command line', async () => {
+	// it.only('preview from command line', async () => {
+
+	// 	await extractSample(path.resolve(global.app.root, 'REF_sample1'))
+	// })
+
+
+	it.only('AAA preview from command line', async () => {
 
 		// now with images
-		await extractSample()
-		// sanity existence
-		enforce(fs.existsSync(path.join(testDirAbs, 'IMG_0634.JPG')))
-		enforce(fs.existsSync(path.join(testDirAbs, 'PM5A3095.CR2')))
+		await extractSample('sample2.zip', path.resolve(testDirAbs))
+
+		// sanity sample2 existence
+		enforce(fs.existsSync(path.join(testDirAbs, 'sample2', 'IMG_2586.JPG')))
+		enforce(fs.existsSync(path.join(testDirAbs, 'sample2', 'PM5A2847.jPg')))
 
 		// avoid all linking matters
 		const result =  execSync(
 			`node ./build/index.js delete ${testDirLocal} -v`,
 			{ cwd: global.app.root }
-		).toString()
+ 		).toString()
 
 
 		// photo delete build/commandTests/sample1 -v
@@ -109,9 +116,6 @@ describe('real command-line: Delete', function () {
 
 		log('')
 		log(result)
-
-		// allerlei matching auf das result  → regexr.com
-		// allerlei file asserts ( Gruppen-Helper-Funktion )
 
 	})
 

@@ -15,23 +15,25 @@ import {
 async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
 	log('Delete Action ************************')
 
-	const liveMode = cmd.live || false
-	const verboseMode = cmd.verbose || false
-	if (verboseMode) setLevel(LEVELS.INFO)
+	// const liveMode = cmd.live || false
+	// const verboseMode = cmd.verbose || false
+	// if (verboseMode) setLevel(LEVELS.INFO)
 
-	let lonely = cmd.lonely || false
-	let unstarred = cmd.unstarred || false
+	// let lonely = cmd.lonely || false
+	// let unstarred = cmd.unstarred || false
 
-	// merge all dirs together
-	let dirs = [firstDir, ...moreDirs]
-	enforce(!!dirs, 'no directory specified')
+	// // merge all dirs together
+	// let dirs = [firstDir, ...moreDirs]
+	// enforce(!!dirs, 'no directory specified')
 
-	// TODO: force lonely only   or   starred ony   or  …else…
+	// // TODO: force lonely only   or   starred only   or  …else…
 
-	//loneFiles.dump()
-	const fileSet = new FileSet(dirs)
-	const loneFiles = fileSet.getLonely()
-	await loneFiles.delete(liveMode)
+	// const fileSet = new FileSet(dirs)
+	// fileSet.dump()
+
+
+	// const loneFiles = fileSet.getLonely()
+	// await loneFiles.delete(liveMode)
 }
 
 

@@ -34,6 +34,13 @@ class FileSet {
 			enforce(match.length === 3, 'match exprssion length')
 			return match[1]
 		}
+
+		// COULDDO match for
+		// IpswickCastle44.CR2
+		// IpswickCastle44_04_retouched.jpg
+		//  _ (2-3 digits) nothing/non-digit
+
+
 		// else: a single
 		return null
 	}
