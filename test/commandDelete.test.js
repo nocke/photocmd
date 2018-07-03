@@ -18,9 +18,6 @@ import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/
 
 import { execSync } from 'child_process'
 
-// test config
-setLevel(LEVELS.INFO)
-
 // local and abs path for testing
 const testDirLocal = 'build/commandTests'
 const testDirAbs = path.resolve(global.app.root, testDirLocal)
@@ -53,7 +50,7 @@ const extractSample = (zipfile, dir) => {
 describe('real command-line: Delete', function () {
 
 	// for entire describe
-	this.slow(900)
+	this.slow(1000)
 
 	before( () => {
 		// sanity self-test with node version ≥ 8
@@ -93,7 +90,7 @@ describe('real command-line: Delete', function () {
 	// })
 
 
-	it.only('AAA preview from command line', async () => {
+	it('preview from command line', async () => {
 
 		// now with images
 		await extractSample('sample2.zip', path.resolve(testDirAbs))

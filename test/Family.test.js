@@ -9,7 +9,6 @@ import { mockfile, assertFiles, testconfig } from './_testtools'
 import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnooze } from '../src/log'
 
 // test config _______________________
-setLevel(LEVELS.INFO)
 const testDir = testconfig.testDir
 
 // system under test:

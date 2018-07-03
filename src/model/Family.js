@@ -67,6 +67,7 @@ constructor(core) {
 	// family flags
 	this._isLonely = true // assume for now
 	this._isStarred = false
+	this._onlySidecars = false
 }
 
 add(member) {
@@ -74,9 +75,18 @@ add(member) {
 	// base (full name) → member object
 	this._map.set(member.base, member)
 
-	// TRUE: at least one IMAGE file (jpg, tiff...) qualifies as 'not lonely'
-	if (config.extensions_image.includes(member.type))
+	// at least one non-raw image file qualifies
+	if (config.extensions_nonraw.includes(member.type))
+	{
 		this._isLonely = false
+		this._onlySidecars = false
+	}
+	else if (config.extensions_nonraw.includes(member.type)) {
+
+
+		
+	}
+
 }
 
 

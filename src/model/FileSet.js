@@ -35,12 +35,6 @@ class FileSet {
 			return match[1]
 		}
 
-		// COULDDO match for
-		// IpswickCastle44.CR2
-		// IpswickCastle44_04_retouched.jpg
-		//  _ (2-3 digits) nothing/non-digit
-
-
 		// else: a single
 		return null
 	}
@@ -57,9 +51,9 @@ class FileSet {
 
 		// parsing each dir:
 		dirs.forEach(function(dir) {
+
 			// COULDO do a file-exist-round beforehand,
 			// so command execution is more likely all-or-nothing
-
 			enforce(fs.existsSync(dir), `no directory or file ${dir}`)
 			enforce(fs.statSync(dir).isDirectory(), 'single File – not handled yet')
 
@@ -100,9 +94,14 @@ class FileSet {
 					// treat singles just like families with the exception,
 					// that p.core is defined by full name...
 					p.core = p.name
+
+					// COULDDO match (under all remaining) for
+					// IpswickCastle44.CR2
+					// IpswickCastle44_04_retouched.jpg
+					//  _ (2-3 digits) nothing/non-digit
 				}
 
-				// open new Family if needed
+				// open new Family if needed COULDDO flyweight getter
 				if (!this._families.has(p.core))
 					this._families.set(p.core, new Family(p.core))
 
@@ -159,7 +158,9 @@ class FileSet {
 		info('== fileSet dump ===========================')
 		for (let [core, family] of this._families) {
 			enforce(core === family._core) // sanity
-			info(`${core} ->  lone◌: ${family._isLonely}  || star★: ${family._isStarred} || num: ${family._map.size}`)
+
+			// TODO fill up with spaces ES6
+			info(`${core} ->  lone: ${family._isLonely}  || star: ${family._isStarred} || num: ${family._map.size}`)
 		}
 		info(' ')
 	}

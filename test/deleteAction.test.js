@@ -15,7 +15,6 @@ import { mockfile, assertFiles, testconfig, recreateDirectory } from './_testtoo
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
 
 // test config
-setLevel(LEVELS.INFO)
 const testDir = testconfig.testDir
 
 import trash from 'trash'

@@ -4,13 +4,8 @@ import chai, { assert } from 'chai'
 import sinon from 'sinon'
 
 // system under test:
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
+import {log, setLevel, LEVELS, info, warn, error, enforce, fail, unmute, mute } from '../src/log'
 
-// test config
-setLevel(LEVELS.INFO)
-
-
-//const testString =
 const testString = 'Ja öäü daß - – 一 \ / <div/> ${hans} Jürgen'
 const testObject = {
 	truth: 42,
@@ -19,33 +14,35 @@ const testObject = {
 	// sub: TODO
 }
 
+const suiteMode = process.env.npm_package_scripts_test_single === 'mocha $1'
+
 let logSpy
-
-describe('pretest', () => {
-
-	it('pretest it', () => {
-		log('Log')
-		warn('Warn')
-	})
-
-}) // describe
 
 describe('testing log', () => {
 
 	beforeEach(function() {
-		logSpy = sinon.spy(console, 'log')
+		if( suiteMode )
+		{
+			unmute()   // only needed in this case
+			// shut up:
+			logSpy = sinon.stub(console, 'log').returns()
+		} else {
+			// be watched, but keep talking
+			logSpy = sinon.spy(console, 'log')
+		}
 	})
 
 	afterEach(function() {
 		console.log.restore()
+
+		if( suiteMode )
+			mute()  // undo for the remainder of suite
 	})
 
 	it('simple log', () => {
-		// works !!  console.log(testString)
 		log(testString)
-
-		sinon.assert.calledOnce(console.log)
-		// log always gets colored green, thus.
+		sinon.assert.called(console.log)
+		// log always gets colored green:
 		sinon.assert.calledWith(logSpy, "\x1b[1;32m" + testString + "\x1b[0m")
 	});
 
@@ -56,6 +53,5 @@ describe('testing log', () => {
 		sinon.assert.calledOnce(console.log)
 		sinon.assert.calledWith(logSpy, "\x1b[1;32m" + '{"truth":42,"yes":true,"str":"Ja öäü daß - – 一  / <div/> ${hans} Jürgen"}' + "\x1b[0m")
 	});
-
 
 }); // describe
