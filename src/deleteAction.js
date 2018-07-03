@@ -2,7 +2,7 @@
 import array from 'core-js/fn/array'
 
 import assert from 'assert'
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from './log'
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from './log'
 
 import {
 	FileSet,
@@ -15,9 +15,12 @@ import {
 async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
 	log('Delete Action ************************')
 
-	// const liveMode = cmd.live || false
-	// const verboseMode = cmd.verbose || false
-	// if (verboseMode) setLevel(LEVELS.INFO)
+	const liveMode = cmd.live || false
+	const verboseMode = cmd.verbose || false
+	if (verboseMode) setLevel(LEVELS.INFO)
+
+	log('a log message')
+	info('an info message')
 
 	// let lonely = cmd.lonely || false
 	// let unstarred = cmd.unstarred || false

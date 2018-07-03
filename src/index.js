@@ -39,6 +39,11 @@ program
 	.option('-s, --unstarred', 'delete unstarred images')
 	.action(promiseWrap(deleteAction))
 
+	// TODO
+	.command('list')
+	// ... how to commonly / re-use actions?
+	.action(promiseWrap(deleteAction))
+
 program.on('--help', function() {
 	console.log([
 		'  Use photo [command] --help for more options on the command',
