@@ -146,7 +146,8 @@ class FileSet {
 	 * @param {force} force if true: actually delete. move-to-recycle otherwise
 	 */
 	async delete(live = false, force = false) {
-		live = live === true // (all but true shall be false)
+		// all but true shall be false
+		live = live === true
 		force = force === true
 
 		for (var [core, family] of this._families) {

@@ -21,7 +21,7 @@ import path from 'path'
 class Family {
 
 	/**
-	 * empty an entire family (determined to be lonely, etc.),
+	 * empty an entire family (determined to be lonely, unstarred, etc.),
 	 * trash / delete respective members
 	 * @param {Family} family
 	 */
@@ -30,7 +30,7 @@ class Family {
 		enforce(typeof force === 'boolean', 'invalid force argument')
 
 		if (!live) {
-			info('mock delete ' + this.dump())
+			this.dump()
 			return
 		}
 
@@ -38,7 +38,7 @@ class Family {
 			fail('force-delete not yet implemented')
 
 		const trashFiles = []
-		for (let [base, member] of this._map) {
+		for (let [member] of this._map) {
 			trashFiles.push( path.join(member.dir, member.base) )
 		}
 
@@ -67,7 +67,6 @@ constructor(core) {
 	// family flags
 	this._isLonely = true // assume for now
 	this._isStarred = false
-	this._onlySidecars = false
 }
 
 add(member) {
@@ -81,11 +80,7 @@ add(member) {
 		this._isLonely = false
 		this._onlySidecars = false
 	}
-	else if (config.extensions_nonraw.includes(member.type)) {
-
-
-		
-	}
+	// else if (...
 
 }
 
@@ -93,8 +88,13 @@ add(member) {
 /**
  * output some core info, for debug purposes
  */
-dump(ret = false, detailed = false /* TODO */ ) {
-	const r = `${this._core} ||  ◌: ${this._isLonely}  || ★: ${this._isStarred} ||  ${this._map.size}`
+
+
+dump(ret = false ) {
+	const r = `${this._core + '          '.substr(this._core.length)}`+
+	` || lone: ${this._isLonely}  || star: ${this._isStarred} || `+
+	` ${this._map.size}`
+
 	if (ret)
 		return r
 	log(r)

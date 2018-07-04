@@ -6,8 +6,6 @@ import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from './log'
 // ↓ extremely important ________________________
 async function listAction(dirs, cmd) {
 
-	log('List Action ************************')
-
 	// COULDDO: common parameter parsing (to a singleton config obj) elsewhere
 
 	log('List: a log message')

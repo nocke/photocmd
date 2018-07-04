@@ -4,10 +4,12 @@
 
 import program from 'commander'
 import pjson from '../package.json'
-import log, { info, warn } from './log'
+import log, { info, warn, error, LEVELS, setLevel } from './log'
 import deleteAction from './deleteAction'
 import listAction from './listAction'
 
+global.app = global.app || {}
+global.app.verbose = false
 
 process.exitCode = 1 // catchall for general errors
 
@@ -27,19 +29,20 @@ const promiseWrap = (func) => (...args) => {
 		})
 }
 
-console.log('\n')
+log('')
 
 program
 	.version(pjson.version) // .version('0.0.1')
 	.option('-v, --verbose', 'log more details')
-	.on('option:verbose', ()=>
-		warn('############## verbosity chosen!')
-	)
+	.on('option:verbose', () => {
+		global.app.verbose = true
+		log.setLevel(log.LEVELS.INFO)
+	})
 
 program
 	.command('delete <dir> [moreDirs...]') // optional and mandatory params
 	.alias('del')
-	.description('delete \"lonely\" or \"unstarred" families of images')
+	.description('–\ndelete \"lonely\" or \"unstarred" families of images\n')
 	.option('-l, --live', 'actually do it')
 	.option('-o, --lonely', 'delete lone images')
 	.option('-s, --unstarred', 'delete unstarred images')
@@ -47,20 +50,18 @@ program
 
 program
 	.command('list [moreParams...]')
-	.description('list whatsoever...')
+	.description('–\nso far just dumping debug info...\n')
 	.option('-y, --Y', 'some other fancy option')
 	.option('-x', 'some fancy option')
 	.action(promiseWrap(listAction))
 
-
-
-
-program.on('--help', function() {
-	console.log([
-		'  Use photo [command] --help for more options on the command',
-		'  e.g. photo delete --help'
-	].join("\n"))
-})
+program
+	.on('--help', function() {
+		log([
+			'  Use photo [command] --help for more options on the command',
+			'  e.g. photo delete --help'
+		].join("\n"))
+	})
 
 // if no params, output help:
 if (process.argv.length == 2)
@@ -70,7 +71,7 @@ if (process.argv.length == 2)
 try {
 	const r = program.parse(process.argv) // actual command execution:
 } catch (err) {
-	error('should NEVER be reached')
+	warn('should NEVER be reached')
 }
 
 // did command run? → if not, output help

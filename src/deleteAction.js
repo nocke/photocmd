@@ -1,4 +1,4 @@
-// import what is not covered by babel runtime
+// import what is not yet covered by babel runtime
 import array from 'core-js/fn/array'
 
 import assert from 'assert'
@@ -13,12 +13,8 @@ import {
 
 // ↓ extremely important ________________________
 async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
-	log('Delete Action ************************')
 
-	// COULDDO: common parameter parsing (to a singleton config obj) elsewhere
 	const liveMode = cmd.live || false
-	const verboseMode = cmd.verbose || false
-	if (verboseMode) setLevel(LEVELS.INFO)
 
 	log('a log message')
 	info('an info message')
@@ -34,7 +30,7 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	const fileSet = new FileSet(dirs)
 	// NEXT: sidecar only...
-	// fileSet.dump()
+	fileSet.dump()
 
 	const loneFiles = fileSet.getLonely()
 	await loneFiles.delete(liveMode)
