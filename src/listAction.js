@@ -4,7 +4,7 @@ import assert from 'assert'
 import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from './log'
 
 // ↓ extremely important ________________________
-async function listAction(firstDir, moreDirs, cmd) {
+async function listAction(dirs, cmd) {
 
 	log('List Action ************************')
 
@@ -13,17 +13,15 @@ async function listAction(firstDir, moreDirs, cmd) {
 	log('List: a log message')
 	info('List: an info message')
 
-	log('firstDir -------------')
-	log(firstDir)
 	log('moreDir -------------')
-	log(moreDirs)
+	log(dirs)
 	log('cmd -------------')
 	// avoiding circular json problem:
 	Object.keys(cmd).forEach( k => log(`${k}`) )
 
 	log('cmd.options -------------')
 	Object.keys(cmd.options).forEach( k => log(`${k}`) )
-	
+
 	// analog zu cmd.verbose  (geht aber nicht)
 	log(` ${cmd.y}`) //geht nicht
 	log(` ${cmd.Y}`) //geht  (?)

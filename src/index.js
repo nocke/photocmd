@@ -28,24 +28,30 @@ const promiseWrap = (func) => (...args) => {
 }
 
 console.log('\n')
-program.version(pjson.version); // .version('0.0.1')
+
+program
+	.version(pjson.version) // .version('0.0.1')
+	.option('-v, --verbose', 'log more details')
+	.on('option:verbose', ()=>
+		warn('############## verbosity chosen!')
+	)
 
 program
 	.command('delete <dir> [moreDirs...]') // optional and mandatory params
 	.alias('del')
 	.description('delete \"lonely\" or \"unstarred" families of images')
-	.option('-v, --verbose', 'log more details')
 	.option('-l, --live', 'actually do it')
 	.option('-o, --lonely', 'delete lone images')
 	.option('-s, --unstarred', 'delete unstarred images')
 	.action(promiseWrap(deleteAction))
 
 program
-	.command('list <param> [moreParams]')
+	.command('list [moreParams...]')
 	.description('list whatsoever...')
 	.option('-y, --Y', 'some other fancy option')
 	.option('-x', 'some fancy option')
 	.action(promiseWrap(listAction))
+
 
 
 
