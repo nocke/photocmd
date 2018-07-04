@@ -6,6 +6,7 @@ import program from 'commander'
 import pjson from '../package.json'
 import log, { info, warn } from './log'
 import deleteAction from './deleteAction'
+import listAction from './listAction'
 
 
 process.exitCode = 1 // catchall for general errors
@@ -39,10 +40,14 @@ program
 	.option('-s, --unstarred', 'delete unstarred images')
 	.action(promiseWrap(deleteAction))
 
-	// TODO
-	.command('list')
-	// ... how to commonly / re-use actions?
-	.action(promiseWrap(deleteAction))
+program
+	.command('list <param> [moreParams]')
+	.description('list whatsoever...')
+	.option('-y, --Y', 'some other fancy option')
+	.option('-x', 'some fancy option')
+	.action(promiseWrap(listAction))
+
+
 
 program.on('--help', function() {
 	console.log([
