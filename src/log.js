@@ -177,6 +177,7 @@ export default Object.assign(log, {
 	error,
 	fail,
 	enforce,
+	setLevel,
 	LEVELS,
 
 	snooze,
