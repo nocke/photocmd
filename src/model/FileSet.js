@@ -145,7 +145,7 @@ class FileSet {
 	 * @param {boolean} live simulate, unless set to true
 	 * @param {force} force if true: actually delete. move-to-recycle otherwise
 	 */
-	async delete(live = false, force = false) {
+	async delete(stats, live = false, force = false) {
 		// all but true shall be false
 		live = live === true
 		force = force === true
@@ -159,11 +159,9 @@ class FileSet {
 		info('== fileSet dump ===========================')
 		for (let [core, family] of this._families) {
 			enforce(core === family._core) // sanity
-
-			// TODO fill up with spaces ES6
-			info(`${core} ->  lone: ${family._isLonely}  || star: ${family._isStarred} || num: ${family._map.size}`)
+			info( family.dump(true) )
 		}
-		info(' ')
+		info('')
 	}
 
 

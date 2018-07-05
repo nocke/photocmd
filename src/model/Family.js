@@ -88,10 +88,8 @@ add(member) {
 /**
  * output some core info, for debug purposes
  */
-
-
 dump(ret = false ) {
-	const r = `${this._core + '          '.substr(this._core.length)}`+
+	const r = `${this._core + '                  '.substr(this._core.length)}`+
 	` || lone: ${this._isLonely}  || star: ${this._isStarred} || `+
 	` ${this._map.size}`
 

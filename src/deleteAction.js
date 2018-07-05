@@ -26,14 +26,19 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	let dirs = [firstDir, ...moreDirs]
 	enforce(!!dirs, 'no directory specified')
 
-	// TODO: fork  lonely / unstarred
+	// COULDDO: fork  lonely / unstarred
 
 	const fileSet = new FileSet(dirs)
-	// NEXT: sidecar only...
 	fileSet.dump()
 
 	const loneFiles = fileSet.getLonely()
-	await loneFiles.delete(liveMode)
+
+	const stats = {}
+	await loneFiles.delete(stats, liveMode)
+
+	
+
+
 }
 
 
