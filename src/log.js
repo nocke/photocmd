@@ -21,7 +21,6 @@
  */
 
 // state ---------------------------
-let coloring = true
 let logLevel = 2
 let muteFlag = false  // mutes all info & log, irrespective of log level (used for full test suite runs)
 
@@ -41,49 +40,38 @@ const color = [
 ]
 
 // COULDDO:
-// • different output targets (logfile, ...), also multiple, thus:  ARRAY (or variadic...)
-// • type detection
-// • smart (legible) dumping of objects, arrays
-// • ...REST parameters (and doing that for each of those)
+// • smart (legible) dumping of objects, arrays, ...
 
-// TODO:  any number of arguments...    log ('the foo object', fooObj, `someValue: ${someValue}`)
-
-
-function _log(level, msg /*  TODO , ...moreArgs */ ) {
-	let out = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`
+function _log(level, messages) {
 
 	if (level < logLevel) {
 		return // skip
 	}
 
-	switch (typeof out) {
-		default:
-			case 'string':
-			break
+	const lines = []
 
-		case 'object':
-			out = JSON.stringify(out)
-			break
-	}
+	messages.forEach( msg => {
+		let line = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`
 
-	if (coloring) {
-		out = color[level] + out + color[0]
-	}
+		switch (typeof line) {
+			default:
+				case 'string':
+				break
 
-	console.log(out)
-}
-
-export function _error(msg, ...args) {
-	if (snoozeCount === null) { // regular use
-		_log(4, msg)
-	} else { // counting uses
-		if (snoozeCount > 0) {
-			snoozeCount--
-		} else {
-			_log(4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******`)
+			case 'object':
+				line = JSON.stringify(line)
+				break
 		}
-	}
-	throw new Error(msg, args)
+
+		lines.push(line)
+	})
+
+	const linesMono = lines.join('\n')
+	const linesColor = color[level] + linesMono + color[0]
+
+	console.log(linesColor) // (.join() avoids a trailing '\n' which comes from console.log anyhow)
+
+	// coulddo: callback to set logger function(s), substituting / adding for console.log
 }
 
 export const LEVELS = Object.freeze({
@@ -106,25 +94,38 @@ export function setLevel(level) {
 	return logLevel
 }
 
-export function info(msg) {
+export function info(...msg) {
 	if (!muteFlag)
 	_log(1, msg)
 }
 
-export function log(msg) {
+export function log(...msg) {
 	if (!muteFlag)
 		_log(2, msg)
 }
 
-export function warn(msg) {
+export function warn(...msg) {
 	_log(3, msg)
+}
+
+// error handling ======================================
+
+export function _error(msg, ...args) {
+	if (snoozeCount === null) { // regular use
+		_log(4, msg)
+	} else { // counting uses
+		if (snoozeCount > 0) {
+			snoozeCount--
+		} else {
+			_log(4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******`)
+		}
+	}
+	throw new Error(msg, args)
 }
 
 export function error(msg, ...args) {
 	_error(msg, ...args)
 }
-
-// error handling ======================================
 
 export function fail(msg = 'failing', ...args) {
 	_error(msg, ...args)
@@ -141,7 +142,7 @@ export function enforce(expr, msg = 'enforce failed', ...args) {
 /**
  * mute error output (but nevertheless throw )
  * on the next n fail() / failed enforces
- * @param {int} n 
+ * @param {int} n
  */
 export function snooze(n) {
 	enforce(Number.isInteger(n), `snooze needs an integer parameter, got ${n}`)
