@@ -25,32 +25,39 @@ class Family {
 	 * trash / delete respective members
 	 * @param {Family} family
 	 */
-	async empty(live, force) {
+	async empty(stats, live, force) {
 		enforce(typeof live === 'boolean', 'invalid live argument')
 		enforce(typeof force === 'boolean', 'invalid force argument')
 
-		if (!live) {
-			this.dump()
-			return
-		}
-
 		if (force)
-			fail('force-delete not yet implemented')
+			fail('TODO force-delete not yet implemented')
 
 		const trashFiles = []
+	
 		for (let [member] of this._map) {
-			trashFiles.push( path.join(member.dir, member.base) )
+			if (live)
+				trashFiles.push( path.join(member.dir, member.base) )
 		}
 
-		await helpers.trashSync(trashFiles)
+		if (live) {
+			await helpers.trashSync(trashFiles)
+		}
+
+		if (!live || global.app.verbose) {
+			this.dump()
+		}
+
+		// stats __________________
+		
+
 
 		// reset state
 		this._core = undefined
 		this._map = new Map()
 
-		// family flags
-		this._isLonely = true // assume for now
-		this._isStarred = false
+		// // family flags
+		// this._isLonely = true // assume for now
+		// this._isStarred = false
 }
 
 

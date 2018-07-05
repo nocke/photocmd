@@ -4,12 +4,11 @@
 
 import program from 'commander'
 import pjson from '../package.json'
+import './global'
 import log, { info, warn, error, LEVELS, setLevel } from './log'
 import deleteAction from './deleteAction'
 import listAction from './listAction'
 
-global.app = global.app || {}
-global.app.verbose = false
 
 process.exitCode = 1 // catchall for general errors
 
