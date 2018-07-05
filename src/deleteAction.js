@@ -33,13 +33,24 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	const loneFiles = fileSet.getLonely()
 
-	const stats = {}
+	const stats = {
+		familiesTotal: 0,
+		familiesDeleted: 0,
+		skippedNotLonely: 0,
+		skippedStarred: 0,
+		filesTotal: 0,
+		filesDeleted: 0
+	}
+
 	await loneFiles.delete(stats, liveMode)
 
-	
+	log('statistics ____________________')
+	log(
+		`familiesTotal:  ${stats.familiesTotal} \n`+
+		
 
-
+		``
+	)
 }
-
 
 export default deleteAction

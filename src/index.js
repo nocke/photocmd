@@ -69,9 +69,11 @@ if (process.argv.length == 2)
 
 // in help case, parse exits ( .outputHelp() would avoid this )
 try {
-	const r = program.parse(process.argv) // actual command execution:
+	// actual command execution:
+	const r = program.parse(process.argv)
 } catch (err) {
 	warn('should NEVER be reached')
+	error('should NEVER be reached')
 }
 
 // did command run? → if not, output help
