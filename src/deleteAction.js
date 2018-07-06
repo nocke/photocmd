@@ -44,7 +44,7 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	await loneFiles.delete(stats, liveMode)
 
-	log('statistics ____________________', stats)
+	log('\nstatistics ____________________', stats)
 }
 
 export default deleteAction

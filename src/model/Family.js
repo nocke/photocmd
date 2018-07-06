@@ -20,6 +20,23 @@ import path from 'path'
  */
 class Family {
 
+
+	/**
+	 * @param {string} core Constructs a family, based on core basename (PM5A2087, or name in case of singles)
+	 */
+	constructor(core) {
+		enforce(typeof core === 'string', 'invalid core argument')
+
+		// properties ============================
+		this._core = core
+		this._map = new Map()
+
+		// family flags
+		this._isLonely = true // assume for now
+		this._isStarred = false
+	}
+
+
 	/**
 	 * empty an entire family (determined to be lonely, unstarred, etc.),
 	 * trash / delete respective members
@@ -34,23 +51,19 @@ class Family {
 
 		const trashFiles = []
 
-		for (let [member] of this._map) {
-			if (live)
-				trashFiles.push( path.join(member.dir, member.base) )
+		this._map.forEach( member => {
+
+			trashFiles.push( path.join(member.dir, member.base) )
 			stats.filesDeleted++
+		})
+
+		if (!live || global.app.verbose) {
+			trashFiles.forEach( f => log(`deleting ${f} ...`))
 		}
 
 		if (live) {
 			await helpers.trashSync(trashFiles)
 		}
-
-		if (!live || global.app.verbose) {
-			this.dump()
-		}
-
-		// stats __________________
-		
-
 
 		// reset state
 		this._core = undefined
@@ -62,20 +75,6 @@ class Family {
 }
 
 
-/**
- * @param {string} core Constructs a family, based on core basename (PM5A2087, or name in case of singles)
- */
-constructor(core) {
-	enforce(typeof core === 'string', 'invalid core argument')
-
-	// properties ============================
-	this._core = core
-	this._map = new Map()
-
-	// family flags
-	this._isLonely = true // assume for now
-	this._isStarred = false
-}
 
 add(member) {
 	enforce(member instanceof Member, 'can only add members')

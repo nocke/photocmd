@@ -59,7 +59,7 @@ function _log(level, messages) {
 				break
 
 			case 'object':
-				line = JSON.stringify(line,null,'  ')
+				line = JSON.stringify(line, null, '  ')
 				break
 		}
 
