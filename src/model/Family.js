@@ -33,10 +33,11 @@ class Family {
 			fail('TODO force-delete not yet implemented')
 
 		const trashFiles = []
-	
+
 		for (let [member] of this._map) {
 			if (live)
 				trashFiles.push( path.join(member.dir, member.base) )
+			stats.filesDeleted++
 		}
 
 		if (live) {
@@ -91,6 +92,9 @@ add(member) {
 
 }
 
+size() {
+	return this._map.size
+}
 
 /**
  * output some core info, for debug purposes

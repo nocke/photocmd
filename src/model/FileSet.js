@@ -156,19 +156,33 @@ class FileSet {
 
 		for (var [core, family] of this._families) {
 			await family.empty(stats, live, force)
+			stats.familiesDeleted++
 			this._families.delete(family)
 		}
 	}
 
-	dump(ret = false, detailed = false) {
+	filesTotal() {
+		// coulddo reduce on such a map, or rather use pokos?
+		let total = 0
+		for (var [core, family] of this._families) {
+			total += family.size()
+		} 
+
+		return total
+	}
+
+	size() {
+		return this._families.size
+	}
+
+	dump(ret = false) {
 		info('== fileSet dump ===========================')
 		for (let [core, family] of this._families) {
 			enforce(core === family._core) // sanity
 			info( family.dump(true) )
 		}
-		info('')
+		info()
 	}
-
 
 } // class
 

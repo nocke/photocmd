@@ -16,11 +16,16 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	const liveMode = cmd.live || false
 
-	log('a log message')
-	info('an info message')
-
 	let lonely = cmd.lonely || false
 	let unstarred = cmd.unstarred || false
+
+	const stats = {
+		familiesTotal: 0,
+		familiesToDelete: 0,
+		familiesDeleted: 0,
+		filesTotal: 0,
+		filesDeleted: 0
+	}
 
 	// merge all dirs together
 	let dirs = [firstDir, ...moreDirs]
@@ -29,28 +34,17 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	// COULDDO: fork  lonely / unstarred
 
 	const fileSet = new FileSet(dirs)
+	stats.filesTotal = fileSet.filesTotal()
+
 	fileSet.dump()
+	stats.familiesTotal = fileSet.size()
 
 	const loneFiles = fileSet.getLonely()
-
-	const stats = {
-		familiesTotal: 0,
-		familiesDeleted: 0,
-		skippedNotLonely: 0,
-		skippedStarred: 0,
-		filesTotal: 0,
-		filesDeleted: 0
-	}
+	stats.familiesToDelete = loneFiles.size()
 
 	await loneFiles.delete(stats, liveMode)
 
-	log('statistics ____________________')
-	log(
-		`familiesTotal:  ${stats.familiesTotal} \n`+
-		
-
-		``
-	)
+	log('statistics ____________________', stats)
 }
 
 export default deleteAction
