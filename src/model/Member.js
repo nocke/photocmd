@@ -1,6 +1,6 @@
 'use strict'
 import config from '../../config'
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../log'
+import log, { info, warn, error, setLevel, LEVELS, enforce, fail } from '../log'
 
 class Member {
 

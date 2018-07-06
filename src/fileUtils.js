@@ -9,7 +9,7 @@ import fs from 'fs'
 import rimraf from 'rimraf'
 import trash from 'trash'
 
-import { enforce, fail, log, error } from './log'
+import log, { info, warn, error, setLevel, LEVELS, enforce, fail } from './log'
 
 /**
  * A move() function that renames, if possible, or falls back to copying
