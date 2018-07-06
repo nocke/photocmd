@@ -1,7 +1,7 @@
 'use strict'
 
 import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../log'
-import helpers from '../helpers'
+import fileUtils from '../fileUtils'
 import config from '../../config'
 import { Member } from '.'
 import path from 'path'
@@ -62,7 +62,7 @@ class Family {
 		}
 
 		if (live) {
-			await helpers.trashSync(trashFiles)
+			await fileUtils.trashSync(trashFiles)
 		}
 
 		// reset state

@@ -8,7 +8,6 @@ import {
 	Family,
 	Member
 } from '.'
-import helpers from '../helpers'
 
 /*
  *  data structure of FileSet
