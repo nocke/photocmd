@@ -21,7 +21,7 @@ import trash from 'trash'
 
 
 // system under test:
-import helpers from '../src/helpers'
+import fileUtils from '../src/fileUtils'
 import Family from '../src/model/Family'
 import deleteAction from '../src/deleteAction'
 
@@ -42,16 +42,16 @@ describe('deleteAction', () => {
 		const trashFiles = []
 		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) )
 
-		await helpers.trashSync(trashFiles)
+		await fileUtils.trashSync(trashFiles)
 
 		// TODO: warn when trashing non-existing
-		// await helpers.trashSync('banana')
+		// await fileUtils.trashSync('banana')
 
 		mockFiles.forEach(file =>
 			assert(!fs.existsSync(file))
 		)
 
-		await helpers.removeFolder(testDir)
+		await fileUtils.removeFolder(testDir)
 		assert(!fs.existsSync(testDir), 'directory not gone!')
 	})
 

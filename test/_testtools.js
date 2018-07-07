@@ -15,7 +15,7 @@ export const testconfig = {
 	test: '1'
 }
 
-import helpers from '../src/helpers'
+import fileUtils from '../src/fileUtils'
 
 // helper functions for testing -------------------------
 
@@ -23,7 +23,7 @@ import helpers from '../src/helpers'
 export const recreateDirectory = async (dirName) => {
 
 		// ensured fully fresh testDir creation
-		await helpers.removeFolder(dirName)
+		await fileUtils.removeFolder(dirName)
 		assert.isFalse(fs.existsSync(dirName))
 		fs.mkdirSync(dirName)
 		assert.isTrue(fs.existsSync(dirName))

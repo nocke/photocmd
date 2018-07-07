@@ -1,6 +1,6 @@
 'use strict'
 /*
- * Franks small set of little helpers.
+ * Franks small set of little fileUtils.
  * i.e. sanity checks
  */
 import path from 'path'
