@@ -14,6 +14,9 @@ const testObject = {
 	// sub: TODO
 }
 
+// great to get the expectd log string: JSON.stringify( logSpy.args[0][0] )
+const testObjectString = "{\n  \"truth\": 42,\n  \"yes\": true,\n  \"str\": \"Ja öäü daß - – 一  / <div/> ${hans} Jürgen\"\n}"
+
 const suiteMode = process.env.npm_package_scripts_test_single === 'mocha $1'
 
 let logSpy
@@ -51,7 +54,7 @@ describe('testing log', () => {
 		log(testObject)
 
 		sinon.assert.calledOnce(console.log)
-		sinon.assert.calledWith(logSpy, "\x1b[1;32m" + '{"truth":42,"yes":true,"str":"Ja öäü daß - – 一  / <div/> ${hans} Jürgen"}' + "\x1b[0m")
+		sinon.assert.calledWith(logSpy, "\x1b[1;32m" + testObjectString + "\x1b[0m")
 	});
 
 	it('multiple params - info', () => {
@@ -60,10 +63,10 @@ describe('testing log', () => {
 
 		sinon.assert.calledOnce(console.log)
 		sinon.assert.calledWith(logSpy,
-			"\x1b[1;34m"+
-			"info vanilla string\n"+
-			"{\"truth\":42,\"yes\":true,\"str\":\"Ja öäü daß - – 一  / <div/> ${hans} Jürgen\"}\n"+
-			"someValue: Ja öäü daß - – 一 \ / <div/> ${hans} Jürgen"+
+			"\x1b[1;34m" +
+			"info vanilla string\n" +
+			testObjectString + "\n" +
+			"someValue: Ja öäü daß - – 一 \ / <div/> ${hans} Jürgen" +
 			"\x1b[0m"
 		)
 	})
@@ -79,7 +82,7 @@ describe('testing log', () => {
 		sinon.assert.calledWith(logSpy,
 			"\x1b[1;33m"+
 			"warn vanilla string\n"+
-			"{\"truth\":42,\"yes\":true,\"str\":\"Ja öäü daß - – 一  / <div/> ${hans} Jürgen\"}\n"+
+			testObjectString + "\n" +
 			"someValue: Ja öäü daß - – 一 \ / <div/> ${hans} Jürgen"+
 			"\x1b[0m"
 		)
