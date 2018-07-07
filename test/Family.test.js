@@ -12,7 +12,7 @@ import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnoo
 const testDir = testconfig.testDir
 
 // system under test:
-import helpers from '../src/helpers'
+import fileUtils from '../src/fileUtils'
 import Family from '../src/model/Family'
 import FileSet from '../src/model/FileSet' // testing has to go through FileSet anyway
 
@@ -22,7 +22,7 @@ import FileSet from '../src/model/FileSet' // testing has to go through FileSet 
 describe('Family Initialize', () => {
 
 	beforeEach(async () => {
-		await helpers.removeFolder(testDir)
+		await fileUtils.removeFolder(testDir)
 		fs.mkdirSync(testDir)
 	})
 
