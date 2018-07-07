@@ -15,6 +15,9 @@ import {
 // ↓ extremely important ________________________
 async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
 
+	// simulation
+	// throw new Error('mocking error')
+
 	const liveMode = cmd.live || false
 
 	let lonely = cmd.lonely || false

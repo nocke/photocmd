@@ -62,8 +62,9 @@ class Family {
 		}
 
 		if (live) {
-			warn( 'TEMPTEMP THIS WOULD BE LIVE DELETING OF ',trashFiles)
-			// await fileUtils.trashSync(trashFiles)
+			// warn( 'TEMPTEMP THIS WOULD BE LIVE DELETING OF ',trashFiles)
+			// warn('now deleting',trashFiles)
+			await fileUtils.trashSync(trashFiles)
 		}
 
 		// reset state
