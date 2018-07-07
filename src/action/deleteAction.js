@@ -2,13 +2,13 @@
 import array from 'core-js/fn/array'
 
 import assert from 'assert'
-import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from './log'
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../log'
 
 import {
 	FileSet,
 	Family,
 	Member
-} from './model'
+} from '../model'
 
 
 // ↓ extremely important ________________________

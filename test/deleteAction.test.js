@@ -23,7 +23,7 @@ import trash from 'trash'
 // system under test:
 import fileUtils from '../src/fileUtils'
 import Family from '../src/model/Family'
-import deleteAction from '../src/deleteAction'
+import deleteAction from '../src/action/deleteAction'
 
 
 describe('deleteAction', () => {
