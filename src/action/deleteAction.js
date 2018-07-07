@@ -3,7 +3,7 @@ import array from 'core-js/fn/array'
 
 import assert from 'assert'
 import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../log'
-import {cancellableCountdown} from '../promiseUtils'
+import { countdown } from '../promiseUtils'
 
 import {
 	FileSet,
@@ -43,12 +43,10 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	const loneFiles = fileSet.getLonely()
 	stats.familiesToDelete = loneFiles.size()
 
-	if (liveMode) {
-		await cancellableCountdown( 3, loneFiles.delete, stats, liveMode )
-		// await loneFiles.delete(stats, liveMode)
-	} else {
-		await loneFiles.delete(stats, liveMode)
-	}
+	if (liveMode)
+		await countdown(3)
+
+	await loneFiles.delete(stats, liveMode)
 
 	log('\nstatistics ____________________', stats)
 }

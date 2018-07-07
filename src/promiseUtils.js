@@ -26,29 +26,23 @@ export const promiseWrap = (func) => (...args) => {
  * count's down from sec to 0, then launches func
  * if process is interrupted, func gets _not_ called
  * coulddo: get a return handle to .cancel()
- * 
+ *
  * TODO: this needs async/await love
  */
-export const cancellableCountdown = async (sec, func, ...params) => {
-	enforce(sec && Number.isInteger(sec))
-	let count = sec
+export const countdown = async (sec) =>
+	new Promise((resolve, reject) => {
+		enforce(sec && Number.isInteger(sec))
+		let count = sec
 
-	// das kann aber auch noch schrott sein, und wir brauchen Promises,
-	// outer resolved erst wenn..
-
-	// TODO: mir das mit parametern knicken? kann man ja per closure reingeben
-
-	const round = async () => {
-		warn(`counting ${count} ...`)
-
-		if (count === 0) {
-			await func.apply(func, params)
-			return
+		const round = async () => {
+			warn(`counting ${count} ...`)
+			if (count === 0) {
+				resolve(true) // no need for specific value
+			} else {
+				count--
+				setTimeout(round, 1000)
+			}
 		}
 
-		count--
-		setTimeout(round, 1000)
-	}
-
-	await round()
-}
+		round()
+	})
