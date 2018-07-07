@@ -8,25 +8,9 @@ import './global'
 import log, { info, warn, error, LEVELS, setLevel } from './log'
 import deleteAction from './action/deleteAction'
 import listAction from './action/listAction'
+import { promiseWrap } from './promiseUtils'
 
-
-process.exitCode = 1 // catchall for general errors
-
-const promiseWrap = (func) => (...args) => {
-
-	const cmd = args[args.length - 1]
-	func.call(null, ...args)
-		.then(result => {
-			info('completed succesfully __________')
-			process.exitCode = 0
-		})
-		.catch(err => {
-			warn(err.message) // (makes log in error itself superficious)
-			if (cmd.verbose)
-				log(err.stack)
-			process.exitCode = 126 // command cannot execute
-		})
-}
+process.exitCode = 1 // assume there to be errors for now
 
 log('')
 
