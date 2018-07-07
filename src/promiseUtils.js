@@ -35,7 +35,7 @@ export const countdown = async (sec) =>
 		let count = sec
 
 		const round = async () => {
-			warn(`counting ${count} ...`)
+			log(`counting ${count} ...`)
 			if (count === 0) {
 				resolve(true) // no need for specific value
 			} else {

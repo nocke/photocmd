@@ -3,7 +3,6 @@
 /**
  * testing the delete action
  *
- *
  */
 
 import chai, { assert } from 'chai'
@@ -16,22 +15,25 @@ import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/
 
 // test config
 const testDir = testconfig.testDir
-
 import trash from 'trash'
-
 
 // system under test:
 import fileUtils from '../src/fileUtils'
 import Family from '../src/model/Family'
 import deleteAction from '../src/action/deleteAction'
 
+let clock
 
 describe('deleteAction', () => {
 
 	beforeEach(async () => {
 		await recreateDirectory(testDir)
+		clock = sinon.useFakeTimers()
 	})
 
+	afterEach(async () => {
+		clock.restore()
+	})
 
 	it('general trashSync test', async () => {
 		// // create a number of files, delete a subset. verify. done.
@@ -44,7 +46,7 @@ describe('deleteAction', () => {
 
 		await fileUtils.trashSync(trashFiles)
 
-		// TODO: warn when trashing non-existing
+		// COULDDO: warn when trashing non-existing
 		// await fileUtils.trashSync('banana')
 
 		mockFiles.forEach(file =>
@@ -84,7 +86,23 @@ describe('deleteAction', () => {
 			]
 		)
 
-		await deleteAction(testDir, [], { live: true, lonely: true })
+		await new Promise((resolve, reject) => {
+			// await
+			deleteAction(testDir, [], { live: true, lonely: true }).then(
+				(value) => {
+					log('now it happend')
+					resolve()
+				},
+				(reason) => {
+					reject(reason)
+				}
+			)
+			// by not using await (despite deleteAction being an sync function)
+			// but rather just chaining a then, this clock.tick get run while
+			// deleteAction is running resp. while it is waiting in some
+			// setTimeout for it's countdown
+			clock.tick(5000)
+		})
 
 		await assertFiles(
 			testDir, {
@@ -109,9 +127,8 @@ describe('deleteAction', () => {
 				'DSCN123.jpeg': true
 			}
 		)
-			log('end of test ___________________________')
 
-
+		log('end of test ___________________________')
 	}) // delete lonely
 
 })
