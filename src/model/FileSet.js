@@ -146,18 +146,20 @@ class FileSet {
 	 */
 	async delete(stats, live = false, force = false) {
 
-		// TODO: if  live , delay with countdown. Option to cancel (closure flag probably)
-		// https://gist.github.com/ericelliott/7da732294d4c23c549aeff887e02fa82
-
 		// all but true shall be false
 		live = live === true
 		force = force === true
 
-		for (var [core, family] of this._families) {
-			await family.empty(stats, live, force)
-			stats.familiesDeleted++
-			this._families.delete(family)
+		const innerDelete = async () => {
+			for (var [core, family] of this._families) {
+				await family.empty(stats, live, force)
+				stats.familiesDeleted++
+				this._families.delete(family)
+			}
 		}
+
+		await innerDelete()
+
 	}
 
 	filesTotal() {
