@@ -49,8 +49,8 @@ const extractSample = (zipfile, dir) => {
 
 describe('real command-line: Delete', function () {
 
-	// for entire describe
-	this.slow(1000)
+	// for entire describe - live execution requires 3sec wait and a bit of execution
+	this.slow(2000)
 
 	before( () => {
 		// sanity self-test with node version ≥ 8
@@ -84,37 +84,38 @@ describe('real command-line: Delete', function () {
 
 	})
 
-	// it.only('preview from command line', async () => {
+	it('preview and live', async () => {
 
-	// 	await extractSample(path.resolve(global.app.root, 'REF_sample1'))
-	// })
-
-
-	it('preview from command line', async () => {
-
-		// now with images
 		await extractSample('sample2.zip', path.resolve(testDirAbs))
-
-		// sanity sample2 existence
+		// sanity on sample2
 		enforce(fs.existsSync(path.join(testDirAbs, 'sample2', 'IMG_2586.JPG')))
 		enforce(fs.existsSync(path.join(testDirAbs, 'sample2', 'PM5A2847.jPg')))
 
-		// avoid all linking matters
+		// dry run
 		const result =  execSync(
-			`node ./build/index.js delete ${testDirLocal} -v`,
+			`node ./build/index.js delete ${testDirLocal}/sample2`,
 			{ cwd: global.app.root }
  		).toString()
 
+		// verify stats
+		assert.match(result, /familiesTotal.*\D11/, 'regexp matches');
+		assert.match(result, /familiesToDelete.*\D5/, 'regexp matches');
+		assert.match(result, /familiesDeleted.*\D5/, 'regexp matches');
+		assert.match(result, /filesTotal.*\D14/, 'regexp matches');
+		assert.match(result, /filesDeleted.*\D6/, 'regexp matches');
 
-		// photo delete build/commandTests/sample1 -v
+		// // can't do it, unless we have a  TODO skipCountdown, since test takes too long
+		// // live - doing it!
+		// // dry run
+		// const result2 =  execSync(
+		// 	`node ./build/index.js delete ${testDirLocal}/sample2 -l`,
+		// 	{ cwd: global.app.root }
+ 		// ).toString()
 
-		// dann output checking
-		//
-
-		log('')
-		log(result)
+		// warn(result2)
 
 	})
+
 
 })
 
