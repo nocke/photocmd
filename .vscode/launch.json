@@ -1,0 +1,55 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Photo as command",
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceRoot}/build/**/*.js"
+			],
+			"program": "${workspaceRoot}/build/index.js",
+			"protocol": "auto",
+			"cwd": "${workspaceRoot}",
+			"args": [
+        		"delete",
+        		"sample1",
+				"-lv",
+				"--lonely"
+			]
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "my Mocha Tests",
+			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"args": [
+				"-u",
+				"tdd",
+				"--timeout",
+				"999999",
+				"--colors",
+				"${workspaceFolder}/test"
+			],
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Mocha Test Single",
+			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"args": [
+				"-u",
+				"tdd",
+				"--timeout",
+				"999999",
+				"--colors",
+				"${workspaceFolder}/test/Family.spec.js"
+			],
+			"internalConsoleOptions": "openOnSessionStart"
+		}
+
+	]
+}

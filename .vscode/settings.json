@@ -1,0 +1,25 @@
+{
+	// disable "the competition" on styling
+	"eslint.enable": false,
+	"tslint.enable": false,
+	"tslint.jsEnable": false,
+
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+
+	// supposedly a fix for the
+	// not-quite-working
+	// window.openFilesInNewWindow
+	// https://github.com/Microsoft/vscode/issues/11491
+	"workbench.editor.enablePreview": false,
+	"editor.tabSize": 4,
+	"files.exclude": {
+		"**/.git": true,
+		// "**/.sass-cache": true,
+		"**/.tmp": true,
+		"**/node_modules": true,
+		"**/build": true
+	},
+	// ignore, according to .gitignore
+	"search.useIgnoreFilesByDefault": true
+}

@@ -1,0 +1,110 @@
+
+
+//     <────────┼─────────┼─────────┼──────────┼──────────┤
+//       purple    blue     green      yellow    orange
+$breakpoints: (s: 480px, m: 768px, l: 960px, xl: 1200px)
+$tween: ()
+
+// generate inbetween sizes
+$prior: null
+@each $bp, $value in $breakpoints
+  @if $prior != null
+    $tweenResolution : floor( (map-get($breakpoints, $prior) + map-get($breakpoints, $bp)) / 2)
+    $tuple: ( #{$prior}-#{$bp} : $tweenResolution )
+    $tween: map-merge($tween, $tuple)
+  $prior: $bp
+
+$breakpoints: map-merge($breakpoints, $tween)
+
+// debug output
+// @each $bp, $value in $breakpoints
+//   .banana-#{$bp}
+//     color: #{$value}
+
+
+=below($breakpoint)
+  $value: map-get($breakpoints, $breakpoint)
+  // if key exists in map, print media query, otherwise check for valid unit value
+  @if $value != null
+    @media (max-width: $value)
+      @content
+  @else if (not unitless($breakpoint))
+    @media (max-width: $breakpoint)
+      @content
+  @else
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Please make sure it is defined in `$breakpoints` map."
+
+=above($breakpoint)
+  $value: map-get($breakpoints, $breakpoint)
+  // if key exists in map, print media query, otherwise check for valid unit value
+  @if $value != null
+    @media (min-width: $value+1)
+      @content
+  @else if (not unitless($breakpoint))
+    @media (min-width: $breakpoint+1)
+      @content
+  @else
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Please make sure it is defined in `$breakpoints` map."
+
+=lower($breakpoint)
+  $value: map-get($breakpoints, $breakpoint)
+  // if key exists in map, print media query, otherwise check for valid unit value
+  @if $value != null
+    @media (max-height: $value)
+      @content
+  @else if (not unitless($breakpoint))
+    @media (max-height: $breakpoint)
+      @content
+  @else
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Please make sure it is defined in `$breakpoints` map."
+
+=higher($breakpoint)
+  $value: map-get($breakpoints, $breakpoint)
+  // if key exists in map, print media query, otherwise check for valid unit value
+  @if $value != null
+    @media (min-height: $value+1)
+      @content
+  @else if (not unitless($breakpoint))
+    @media (min-height: $breakpoint+1)
+      @content
+  @else
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Please make sure it is defined in `$breakpoints` map."
+
+
+
+// For each key in the map, created an own class
+@each $name, $value in $breakpoints
+  .hide-#{$name}
+    +below($name)
+        display: none !important  //we mean it. no override by some coincidental precedence
+  .show-#{$name}
+    display: none !important
+    +below($name)
+        display: block !important
+  .show-inline-#{$name}
+    +below($name)
+        display: inline !important
+
+
+// usage / testing -------------------------------------------------
+// .test1
+//   background: yellow
+//   +below(xs)
+//     background: orange
+//   +below(700px)
+//     background: purple
+//   +above(xl)
+//     background: green
+//   +above(999px)
+//     background: darkgreen
+
+// .test2
+//   +lower(400px)
+//     color: blue
+//   +higher(m)
+//     color: pink
+
+// .test3
+//     @extend .hide-m
+//     background: darkorange
+

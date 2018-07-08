@@ -6,14 +6,23 @@
 *.bak
 tmp
 
-# folders
+
+############################
+# build and cache folders
+PREP
+REF_*
 cache/
 log/
-PREP/
 [Bb]uild/
 
-# sample image folder
+app/styles.css
+app/maps/
+
+
+# sample image folder (too large to commit)
 sample?/
+# sample zips (copy placed in /depot/own/LARGEFILES)
+sample?.zip
 
 # all hidden files/folders (except .gitignore, .htaccess,... )
 # there might be .htaccess on multiple levels...
@@ -23,9 +32,15 @@ sample?/
 !.htpasswd
 !.editorconfig
 !.babelrc
+!.jsbeautifyrc
 
-# versioning
-.svn
+## permit specific vscode ones
+## (stackoverflow.com/a/5534865/444255)
+!.vscode
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
 
 
 ######################
@@ -64,8 +79,3 @@ nbproject
 # wp subfolders (might !negate own plugin again, if it happens)
 # top-level and certain subfolders, but not  /wp-config[-sample]
 
-#########################
-# output folders (generated stuff)
-/public/**/*.css
-/public/**/*.css.map
-/public/**/*.js.map

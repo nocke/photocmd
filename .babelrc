@@ -1,4 +1,7 @@
 {
-  "presets": ["es2015"],
-  "sourceMaps": "map"
+	"presets": ["es2015"],
+	"plugins": ["transform-runtime"],
+	"retainLines": true,
+	"comments": false,
+	"sourceMaps": "both"
 }
