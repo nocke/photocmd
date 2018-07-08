@@ -6,13 +6,13 @@ import sinon from 'sinon'
 import fs from 'fs'
 
 import { mockfile, assertFiles, testconfig } from './_testtools'
-import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnooze } from '../src/log'
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnooze } from '../src/util/log'
 
 // test config _______________________
 const testDir = testconfig.testDir
 
 // system under test:
-import fileUtils from '../src/fileUtils'
+import fileUtils from '../src/util/fileUtils'
 import Family from '../src/model/Family'
 import FileSet from '../src/model/FileSet' // testing has to go through FileSet anyway
 

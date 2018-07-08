@@ -11,14 +11,14 @@ import sinon from 'sinon'
 import fs from 'fs'
 
 import { mockfile, assertFiles, testconfig, recreateDirectory } from './_testtools'
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
 
 // test config
 const testDir = testconfig.testDir
 import trash from 'trash'
 
 // system under test:
-import fileUtils from '../src/fileUtils'
+import fileUtils from '../src/util/fileUtils'
 import Family from '../src/model/Family'
 import deleteAction from '../src/action/deleteAction'
 

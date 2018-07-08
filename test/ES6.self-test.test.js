@@ -3,7 +3,7 @@
 import chai, { assert } from 'chai'
 import path from 'path'
 import sinon from 'sinon'
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
 
 
 // a simple promise function
