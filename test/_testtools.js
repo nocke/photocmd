@@ -3,7 +3,7 @@
 import chai, { assert } from 'chai'
 import path from 'path'
 import fs from 'fs'
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
 
 // set here, unless already set elsewhere
 global.app = global.app || {} // I rather open my own subspace
@@ -15,7 +15,7 @@ export const testconfig = {
 	test: '1'
 }
 
-import fileUtils from '../src/fileUtils'
+import fileUtils from '../src/util/fileUtils'
 
 // helper functions for testing -------------------------
 

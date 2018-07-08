@@ -1,7 +1,7 @@
 'use strict'
 
-import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../log'
-import fileUtils from '../fileUtils'
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../util/log'
+import fileUtils from '../util/fileUtils'
 import config from '../../config'
 import { Member } from '.'
 import path from 'path'
@@ -62,8 +62,6 @@ class Family {
 		}
 
 		if (live) {
-			// warn( 'TEMPTEMP THIS WOULD BE LIVE DELETING OF ',trashFiles)
-			// warn('now deleting',trashFiles)
 			await fileUtils.trashSync(trashFiles)
 		}
 

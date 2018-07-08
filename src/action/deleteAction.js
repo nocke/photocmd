@@ -2,8 +2,8 @@
 import array from 'core-js/fn/array'
 
 import assert from 'assert'
-import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../log'
-import { countdown } from '../promiseUtils'
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../util/log'
+import { countdown } from '../util/promiseUtils'
 
 import {
 	FileSet,

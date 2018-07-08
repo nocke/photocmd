@@ -1,5 +1,5 @@
 'use strict'
-import { mute } from "../src/log";
+import { mute } from "../src/util/log";
 
 // the global nodejs object with some settings
 import '../src/global'

@@ -142,8 +142,7 @@ export async function trashSync(filesArray) {
 			// under linux returns an object with
 			//	 path: path to trashed file location (“inside the can”)
 			//	 info: pointing to original, undeleted file position
-			log(filesArray)
-
+			// log(filesArray)
 			resolve(true)
 		}).catch((err) =>  {
 			// TODO leave to higher level (or use reject?)

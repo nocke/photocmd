@@ -14,7 +14,7 @@ import fs from 'fs'
 import extract from 'extract-zip'
 
 import { recreateDirectory, mockfile, assertFiles, testconfig } from './_testtools'
-import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/log'
+import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
 
 import { execSync } from 'child_process'
 

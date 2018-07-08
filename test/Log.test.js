@@ -4,7 +4,7 @@ import chai, { assert } from 'chai'
 import sinon from 'sinon'
 
 // system under test:
-import {log, setLevel, LEVELS, info, warn, error, enforce, fail, unmute, mute } from '../src/log'
+import {log, setLevel, LEVELS, info, warn, error, enforce, fail, unmute, mute } from '../src/util/log'
 
 const testString = 'Ja öäü daß - – 一 \ / <div/> ${hans} Jürgen'
 const testObject = {
