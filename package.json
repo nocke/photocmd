@@ -13,8 +13,8 @@
     "test": "mocha ./test/**/*.test.js",
     "test-watch": "mocha -R list -w ./test/**/*.test.js",
     "test-single": "mocha $1",
-	"test-single-watch": "mocha -R list -w $1",
-	"test-live": "unzip -o sample2.zip -d build/commandTests/  &&  photo del ./build/commandTests/sample2/ -lv",
+    "test-single-watch": "mocha -R list -w $1",
+    "test-live": "unzip -o sample2.zip -d build/commandTests/  &&  photo del ./build/commandTests/sample2/ -lv",
     "paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
     "beautify": "scripts/beautify.sh"
   },
