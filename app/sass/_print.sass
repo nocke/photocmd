@@ -8,56 +8,56 @@
 // general stuff (valid for any site) _______________________
 
 .printonly
-    color: green
-    display: none !important
+color: green
+display: none!important
 
 @media print
-    .printonly
-        display: block !important
+	.printonly
+display: block!important
 
-    .neverprint,
-        display: none !important
+	.neverprint,
+	display: none!important
 
-    // otherwise, white becomes some light gray
-    body
-        color: black
+// otherwise, white becomes some light gray
+body
+color: black
 
-    footer
-        display: none
+footer
+display: none
 
 
 // site-specific tweaks _________________________________
 
 @media print
-    body
-        font-size: 16px // a bit smaller than on screen
-        padding-top: 0
+body
+font - size: 16 px // a bit smaller than on screen
+padding - top: 0
 
-    // "inline" the abs-positioned head
-    header
-        position: static
-        height: auto !important
+// "inline" the abs-positioned head
+header
+position: static
+height: auto!important
 
-    header .header-image
-        height: auto !important
+header.header - image
+height: auto!important
 
-    h1
-        margin-top: 0.2em !important
+h1
+margin - top: 0.2e m!important
 
-    // de-corner-pinning
-    body.cornerpin, body.cornerpin-center
-        display: block !important
-        position: relative !important
+// de-corner-pinning
+body.cornerpin, body.cornerpin - center
+display: block!important
+position: relative!important
 
-    // never print “connected to Browser Sync”
-    #__bs_notify__
-        display: none !important
+// never print “connected to Browser Sync”
+# __bs_notify__
+display: none!important
 
-    .wrap
-        max-width: none
+	.wrap
+max - width: none
 
-    footer .teaserbox
-        font-size: 3rem
+footer.teaserbox
+font - size: 3 rem
 
 
 // TOCHECK the min-height: 100vh pushing the footer

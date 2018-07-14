@@ -1,57 +1,57 @@
-$shadowTiny: 0 1px 1px rgba(black, 0.6)
-$shadowMassive: 0 4px 8px rgba(0, 0, 0, 1)
+$shadowTiny: 0 1 px 1 px rgba( black, 0.6 )
+$shadowMassive: 0 4 px 8 px rgba( 0, 0, 0, 1 )
 
-=shadow-tiny
-    box-shadow: $shadowTiny
+= shadow - tiny
+box - shadow: $shadowTiny
 
-=shadow-tiny-text
-    text-shadow: $shadowTiny
+= shadow - tiny - text
+text - shadow: $shadowTiny
 
-=shadow-massive-text
-    text-shadow: $shadowMassive
+= shadow - massive - text
+text - shadow: $shadowMassive
 
-=radiusL
-    border-radius: $radiusL
+= radiusL
+border - radius: $radiusL
 
-=radiusS
-    border-radius: $radiusS
+= radiusS
+border - radius: $radiusS
 
 // have buttons jump out ------------------
-=transcenter
-    display: block
-    position: absolute
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%)
+= transcenter
+display: block
+position: absolute
+top: 50 %
+	left: 50 %
+	transform: translate( -50 % , -50 % )
 
-=bump
-    transform: scale(1.02) !important
+= bump
+transform: scale( 1.02 ) !important
 
-=bumpM
-    transform: translate3d(0, 0, 0) scale(1.08) !important
+= bumpM
+transform: translate3d( 0, 0, 0 ) scale( 1.08 ) !important
 
-=bumpL
-    transform: translate3d(0, 0, 0) scale(1.28) !important
+= bumpL
+transform: translate3d( 0, 0, 0 ) scale( 1.28 ) !important
 
-=unbump
-    transform: scale(1)
+= unbump
+transform: scale( 1 )
 
-=round-small
-    border-radius: 4px
+= round - small
+border - radius: 4 px
 
 //I am just lazy here#
 // the modern one / quirks
-=border-box
-    box-sizing: border-box !important
+= border - box
+box - sizing: border - box!important
 
 // classic box model
-=content-box
-    box-sizing: content-box !important
+= content - box
+box - sizing: content - box!important
 
-=print
-    @media print
-        @content
+= print
+@media print
+@content
 
-=screen
-    @media screen
-        @content
+	= screen
+@media screen
+@content

@@ -6,38 +6,39 @@
  * ---------------------------------- */
 
 /* Clearfix */
-.cf:before, .cf:after
-  content: ""
-  display: table
+.cf: before, .cf: after
+content: ""
+display: table
 
-.cf:after
-  clear: both
+	.cf: after
+clear: both
 
-.cf
-  zoom: 1
+	.cf
+zoom: 1
 
-.clearfix
-  @extend .cf
+	.clearfix
+@extend.cf
 
 // smooth responsive borders
 // $pad defined in variables.sass
-$maxWidth : map-get($breakpoints, l) // 960px
-$scrollBar : 15px // HACK → stackoverflow.com/q/8146874
+$maxWidth: map - get( $breakpoints, l ) // 960px
+$scrollBar: 15 px // HACK → stackoverflow.com/q/8146874
 
-// general layout -----------------------
-.wrap, .wrap-touchy
-  @extend .clearfix
-  margin: 0 auto !important
-  position: relative
-  max-width: $maxWidth
+	// general layout -----------------------
+	.wrap, .wrap - touchy
+@extend.clearfix
+margin: 0 auto!important
+position: relative
+max - width: $maxWidth
 
-// before touching borders switch to "margin-mode"
-.wrap
-  +below( $maxWidth + 2*$pad + $scrollBar )
-    margin-left: $pad !important
-    margin-right: $pad !important
+	// before touching borders switch to "margin-mode"
+	.wrap +
+	below( $maxWidth + 2 * $pad + $scrollBar )
+margin - left: $pad!important
+margin - right: $pad!important
 
-  // in the blue zone (<768) save some margin...
-  +below( s-m )
-    margin-left: $halfpad !important
-    margin-right: $halfpad !important
+	// in the blue zone (<768) save some margin...
+	+
+	below( s - m )
+margin - left: $halfpad!important
+margin - right: $halfpad!important

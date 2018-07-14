@@ -13,7 +13,7 @@ import {
 
 
 // ↓ extremely important ________________________
-async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → deleteLonely
+async function deleteAction( firstDir, moreDirs, cmd ) { // TODO: refactor → deleteLonely
 
 	// simulation
 	// throw new Error('mocking error')
@@ -33,12 +33,12 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	}
 
 	// merge all dirs together
-	let dirs = [firstDir, ...moreDirs]
-	enforce(!!dirs, 'no directory specified')
+	let dirs = [ firstDir, ...moreDirs ]
+	enforce( !!dirs, 'no directory specified' )
 
 	// COULDDO: fork  lonely / unstarred
 
-	const fileSet = new FileSet(dirs)
+	const fileSet = new FileSet( dirs )
 	stats.filesTotal = fileSet.filesTotal()
 
 	fileSet.dump()
@@ -47,20 +47,17 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	const loneFiles = fileSet.getLonely()
 	stats.familiesToDelete = loneFiles.size()
 
-	if (liveMode)
-	{
-		await loneFiles.delete(stats, false)
-		log('\nstatistics PREVIEW ________', stats)
-		if (!skipCountdown) await countdown(3)
+	if ( liveMode ) {
+		await loneFiles.delete( stats, false )
+		log( '\nstatistics PREVIEW ________', stats )
+		if ( !skipCountdown ) await countdown( 3 )
 
-		await loneFiles.delete(stats, true)
-	}
-	else
-	{
-		await loneFiles.delete(stats, false)
+		await loneFiles.delete( stats, true )
+	} else {
+		await loneFiles.delete( stats, false )
 	}
 
-	log('\nstatistics ____________________', stats)
+	log( '\nstatistics ____________________', stats )
 }
 
 export default deleteAction
