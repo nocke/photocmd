@@ -29,6 +29,7 @@ program
 	.option('-l, --live', 'actually do it')
 	.option('-o, --lonely', 'delete lone images')
 	.option('-s, --unstarred', 'delete unstarred images')
+	.option('--skipCountdown', 'skip countdown on actual delete (case matters)')
 	.action(promiseWrap(deleteAction))
 
 program

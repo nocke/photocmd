@@ -52,7 +52,6 @@ class Family {
 		const trashFiles = []
 
 		this._map.forEach( member => {
-
 			trashFiles.push( path.join(member.dir, member.base) )
 			stats.filesDeleted++
 		})
@@ -65,9 +64,10 @@ class Family {
 			await fileUtils.trashSync(trashFiles)
 		}
 
+		// (I think this is all junk, in any case, not if not live)
 		// reset state
-		this._core = undefined
-		this._map = new Map()
+		// this._core = undefined
+		// this._map = new Map()
 
 		// // family flags
 		// this._isLonely = true // assume for now

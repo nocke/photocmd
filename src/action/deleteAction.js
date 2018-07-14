@@ -20,8 +20,9 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 
 	const liveMode = cmd.live || false
 
-	let lonely = cmd.lonely || false
-	let unstarred = cmd.unstarred || false
+	let lonely = cmd.lonely === true || false
+	let unstarred = cmd.unstarred === true || false
+	let skipCountdown = cmd.skipCountdown === true || false
 
 	const stats = {
 		familiesTotal: 0,
@@ -31,6 +32,9 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 		filesDeleted: 0
 	}
 
+
+	const stats2 = { ...stats }
+	 
 	// merge all dirs together
 	let dirs = [firstDir, ...moreDirs]
 	enforce(!!dirs, 'no directory specified')
@@ -47,9 +51,17 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 	stats.familiesToDelete = loneFiles.size()
 
 	if (liveMode)
-		await countdown(3)
+	{
+		await loneFiles.delete(stats, false)
+		log('\nstatistics PREVIEW ________', stats)
+		if (!skipCountdown) await countdown(3)
 
-	await loneFiles.delete(stats, liveMode)
+		await loneFiles.delete(stats, true)
+	}
+	else
+	{
+		await loneFiles.delete(stats, false)
+	}
 
 	log('\nstatistics ____________________', stats)
 }

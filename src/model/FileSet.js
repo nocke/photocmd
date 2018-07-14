@@ -150,11 +150,14 @@ class FileSet {
 		live = live === true
 		force = force === true
 
+		// TODO: inner function superficious?
 		const innerDelete = async () => {
 			for (var [core, family] of this._families) {
 				await family.empty(stats, live, force)
+				if (live) { // keep alive on dry-run
+					this._families.delete(family)
+				}
 				stats.familiesDeleted++
-				this._families.delete(family)
 			}
 		}
 
@@ -167,7 +170,7 @@ class FileSet {
 		let total = 0
 		for (var [core, family] of this._families) {
 			total += family.size()
-		} 
+		}
 
 		return total
 	}
