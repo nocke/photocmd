@@ -16,7 +16,8 @@
     "test-single-watch": "mocha -R list -w $1",
     "test-live": "unzip -o sample2.zip -d build/commandTests/  &&  photo del ./build/commandTests/sample2/ -lv",
     "paramtest": "echo $([ -z $1 ] && echo 42 || echo $1)",
-    "beautify": "scripts/beautify.sh"
+	"beautify": "scripts/beautify.sh",
+	"beautify2": "find . -regextype egrep -regex './(src|test|app)/.*\\.(js|sass|html)' -print0 | xargs -0 js-beautify -r"
   },
   "keywords": [
     "photo",
