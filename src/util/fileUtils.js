@@ -91,7 +91,7 @@ export async function removeFolder(dir) {
 			}
 		)
 	}).then(() => {
-		// console.log('deleted!') // just verifies order
+		// log('deleted!') // just verifies order
 	})
 
 

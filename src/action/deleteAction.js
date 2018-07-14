@@ -32,9 +32,6 @@ async function deleteAction(firstDir, moreDirs, cmd) { // TODO: refactor → del
 		filesDeleted: 0
 	}
 
-
-	const stats2 = { ...stats }
-	 
 	// merge all dirs together
 	let dirs = [firstDir, ...moreDirs]
 	enforce(!!dirs, 'no directory specified')

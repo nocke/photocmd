@@ -1,9 +1,11 @@
 {
-	// github.com/HookyQR/VSCodeBeautify/blob/master/Settings.md'
+	"_": "github.com/HookyQR/VSCodeBeautify/blob/master/Settings.md",
+
 	"indent_size": 4,
 	"indent_with_tabs": true,
 	"max_preserve_newlines": 3,
 	"brace_style": "collapse,preserve-inline",
 	"end_with_newline": true,
-	"keep_array_indentation": true    // TOTEST
+	"space_in_paren" : true,
+	"keep_array_indentation": true    /* TOTEST */
 }

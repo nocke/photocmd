@@ -24,7 +24,9 @@ import deleteAction from '../src/action/deleteAction'
 
 let clock
 
-describe('deleteAction', () => {
+describe('deleteAction', function() {
+
+	this.slow(300)
 
 	beforeEach(async () => {
 		await recreateDirectory(testDir)
@@ -40,14 +42,11 @@ describe('deleteAction', () => {
 		const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`)
 		mockfile(testDir, mockFiles)
 
-		// just to add path in front
+		// add path in front of each file
 		const trashFiles = []
 		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) )
 
 		await fileUtils.trashSync(trashFiles)
-
-		// COULDDO: warn when trashing non-existing
-		// await fileUtils.trashSync('banana')
 
 		mockFiles.forEach(file =>
 			assert(!fs.existsSync(file))
@@ -88,7 +87,7 @@ describe('deleteAction', () => {
 
 		await new Promise((resolve, reject) => {
 			// await
-			deleteAction(testDir, [], { live: true, lonely: true }).then(
+			deleteAction(testDir, [], { live: true, lonely: true, skipCountdown: true }).then(
 				(value) => {
 					log('now it happend')
 					resolve()

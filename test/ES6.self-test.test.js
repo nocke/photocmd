@@ -38,7 +38,6 @@ describe('ES6 self-test', () => {
 		promiseWrap()
 			.then(v => {
 				assert.equal(v, 42)
-				//console.log(promiseWrap.callCount)
 				assert(promiseWrap.calledOnce) // property!
 			})
 			.catch(reason => {
