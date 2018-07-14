@@ -22,7 +22,7 @@
 
 // state ---------------------------
 let logLevel = 2
-let muteFlag = false  // mutes all info & log, irrespective of log level (used for full test suite runs)
+let muteFlag = false // mutes all info & log, irrespective of log level (used for full test suite runs)
 
 // one can mute fail and failed enforce output (still throwing…)
 // null := snooze mode OFF  (default)
@@ -42,9 +42,9 @@ const color = [
 // COULDDO:
 // • smart (legible) dumping of objects, arrays, ...
 
-function _log(level, messages) {
+function _log( level, messages ) {
 
-	if (level < logLevel) {
+	if ( level < logLevel ) {
 		return // skip
 	}
 
@@ -53,87 +53,87 @@ function _log(level, messages) {
 	messages.forEach( msg => {
 		let line = msg; // `${msg}  (msg level: ${level}, log level: ${logLevel}`
 
-		switch (typeof line) {
+		switch ( typeof line ) {
 			default:
 				case 'string':
 				break
 
 			case 'object':
-				line = JSON.stringify(line, null, '  ')
+					line = JSON.stringify( line, null, '  ' )
 				break
 		}
 
-		lines.push(line)
-	})
+		lines.push( line )
+	} )
 
-	const linesMono = lines.join('\n')
-	const linesColor = color[level] + linesMono + color[0]
+	const linesMono = lines.join( '\n' )
+	const linesColor = color[ level ] + linesMono + color[ 0 ]
 
-	console.log(linesColor) // (.join() avoids a trailing '\n' which comes from console.log anyhow)
+	console.log( linesColor ) // (.join() avoids a trailing '\n' which comes from console.log anyhow)
 
 	// coulddo: callback to set logger function(s), substituting / adding for console.log
 }
 
-export const LEVELS = Object.freeze({
+export const LEVELS = Object.freeze( {
 	INFO: 1,
 	LOG: 2,
 	WARN: 3,
 	ERROR: 4,
 	FAIL: 5
-})
+} )
 
 /**
  * Setting (or just getting) the current logLevel
  * @param {number} level
  */
-export function setLevel(level) {
-	if (level !== undefined) {
-		enforce(typeof level === 'number')
+export function setLevel( level ) {
+	if ( level !== undefined ) {
+		enforce( typeof level === 'number' )
 		logLevel = level
 	}
 	return logLevel
 }
 
-export function info(...msg) {
-	if (!muteFlag)
-	_log(1, msg)
+export function info( ...msg ) {
+	if ( !muteFlag )
+		_log( 1, msg )
 }
 
-export function log(...msg) {
-	if (!muteFlag)
-		_log(2, msg)
+export function log( ...msg ) {
+	if ( !muteFlag )
+		_log( 2, msg )
 }
 
-export function warn(...msg) {
-	_log(3, msg)
+export function warn( ...msg ) {
+	_log( 3, msg )
 }
 
 // error handling ======================================
 
-export function _error(msg, ...args) {
-	if (snoozeCount === null) { // regular use
-		_log(4, msg)
+export function _error( msg, ...args ) {
+	if ( snoozeCount === null ) { // regular use
+		_log( 4, msg )
 	} else { // counting uses
-		if (snoozeCount > 0) {
+		if ( snoozeCount > 0 ) {
 			snoozeCount--
 		} else {
-			_log(4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******`)
+			_log( 4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******` )
 		}
 	}
-	throw new Error(msg, args)
+	throw new Error( msg, args )
 }
 
-export function error(msg, ...args) {
-	_error(msg, ...args)
+export function error( msg, ...args ) {
+	_error( msg, ...args )
 }
 
-export function fail(msg = 'failing', ...args) {
-	_error(msg, ...args)
+export function fail( msg = 'failing', ...args ) {
+	_error( msg, ...args )
 }
 
-export function enforce(expr, msg = 'enforce failed', ...args) {
-	if (expr !== true) {
-		_error(msg, ...args)
+export function enforce( expr, msg = 'enforce failed', ...args ) {
+	if ( expr !== true ) {
+		_error( msg, ...args )
 	}
 }
 
@@ -144,10 +144,10 @@ export function enforce(expr, msg = 'enforce failed', ...args) {
  * on the next n fail() / failed enforces
  * @param {int} n
  */
-export function snooze(n) {
-	enforce(Number.isInteger(n), `snooze needs an integer parameter, got ${n}`)
-	enforce(n > 0, `snooze must be larger than zero, got ${n}`)
-	enforce(snoozeCount === null, `snooze already activated`)
+export function snooze( n ) {
+	enforce( Number.isInteger( n ), `snooze needs an integer parameter, got ${n}` )
+	enforce( n > 0, `snooze must be larger than zero, got ${n}` )
+	enforce( snoozeCount === null, `snooze already activated` )
 
 	snoozeCount = n
 }
@@ -156,8 +156,8 @@ export function snooze(n) {
  * leave the snooze mode again. MUST happen precisely when the n are used up
  */
 export function unsnooze() {
-	enforce(snoozeCount !== null, `snooze not activated`)
-	enforce(!(snoozeCount > 0), `remaining snooze count too high`)
+	enforce( snoozeCount !== null, `snooze not activated` )
+	enforce( !( snoozeCount > 0 ), `remaining snooze count too high` )
 	snoozeCount = null
 }
 
@@ -171,7 +171,7 @@ export function unmute() {
 
 // log('foo') as the basic function, all else contained
 // (like chai: assert(), assert.method1(),... )
-export default Object.assign(log, {
+export default Object.assign( log, {
 	info,
 	log,
 	warn,
@@ -186,4 +186,4 @@ export default Object.assign(log, {
 
 	mute,
 	unmute
-})
+} )

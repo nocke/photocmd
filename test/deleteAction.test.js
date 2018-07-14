@@ -24,41 +24,40 @@ import deleteAction from '../src/action/deleteAction'
 
 let clock
 
-describe('deleteAction', () => {
+describe( 'deleteAction', function() {
 
-	beforeEach(async () => {
-		await recreateDirectory(testDir)
+	this.slow( 300 )
+
+	beforeEach( async () => {
+		await recreateDirectory( testDir )
 		clock = sinon.useFakeTimers()
-	})
+	} )
 
-	afterEach(async () => {
+	afterEach( async () => {
 		clock.restore()
-	})
+	} )
 
-	it('general trashSync test', async () => {
+	it( 'general trashSync test', async () => {
 		// // create a number of files, delete a subset. verify. done.
-		const mockFiles = [1, 2, 'A', 'B'].map(v => `mock${v}`)
-		mockfile(testDir, mockFiles)
+		const mockFiles = [ 1, 2, 'A', 'B' ].map( v => `mock${v}` )
+		mockfile( testDir, mockFiles )
 
-		// just to add path in front
+		// add path in front of each file
 		const trashFiles = []
-		mockFiles.forEach(file => trashFiles.push( path.join(testDir, file) ) )
+		mockFiles.forEach( file => trashFiles.push( path.join( testDir, file ) ) )
 
-		await fileUtils.trashSync(trashFiles)
+		await fileUtils.trashSync( trashFiles )
 
-		// COULDDO: warn when trashing non-existing
-		// await fileUtils.trashSync('banana')
-
-		mockFiles.forEach(file =>
-			assert(!fs.existsSync(file))
+		mockFiles.forEach( file =>
+			assert( !fs.existsSync( file ) )
 		)
 
-		await fileUtils.removeFolder(testDir)
-		assert(!fs.existsSync(testDir), 'directory not gone!')
-	})
+		await fileUtils.removeFolder( testDir )
+		assert( !fs.existsSync( testDir ), 'directory not gone!' )
+	} )
 
 
-	it('delete lonely', async () => {
+	it( 'delete lonely', async () => {
 
 		// create files
 		await mockfile(
@@ -74,35 +73,35 @@ describe('deleteAction', () => {
 				'PM5A2087_Photoshop.jpg',
 				'PM5A3095.CR2', // lonely raw → DELETE
 				'PM5A3095.xmp', // /(verify, entire family gets wiped)
-				'PM5A3095.dop',    // lone helper file
+				'PM5A3095.dop', // lone helper file
 				'PM5A3095.cr.dop', // lone helper file double-ext
 
 				'mockA.jpg', // TEMP
 				'PM5A1234.cr2', // TEMP
 				'PM5A3096.cr3', // lonely raw → DELETE
-				'banana.cr3',   // lonely raw → DELETE
-				'DSCN123.cR2',  // Family, not lonely
-				'DSCN123.jpeg'  // testing: jpeg with 'e'
+				'banana.cr3', // lonely raw → DELETE
+				'DSCN123.cR2', // Family, not lonely
+				'DSCN123.jpeg' // testing: jpeg with 'e'
 			]
 		)
 
-		await new Promise((resolve, reject) => {
+		await new Promise( ( resolve, reject ) => {
 			// await
-			deleteAction(testDir, [], { live: true, lonely: true }).then(
-				(value) => {
-					log('now it happend')
+			deleteAction( testDir, [], { live: true, lonely: true, skipCountdown: true } ).then(
+				( value ) => {
+					log( 'now it happend' )
 					resolve()
 				},
-				(reason) => {
-					reject(reason)
+				( reason ) => {
+					reject( reason )
 				}
 			)
 			// by not using await (despite deleteAction being an sync function)
 			// but rather just chaining a then, this clock.tick get run while
 			// deleteAction is running resp. while it is waiting in some
 			// setTimeout for it's countdown
-			clock.tick(5000)
-		})
+			clock.tick( 5000 )
+		} )
 
 		await assertFiles(
 			testDir, {
@@ -128,7 +127,7 @@ describe('deleteAction', () => {
 			}
 		)
 
-		log('end of test ___________________________')
-	}) // delete lonely
+		log( 'end of test ___________________________' )
+	} ) // delete lonely
 
-})
+} )

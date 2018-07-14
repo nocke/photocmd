@@ -4,12 +4,12 @@ import log, { info, warn, error, setLevel, LEVELS, enforce, fail } from '../util
 
 class Member {
 
-	constructor(pathObj) {
+	constructor( pathObj ) {
 		// copy 'em all (much preparation already happens one level up in Family)
-		Object.assign(this, pathObj)
+		Object.assign( this, pathObj )
 
 		// create type (must correlated with extensions known in config.js)
-		switch (this.ext.toLowerCase()) {
+		switch ( this.ext.toLowerCase() ) {
 			// regular extensions - just lowercase
 			case 'png':
 			case 'psd':
@@ -17,7 +17,7 @@ class Member {
 			case 'tif':
 				this.type = this.ext.toLowerCase()
 
-			// special cases
+				// special cases
 			case 'jpeg':
 				this.type = 'jpg'
 				break
@@ -25,7 +25,7 @@ class Member {
 				this.type = 'tif'
 				break
 
-			// → en.wikipedia.org/wiki/Raw_image_format
+				// → en.wikipedia.org/wiki/Raw_image_format
 			case 'crw':
 			case 'cr2':
 			case 'dng':
@@ -37,7 +37,7 @@ class Member {
 			case 'dop':
 				this.type = 'sidecar'
 				break
-	
+
 		} // switch
 
 		// TODO:

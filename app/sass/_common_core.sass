@@ -1,29 +1,31 @@
 html, body
-  margin: 0
-  padding: 0
-  background: #181818
+margin: 0
+padding: 0
+background: #181818
 
 html
-  font-size: 62.5% // 1rem <:=> 10px
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+  font-size: 62.5% // 1rem <:= > 10 px -
+	webkit - font - smoothing: antialiased -
+	moz - osx - font - smoothing: grayscale
 
 body
-  position: relative
-  font-weight: normal
-  font-family: Ubuntu, Arial, Helvetica, sans-serif
-  padding-top: $headerHeight+$halfpad
-  &.tpad0 // nice bodyclass
-    padding-top: $headerHeight !important
+position: relative
+font - weight: normal
+font - family: Ubuntu, Arial, Helvetica, sans - serif
+padding - top: $headerHeight + $halfpad &
+	.tpad0 // nice bodyclass
+padding - top: $headerHeight!important
 
-  padding-bottom: $footerHeight // reserved for footer
-  +below(s-m)
-    padding-bottom: $footerHeightSM // reserved for footer
-  +below(s)
-    padding-bottom: $footerHeightS // reserved for footer
+padding - bottom: $footerHeight // reserved for footer
+	+
+	below( s - m )
+padding - bottom: $footerHeightSM // reserved for footer
+	+
+	below( s )
+padding - bottom: $footerHeightS // reserved for footer
 
-  box-sizing: border-box // so padding reserved for footer does not add up
-  background: #151515 url('./bkg.png') 0 0
+box - sizing: border - box // so padding reserved for footer does not add up
+background: #151515 url('./bkg.png') 0 0
 
   color: white
   min-height: 100vh
@@ -53,9 +55,9 @@ section
   margin: 0 0 20px 0
 
 blockquote
-  color: #aaa
-  padding-left: 10px
-  border-left: 1px dotted #666
+  color: # aaa
+padding - left: 10 px
+border - left: 1 px dotted #666
 
 pre
   background: rgba(0, 0, 0, 0.9)
@@ -135,4 +137,3 @@ body.cornerpin-center
 .justify-wide
   +above(m-l)
     text-align: justify !important
-
