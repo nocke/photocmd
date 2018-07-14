@@ -1,9 +1,18 @@
-# PhotoCmd
+# Photo
 
 ## — _a command-line tool for working with ‘families’ of photos, syncing metadata, deleting and renaming_
 
-PhotoCmd is a command line tool to deal with digital images (jpg, png, raw). It's _*not_ meant to compote with [Exiftool](http://owl.phy.queensu.ca/~phil/exiftool/) or [ImageMagick](https://www.imagemagick.org/script/index.php), rather it employs these and focuses on the concept of **image families** of related images:
+A typical photography workflow looks like this
 
+* **shoot**: shoot a ton of images (most often with my DLSR, saving both jpg+raw)
+* **selected tages**: concentrate on jps (filtering out their raw counterparts). Star images that are good, deleting those unstarred ones. (in another tool)
+
+* **prunce junk** I want to delete the counterparts of those 'lonely', unstarred images. Sure this could be done in any GUI, but (first tedious manual issue).Also all sidecars that got generated.
+
+So far, that's what `photo` does. Deleting lonely raw's and all sidecars of the same **'image family'**, provided the jpg of that family got deleted:
+
+
+```
 	IMG_0635.JPG                  // original image (probably)
 	IMG_0635_retouche.psd         // some photoshop enhancements (in the work)
 	IMG_0635_bg_more-blurry.jpg   // a save, derived copy
@@ -15,19 +24,69 @@ PhotoCmd is a command line tool to deal with digital images (jpg, png, raw). It'
 	PM5A0036_DXs1.jpg             // one raw->jpeg conversion (possibly done with DxO
 	PM5A0039_acr.jpg              // an alternative conversion (done with Adobe Camera Raw?)
 
-    PM5A0042_DXs2.jpg             // another familty (a ‘lonely’ image)
-    00PM5A0045.CR2                // another family (the typical DSLR couple)
+	PM5A0042_DXs2.jpg             // another familty (a ‘lonely’ image)
+	00PM5A0045.CR2                // another family (the typical DSLR couple)
 	picasa.ini                    // a (legacy) picasa file with some metadata for the entire folder
+```
 
+## Usage:
 
-Common tasks with freshly shot images that made me write this tool were:
+```
+    $> photo del --help
 
-* **shoot**: shoot a ton of images (most often with my DLSR, saving both jpg+raw)
-* **selected tages**: star images that are basically not crap (in another tool. Just looking at the jpg is much faster and enough )
+	delete "lonely" or "unstarred" families of images
 
-* **prunce junk** I want to delete unstarred images. Sure this could be done in any GUI, but (first tedious manual issue) I also want to delete their raw counterparts and possibly all sidecars that already got generated
+	Options:
 
-    $> photo ...
+		-l, --live       actually do it
+		-v, --verbose    log more details
+		-o, --lonely     delete lone images
+		-s, --unstarred  delete unstarred images
+		--skipCountdown  skip countdown on actual delete
+		-h, --help       output usage information
+```
+
+## Example:
+
+```
+	photo del . -lv
+
+	$>photo del sample2/ -l
+
+	deleting sample2/DSCN7029.CR2 ...
+	deleting sample2/IMGSX9999.xmp ...
+	deleting sample2/PM5A2087.cr2 ...
+	deleting sample2/PM5A2087.cr2.dop ...
+	deleting sample2/PM5A29999.cr2.dop ...
+	deleting sample2/PM5A3095_lonely.CR2 ...
+
+	statistics PREVIEW ________
+	{
+	"familiesTotal": 11,
+	"familiesToDelete": 5,
+	"familiesDeleted": 5,
+	"filesTotal": 14,
+	"filesDeleted": 6
+	}
+	counting 3 ...
+	counting 2 ...
+	counting 1 ...
+	counting 0 ...
+
+	statistics ____________________
+	{
+	"familiesTotal": 11,
+	"familiesToDelete": 5,
+	"familiesDeleted": 10,
+	"filesTotal": 14,
+	"filesDeleted": 12
+	}
+
+```
+
+----
+
+## Future plans (haha)
 
 * **metadata stamping**: especially under time pressue, it's nice if you can preconfigure things and the just let's go...
 
@@ -53,71 +112,32 @@ Common tasks with freshly shot images that made me write this tool were:
 
 * distribution ... (into preconfigured channels)
 
-----
-## Status
-
-I am currently in the process of rewriting my (very proven but somewhat outdated) PHP version of this tool in javascript.
-
-I _did_ set up the parameter parsing using [commander](https://github.com/tj/commander.js), dispatching to difference action classes and the general iteration loop for it.
-
-More to be done...
 
 ----
-## Running it:
 
-The bin-section of the [package.json](package.json) defines it as a command line command:
-
-— DRAFT, work in progress, DRAFT ... —
-
-```
-
-	$> photo
-	Usage: photo [options] [command]
-
-	Commands:
-
-	delete [options] <dir> [moreDirs...]  delete "lonely" images of sorts
-
-	Options:
-
-	-h, --help     output usage information
-	-V, --version  output the version number
-
-
-	examples:
-
-```
-
-----
 ## development
 
 `npm install` – before all else. naturally.
 
 Most of the time you will just want:
 
-`npm start` – starts watching (`src/` and `test/` folder), rebuilds and tests on change.
+### build
 
-#### build
+`npm run build` – build ES6 → ES5 once ( Yes, it's a tool written & running on nodeJS, but to use `import`, ES6 `Map` and spread operators this is still needed...)
 
-`npm run build` – build ES6 → ES5 once
+`npm run watch` – builds once and starts watching `src/` folder, rebuilds and tests on change. Not needed for running tests
 
-`npm run watch` – to keep compiling ES6 → ES5
-
-#### test
+### test
 
 `npm run test` – conduct tests (on build ES5 sources) once
-* ensure ES6 transpilation
-* smoke test
 
 `npm run test-watch` – watch source files and keep testing
 
-You can also aim for a single test:
+`cls && npm run test-single -- test/commandDelete.test.js`
 
-`npm run test-single <path>`
-`npm run test-single-watch <path>`
-
+Some tests require the existence of a large file named `sample2.zip`. Contact me if you need it.
 
 ----
 ## License
 
-The content on this project are released under the (very permissive) terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and places almost no restrictions on what you can do with the Project.
+The content on this project are released under the (very permissive) terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and places almost no restrictions on what you can do with the project.
