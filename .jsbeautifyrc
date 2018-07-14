@@ -7,5 +7,5 @@
 	"brace_style": "collapse,preserve-inline",
 	"end_with_newline": true,
 	"space_in_paren" : true,
-	"keep_array_indentation": true    /* TOTEST */
+	"keep_array_indentation": true
 }
