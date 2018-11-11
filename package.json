@@ -8,7 +8,7 @@
 		"photoui": "./build/photoui.js"
 	},
 	"scripts": {
-		"test": "yarn cli:test",
+		"test": "yarn cli:build && yarn cli:test",
 
 		"clean": "rimraf build dist .cache",
 

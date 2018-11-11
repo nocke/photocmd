@@ -32,6 +32,8 @@ sample?.zip
 !.babelrc
 !.jsbeautifyrc
 
+!.travis.yml
+
 ######################
 ## vscode, except specific ones
 ## (stackoverflow.com/a/5534865/444255)
