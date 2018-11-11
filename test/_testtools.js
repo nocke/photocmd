@@ -17,6 +17,10 @@ export const recreateDirectory = async ( dirName ) => {
 	await fileUtils.removeFolder( dirName )
 	assert.isFalse( fs.existsSync( dirName ) )
 
+	const parentDir2 = path.join(dirName,'../..')
+	if( !fs.existsSync( parentDir2 ))
+		fs.mkdirSync( parentDir2 )
+
 	const parentDir = path.join(dirName,'..')
 	if( !fs.existsSync( parentDir ))
 		fs.mkdirSync( parentDir )
