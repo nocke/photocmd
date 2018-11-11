@@ -135,6 +135,7 @@ export async function trashSync( filesArray ) {
 	enforce( Array.isArray( filesArray ), 'not an array' )
 
 	return new Promise( ( resolve, reject ) => {
+
 		trash( filesArray, {
 				glob: false
 			} )
@@ -149,6 +150,7 @@ export async function trashSync( filesArray ) {
 				error( err )
 				return err
 			} )
+
 	} )
 }
 

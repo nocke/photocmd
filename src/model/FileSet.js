@@ -2,7 +2,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import config from '../../config'
+import config from '../config'
 import log, { info, warn, error, setLevel, LEVELS, enforce, fail } from '../util/log'
 import {
 	Family,

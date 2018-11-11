@@ -13,129 +13,147 @@ So far, that's what `photo` does. Deleting lonely raw's and all sidecars of the 
 
 
 ```
-	IMG_0635.JPG                  // original image (probably)
-	IMG_0635_retouche.psd         // some photoshop enhancements (in the work)
-	IMG_0635_bg_more-blurry.jpg   // a save, derived copy
+    IMG_0635.JPG                  // original image (probably)
+    IMG_0635_retouche.psd         // some photoshop enhancements (in the work)
+    IMG_0635_bg_more-blurry.jpg   // a save, derived copy
 
-	PM5A0039.CR2                  // another family: the original raw image
-	PM5A0039.jpg                  // the jpeg saved along with (common in many DLSRs)
-	PM5A0039.CR2.dop              // a sidecar related to it (by DxO raw converter)
-	PM5A0039.CR2.xmp              // another sidecar (XMP meta data)
-	PM5A0036_DXs1.jpg             // one raw->jpeg conversion (possibly done with DxO
-	PM5A0039_acr.jpg              // an alternative conversion (done with Adobe Camera Raw?)
+    PM5A0039.CR2                  // another family: the original raw image
+    PM5A0039.jpg                  // the jpeg saved along with (common in many DLSRs)
+    PM5A0039.CR2.dop              // a sidecar related to it (by DxO raw converter)
+    PM5A0039.CR2.xmp              // another sidecar (XMP meta data)
+    PM5A0036_DXs1.jpg             // one raw->jpeg conversion (possibly done with DxO
+    PM5A0039_acr.jpg              // an alternative conversion (done with Adobe Camera Raw?)
 
-	PM5A0042_DXs2.jpg             // another familty (a ‘lonely’ image)
-	00PM5A0045.CR2                // another family (the typical DSLR couple)
-	picasa.ini                    // a (legacy) picasa file with some metadata for the entire folder
+    PM5A0042_DXs2.jpg             // another familty (a ‘lonely’ image)
+    00PM5A0045.CR2                // another family (the typical DSLR couple)
+    picasa.ini                    // a (legacy) picasa file with some metadata for the entire folder
 ```
 
-## Usage:
+## CLI Usage:
 
 ```
     $> photo del --help
 
-	delete "lonely" or "unstarred" families of images
+    delete "lonely" or "unstarred" families of images
 
-	Options:
+    Options:
 
-		-l, --live       actually do it
-		-v, --verbose    log more details
-		-o, --lonely     delete lone images
-		-s, --unstarred  delete unstarred images
-		--skipCountdown  skip countdown on actual delete
-		-h, --help       output usage information
+        --version        print out version information
+
+        -l, --live       actually do it
+        -v, --verbose    log more details
+        -o, --lonely     delete lone images
+        -s, --unstarred  delete unstarred images
+        --skipCountdown  skip countdown on actual delete
+        -h, --help       output usage information
 ```
 
-## Example:
+## CLI Examples:
 
 ```
-	photo del . -lv
+    photo del . -lv
 
-	$>photo del sample2/ -l
+    $>photo del sample2/ -l
 
-	deleting sample2/DSCN7029.CR2 ...
-	deleting sample2/IMGSX9999.xmp ...
-	deleting sample2/PM5A2087.cr2 ...
-	deleting sample2/PM5A2087.cr2.dop ...
-	deleting sample2/PM5A29999.cr2.dop ...
-	deleting sample2/PM5A3095_lonely.CR2 ...
+    deleting sample2/DSCN7029.CR2 ...
+    deleting sample2/IMGSX9999.xmp ...
+    deleting sample2/PM5A2087.cr2 ...
+    deleting sample2/PM5A2087.cr2.dop ...
+    deleting sample2/PM5A29999.cr2.dop ...
+    deleting sample2/PM5A3095_lonely.CR2 ...
 
-	statistics PREVIEW ________
-	{
-	"familiesTotal": 11,
-	"familiesToDelete": 5,
-	"familiesDeleted": 5,
-	"filesTotal": 14,
-	"filesDeleted": 6
-	}
-	counting 3 ...
-	counting 2 ...
-	counting 1 ...
-	counting 0 ...
+    statistics PREVIEW ________
+    {
+    "familiesTotal": 11,
+    "familiesToDelete": 5,
+    "familiesDeleted": 5,
+    "filesTotal": 14,
+    "filesDeleted": 6
+    }
+    counting 3 ...
+    counting 2 ...
+    counting 1 ...
+    counting 0 ...
 
-	statistics ____________________
-	{
-	"familiesTotal": 11,
-	"familiesToDelete": 5,
-	"familiesDeleted": 10,
-	"filesTotal": 14,
-	"filesDeleted": 12
-	}
+    statistics ____________________
+    {
+    "familiesTotal": 11,
+    "familiesToDelete": 5,
+    "familiesDeleted": 10,
+    "filesTotal": 14,
+    "filesDeleted": 12
+    }
 
 ```
-
 ----
 
-## Future plans (haha)
+`yarn install` – before all else. naturally.
 
-* **metadata stamping**: especially under time pressue, it's nice if you can preconfigure things and the just let's go...
-
-    $> photo ...
-
-* ...also to have several ready-made configuration, i.e. copyright and free-to-use:
-
-    $> photo ...
-
-* **metadata syncing**: After you tediously tagged each image on fine-grained level (geolocation, people or scenery contained, tags and caption...) you want all members of that image family to benefit from it, do you? The jpg, the raw, even the raw converted jpg and the touched up psd is sure to have the same content, the same location and caption. Heavy cropping might change this a little, but 95% of the time.
-
-    $> photo ...
-
-* **metadata interpolation**: tbd...
+`yarn clean` – cleans the `dist` output and all cache dirs (not node_modules)
 
 
-* beyond those 95% deleted: some pictures might qualify als „great shot“ (=keep the raw, to later pull the best out of it), some just as „snapshot“ to keep. For the former, I want to keep the entire family, for the latter, keeping the jpg is just enough. This can be achieved by agreeing to a certain tag (default is...):
+## CLI build & test
 
-    $> photo ...
+### development
 
-* always the same pain: timestamp offset. Least thinking required: photograph a reliable clock, tell the name of the image and the time seen in it. Tool will pull exif date, build the time difference, do it's job (for all images, or by criteria. i.e. before mixing with alternate cameras / friends pictures... )
+`yarn cli:watch` – builds in `dist/cli` and keeps watching
 
+Yes, photocmd is written for nodeJS, but use `import`, ES6 `Map` and spread operators, so this is still needed...
 
-* distribution ... (into preconfigured channels)
-
-
-----
-
-## development
-
-`npm install` – before all else. naturally.
-
-Most of the time you will just want:
-
-### build
-
-`npm run build` – build ES6 → ES5 once ( Yes, it's a tool written & running on nodeJS, but to use `import`, ES6 `Map` and spread operators this is still needed...)
-
-`npm run watch` – builds once and starts watching `src/` folder, rebuilds and tests on change. Not needed for running tests
+`yarn cli:build` – just builds in `dist/cli` and keeps watching
 
 ### test
 
-`npm run test` – conduct tests (on build ES5 sources) once
+`yarn cli:test` – runs the full test suite. No building needed for this.
 
-`npm run test-watch` – watch source files and keep testing
+A few tests requires the existence of two large file archives  `sample1|2.zip`. (around 100-200 MB)... TODO Contact me if you need it.
 
-`cls && npm run test-single -- test/commandDelete.test.js`
+----
+## Electron UI build
 
-Some tests require the existence of a large file named `sample2.zip`. Contact me if you need it.
+The user interface to be...
+
+#### yarn tasks for develop:
+
+`yarn start` will be enough to have a watch process for renderer and main, compiling into `dist/app/development` and the main window pop open:
+
+client-side changes should...
+server-side changes need reload(?)...
+
+```
+start
+    ├ ui:develop:renderer
+    │   • watches the `client side’,
+    │   • loading through localhost://
+    └ ui:develop:main
+       │
+       ├ ui:develop:main:build
+       │   • builds the electron main
+       └ ui:develop:start
+           • starts the electron app
+```
+
+#### yarn tasks for release:
+
+
+
+```
+ui:release:build
+    ├ ui:release:build:main
+    │    • just builds, no watching
+    │    loading through file://
+    └ ui:release:build:renderer
+         • just builds the `client side’
+
+ui:release:start
+    start release build to verify…
+    • no more security warnings
+    • resources load through file
+    ( re-run ui:release:build:renderer
+      to see reloadable changes )
+```
+
+**`dist`** runs `ui:release:build` first, then packages things with target `electron:build` (based on [`electron-builder`](https://github.com/electron-userland/electron-builder))
 
 ----
 ## License

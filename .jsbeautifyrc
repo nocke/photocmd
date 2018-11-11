@@ -6,6 +6,6 @@
 	"max_preserve_newlines": 3,
 	"brace_style": "collapse,preserve-inline",
 	"end_with_newline": true,
-	"space_in_paren" : true,
+	"space_in_paren" : false,
 	"keep_array_indentation": true
 }

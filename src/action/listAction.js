@@ -1,7 +1,7 @@
 // import what is not covered by babel runtime
 import array from 'core-js/fn/array'
 import assert from 'assert'
-import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../log'
+import log, { setLevel, LEVELS, info, warn, error, enforce, fail } from '../util/log'
 
 // ↓ extremely important ________________________
 async function listAction( dirs, cmd ) {

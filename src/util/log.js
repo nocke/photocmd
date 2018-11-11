@@ -10,6 +10,11 @@
  *	logLevel(LEVELS.WARN)
  *
  * TODO error/fail distinction (catchable-per-item vs. fatal) isn't there yet
+ * TODO lithmus test: source errors
+ * TODO feature: channels   logCh('exceptions', )
+ * TOOD functionalize: a function rather than a direct action.
+ *      logFn('howdy partner')()
+ *      (easier to include in some places)
  *
  *  1 info  - tiny process info (-v Switch activates that)
  *  2 log   - regular output (default verbosity)
@@ -71,7 +76,7 @@ function _log( level, messages ) {
 
 	console.log( linesColor ) // (.join() avoids a trailing '\n' which comes from console.log anyhow)
 
-	// coulddo: callback to set logger function(s), substituting / adding for console.log
+	// COULDDO: callback to set logger function(s), substituting / adding for console.log
 }
 
 export const LEVELS = Object.freeze( {
@@ -112,12 +117,12 @@ export function warn( ...msg ) {
 
 export function _error( msg, ...args ) {
 	if ( snoozeCount === null ) { // regular use
-		_log( 4, msg )
+		_log( 4, [msg] )
 	} else { // counting uses
 		if ( snoozeCount > 0 ) {
 			snoozeCount--
 		} else {
-			_log( 4, `testing error – snoozed too often, snoozeCount: ${snoozeCount} ******` )
+			_log( 4, [`testing error – snoozed too often, snoozeCount: ${snoozeCount} ******`] )
 		}
 	}
 	throw new Error( msg, args )

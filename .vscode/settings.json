@@ -14,12 +14,10 @@
 	"workbench.editor.enablePreview": false,
 	"editor.tabSize": 4,
 	"files.exclude": {
+		"**/.cache": true,
 		"**/.git": true,
-		// "**/.sass-cache": true,
 		"**/.tmp": true,
 		"**/node_modules": true,
 		"**/build": true
-	},
-	// ignore, according to .gitignore
-	"search.useIgnoreFilesByDefault": true
+	}
 }

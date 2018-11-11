@@ -5,11 +5,11 @@ import path from 'path'
 import sinon from 'sinon'
 import fs from 'fs'
 
-import { mockfile, assertFiles, testconfig } from './_testtools'
+import { mockfile, assertFiles } from './_testtools'
 import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnooze } from '../src/util/log'
 
-// test config _______________________
-const testDir = testconfig.testDir
+// test config:
+const testDir = path.resolve( global.app.dirs.test, 'deleteActionTests' )
 
 // system under test:
 import fileUtils from '../src/util/fileUtils'

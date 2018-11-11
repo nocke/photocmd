@@ -17,14 +17,12 @@ const testObject = {
 // great to get the expectd log string: JSON.stringify( logSpy.args[0][0] )
 const testObjectString = "{\n  \"truth\": 42,\n  \"yes\": true,\n  \"str\": \"Ja öäü daß - – 一  / <div/> ${hans} Jürgen\"\n}"
 
-const suiteMode = process.env.npm_package_scripts_test_single === 'mocha $1'
-
 let logSpy
 
 describe( 'testing log', () => {
 
 	beforeEach( function() {
-		if ( suiteMode ) {
+		if ( global.app.suiteMode ) {
 			unmute() // only needed in this case
 			// shut up:
 			logSpy = sinon.stub( console, 'log' ).returns()
@@ -37,12 +35,13 @@ describe( 'testing log', () => {
 	afterEach( function() {
 		console.log.restore()
 
-		if ( suiteMode )
+		if ( global.app.suiteMode )
 			mute() // undo for the remainder of suite
 	} )
 
 	it( 'simple log', () => {
 		log( testString )
+
 		sinon.assert.called( console.log )
 		// log always gets colored green:
 		sinon.assert.calledWith( logSpy, "\x1b[1;32m" + testString + "\x1b[0m" )

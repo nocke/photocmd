@@ -1,11 +1,9 @@
-### .gitignore ##############
-
+############################
 # temp and backups
 *~
 *.log
 *.bak
 tmp
-
 
 ############################
 # build and cache folders
@@ -13,28 +11,29 @@ PREP
 REF_*
 cache/
 log/
-[Bb]uild/
+build/
+dist/
 
+# TODO not much longer
 app/styles.css
 app/maps/
-
 
 # sample image folder (too large to commit)
 sample?/
 # sample zips (copy placed in /depot/own/LARGEFILES)
 sample?.zip
 
-# all hidden files/folders (except .gitignore, .htaccess,... )
-# there might be .htaccess on multiple levels...
+######################
+# all hidden files/folders
+# - except specific ones
 .*
 !.gitignore
-!.htaccess
-!.htpasswd
 !.editorconfig
 !.babelrc
 !.jsbeautifyrc
 
-## permit specific vscode ones
+######################
+## vscode, except specific ones
 ## (stackoverflow.com/a/5534865/444255)
 !.vscode
 .vscode/*
@@ -42,40 +41,29 @@ sample?.zip
 !.vscode/tasks.json
 !.vscode/settings.json
 
-
 ######################
 #  security
 
 ######################
 # OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-.picasa.ini
 Icon?
 ehthumbs.db
 Thumbs.db
 Desktop.ini
 
 #########################
-# Eclipse
+# Netbeans / Eclipse
+nbproject
 .settings
 .cache
 .project
 
 ##########################
-# npm
+# yarn / npm
 node_modules/**/*
-bower_components/**/*
 
-# IDE subfolders ############
-nbproject
+#########
+# TEMPTEMP
 
-# particular css files (unless desired)
-
-#########################
-# wp subfolders (might !negate own plugin again, if it happens)
-# top-level and certain subfolders, but not  /wp-config[-sample]
-
+main2.map
+main2.js

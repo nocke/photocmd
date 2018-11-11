@@ -18,15 +18,17 @@ import sinon from 'sinon'
 import fs from 'fs'
 import extract from 'extract-zip'
 
-import { recreateDirectory, mockfile, assertFiles, testconfig } from './_testtools'
+import { recreateDirectory, mockfile, assertFiles } from './_testtools'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
 
 import { execSync } from 'child_process'
 
-// local and abs path for testing
-const testDirLocal = 'build/commandTests'
-const testDirAbs = path.resolve( global.app.root, testDirLocal )
+// the command to use (build output – UNLIKE most other tests(!))
+const photoCmd = `${global.app.dirs.cli}/index.js`
 
+// local and abs path for testing
+const testDirAbs = path.resolve( global.app.dirs.test, 'commandTests' )
+const testDirLocal = global.app.dirs.testLocal + path.sep + 'commandTests'
 
 const extractSample = ( zipfile, dir ) => {
 	enforce( dir && typeof dir === 'string', 'invalid directory param' )
@@ -55,7 +57,7 @@ const extractSample = ( zipfile, dir ) => {
 describe( 'real command-line: Delete', function() {
 
 	// for entire describe - live execution requires 3sec wait and a bit of execution
-	this.slow( 2200 )
+	this.slow( 5000 ) // yes, 2200 oder 3200 can at times not be enough (works in .only() but not on entire single test or full suite )
 
 	before( () => {
 		// sanity self-test with node version ≥ 8
@@ -66,14 +68,14 @@ describe( 'real command-line: Delete', function() {
 
 	beforeEach( async () => {
 		await recreateDirectory( testDirAbs )
+		enforce(fs.existsSync( photoCmd ), "cli binary missing. not build?")
 	} )
-
 
 	it( 'command on empty folder', () => {
 
 		// (anything but returncode 0 triggers an error,)
 		const result = execSync(
-			`node ./build/index.js delete ${testDirLocal} -v`, { cwd: global.app.root }
+			`node ${photoCmd} delete ${testDirLocal} -v`, { cwd: global.app.root }
 		).toString()
 
 		assert.match( result, /succesfully/ )
@@ -82,7 +84,7 @@ describe( 'real command-line: Delete', function() {
 	it( 'command on nonexisting folder', () => {
 
 		assert.throws( () => execSync(
-			'node ./build/index.js  delete nonexistingFolder -v', { cwd: global.app.root }
+			`node ${photoCmd} delete nonexistingFolder -v`, { cwd: global.app.root }
 		) )
 
 	} )
@@ -98,7 +100,7 @@ describe( 'real command-line: Delete', function() {
 
 		// dry run ( not live, no countDown that would time out)
 		const result = execSync(
-			`node ./build/index.js delete ${testDirLocal}/sample2`, { cwd: global.app.root }
+			`node ${photoCmd} delete ${testDirLocal}/sample2`, { cwd: global.app.root }
 		).toString()
 
 		// verify stats
@@ -110,7 +112,7 @@ describe( 'real command-line: Delete', function() {
 
 		// live - doing it! _________________________________________
 		const result2 = execSync(
-			`node ./build/index.js delete ${testDirLocal}/sample2 -l --skipCountdown`, { cwd: global.app.root }
+			`node ${photoCmd} delete ${testDirLocal}/sample2 -l --skipCountdown`, { cwd: global.app.root }
 		).toString()
 
 		// verify very same stats!
@@ -140,7 +142,7 @@ describe( 'real command-line: Delete', function() {
 
 		// TODO aftermath – assert for reduced number of families and zero deletes
 		const result3 = execSync(
-			`node ./build/index.js delete ${testDirLocal}/sample2 -l --skipCountdown`, { cwd: global.app.root }
+			`node ${photoCmd} delete ${testDirLocal}/sample2 -l --skipCountdown`, { cwd: global.app.root }
 		).toString()
 
 		assert.match( result3, /familiesTotal.*\D6/, 'regexp matches' );

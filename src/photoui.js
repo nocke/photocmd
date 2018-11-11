@@ -2,9 +2,10 @@
 
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import url from 'url'
+
 
 console.log( 'Photo UI 234\n' + path.join( __dirname, 'app', 'index.html' ) )
 
@@ -53,13 +54,14 @@ const createWindow = () => {
 	} ) )
 
 	// Open the DevTools.
-	// DISABLE win.webContents.openDevTools()
+	// DISABLE
+	win.webContents.openDevTools()
 
 	// Emitted when the window is closed.
 	win.on( 'closed', () => {
 		win = null
 	} )
-}
+} // createWindow
 
 app.on( 'ready', createWindow )
 
@@ -78,4 +80,16 @@ app.on( 'activate', () => {
 	if ( win === null ) {
 		createWindow()
 	}
+} )
+
+
+// In main process.
+ipcMain.on( 'asynchronous-message', ( event, arg ) => {
+	console.log( arg ) // prints "ping"
+	event.sender.send( 'asynchronous-reply', 'pong' )
+} )
+
+ipcMain.on( 'synchronous-message', ( event, arg ) => {
+	console.log( arg ) // prints "ping"
+	event.returnValue = 'pong'
 } )

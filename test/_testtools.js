@@ -3,31 +3,27 @@ import chai, { assert } from 'chai'
 import path from 'path'
 import fs from 'fs'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
-
-// set here, unless already set elsewhere
-global.app = global.app || {} // I rather open my own subspace
-global.app.root = global.app.root || path.resolve( __dirname, '..' )
-
-// same basic test config
-export const testconfig = {
-	testDir: path.resolve( global.app.root, 'build/actionTests' ),
-	test: '1'
-}
-
 import fileUtils from '../src/util/fileUtils'
 
 // helper functions for testing -------------------------
 
 
+// also creates parent Dir if not (good enough for our tests), but not a full depth path
+// TODO a blacklist, to not create path in dangerous regions (linux / win respectively)
+// TODO create nested if necessary
 export const recreateDirectory = async ( dirName ) => {
 
 	// ensured fully fresh testDir creation
 	await fileUtils.removeFolder( dirName )
 	assert.isFalse( fs.existsSync( dirName ) )
+
+	const parentDir = path.join(dirName,'..')
+	if( !fs.existsSync( parentDir ))
+		fs.mkdirSync( parentDir )
+
 	fs.mkdirSync( dirName )
 	assert.isTrue( fs.existsSync( dirName ) )
 }
-
 
 /**
  * creates a number of mockfiles (just tiny text content)
@@ -61,6 +57,5 @@ export const assertFiles = async ( basedir, fileObj ) => {
 
 
 export default {
-	testconfig,
 	mockfile
 }
