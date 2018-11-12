@@ -15,7 +15,7 @@
 import chai, { assert } from 'chai'
 import path from 'path'
 import sinon from 'sinon'
-import fs from 'fs'
+import fs from 'fs-extra'
 import extract from 'extract-zip'
 
 import { recreateDirectory, mockfile, assertFiles } from './_testtools'
@@ -27,31 +27,9 @@ import { execSync } from 'child_process'
 const photoCmd = `${global.app.dirs.cli}/index.js`
 
 // local and abs path for testing
+const sampleFilesOrig = path.resolve( global.app.root, 'node_modules/photocmd-testfiles/sample2' )
 const testDirAbs = path.resolve( global.app.dirs.test, 'commandTests' )
 const testDirLocal = global.app.dirs.testLocal + path.sep + 'commandTests'
-
-const extractSample = ( zipfile, dir ) => {
-	enforce( dir && typeof dir === 'string', 'invalid directory param' )
-	const source = path.resolve( app.root, zipfile )
-
-	return new Promise( ( resolve, reject ) => {
-
-		extract( source, { dir }, ( err ) => {
-
-			if ( err ) {
-				if ( err instanceof Error )
-					warn( err.name + ' *** : ' + err.message )
-				else
-					warn( 'a DIFFERENT error?' )
-				const target = path.resolve( dir )
-				reject( err )
-			} else {
-				resolve( 'done' )
-			}
-		} )
-		// this line reached in both cases
-	} )
-}
 
 
 describe( 'real command-line: Delete', function() {
@@ -69,6 +47,10 @@ describe( 'real command-line: Delete', function() {
 	beforeEach( async () => {
 		await recreateDirectory( testDirAbs )
 		enforce(fs.existsSync( photoCmd ), "cli binary missing. not build?")
+		await fs.copy(sampleFilesOrig, path.resolve(testDirAbs, 'sample2' ))
+
+		enforce( fs.existsSync( path.join( testDirAbs, 'sample2', 'IMG_2586.JPG' ) ), 'no such image 1' )
+		enforce( fs.existsSync( path.join( testDirAbs, 'sample2', 'PM5A2847.jPg' ) ), 'no such image 2' )
 	} )
 
 	it( 'command on empty folder', () => {
@@ -90,14 +72,6 @@ describe( 'real command-line: Delete', function() {
 	} )
 
 	it( 'preview and live', async () => {
-
-		debugger
-
-		await extractSample( 'sample2.zip', path.resolve( testDirAbs ) )
-		// sanity on sample2
-		enforce( fs.existsSync( path.join( testDirAbs, 'sample2', 'IMG_2586.JPG' ) ) )
-		enforce( fs.existsSync( path.join( testDirAbs, 'sample2', 'PM5A2847.jPg' ) ) )
-
 		// dry run ( not live, no countDown that would time out)
 		const result = execSync(
 			`node ${photoCmd} delete ${testDirLocal}/sample2`, { cwd: global.app.root }

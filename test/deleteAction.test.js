@@ -8,7 +8,7 @@
 import chai, { assert } from 'chai'
 import path from 'path'
 import sinon from 'sinon'
-import fs from 'fs'
+import fs from 'fs-extra'
 
 import { mockfile, assertFiles, recreateDirectory } from './_testtools'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'

@@ -3,7 +3,7 @@
 import chai, { assert } from 'chai'
 import path from 'path'
 import sinon from 'sinon'
-import fs from 'fs'
+import fs from 'fs-extra'
 
 import { mockfile, assertFiles } from './_testtools'
 import log, { setLevel, LEVELS, info, warn, error, enforce, fail, snooze, unsnooze } from '../src/util/log'

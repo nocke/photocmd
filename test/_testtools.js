@@ -1,7 +1,7 @@
 // needed for all testing
 import chai, { assert } from 'chai'
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs-extra'
 import { setLevel, LEVELS, info, log, warn, error, enforce, fail } from '../src/util/log'
 import fileUtils from '../src/util/fileUtils'
 

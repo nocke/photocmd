@@ -2,31 +2,36 @@
 
 ## — _a command-line tool for working with ‘families’ of photos, syncing metadata, deleting and renaming_
 
+[![Build Status](https://travis-ci.com/nocke/photocmd.svg?branch=master)](https://travis-ci.com/nocke/photocmd)
+
+### Introduction...
+
 A typical photography workflow looks like this
 
-* **shoot**: shoot a ton of images (most often with my DLSR, saving both jpg+raw)
-* **selected tages**: concentrate on jps (filtering out their raw counterparts). Star images that are good, deleting those unstarred ones. (in another tool)
+1. **shoot**: shoot a ton of images (most often with my DLSR, saving both jpg+raw)
+1. **selected tages**: concentrate on jps (filtering out their raw counterparts). Star images that are good, deleting those unstarred ones. (in another tool)
 
-* **prunce junk** I want to delete the counterparts of those 'lonely', unstarred images. Sure this could be done in any GUI, but (first tedious manual issue).Also all sidecars that got generated.
+3. **prune junk** I want to delete the counterparts of those 'lonely', unstarred images. Sure this could be done in any GUI, but (first tedious manual issue).Also all sidecars that got generated.
 
-So far, that's what `photo` does. Deleting lonely raw's and all sidecars of the same **'image family'**, provided the jpg of that family got deleted:
+So far, the last point is, what `photo` does. Deleting lonely raw's and all sidecars of the same **'image family'**, provided the jpg of that family got deleted:
 
+Commonly after some (re)working a photo directory contains files like these:
 
 ```
-    IMG_0635.JPG                  // original image (probably)
-    IMG_0635_retouche.psd         // some photoshop enhancements (in the work)
-    IMG_0635_bg_more-blurry.jpg   // a save, derived copy
+    IMG_0635.JPG           // original image (probably)
+    IMG_0635_retouche.psd  // some photoshop enhancements (in the work)
+    IMG_0635_bg_blur.jpg   // another derived copy
 
-    PM5A0039.CR2                  // another family: the original raw image
-    PM5A0039.jpg                  // the jpeg saved along with (common in many DLSRs)
-    PM5A0039.CR2.dop              // a sidecar related to it (by DxO raw converter)
-    PM5A0039.CR2.xmp              // another sidecar (XMP meta data)
-    PM5A0036_DXs1.jpg             // one raw->jpeg conversion (possibly done with DxO
-    PM5A0039_acr.jpg              // an alternative conversion (done with Adobe Camera Raw?)
+    PM5A0039.CR2           // another family: the original raw image
+    PM5A0039.jpg           // the jpeg stored besides (common in many DLSRs)
+    PM5A0039.CR2.xmp       // XMP sidecar (after some image organizer edits)
+    PM5A0039.CR2.dop       // a sidecar related to it (courtesy of DxO raw converter)
+    PM5A0036_DXs1.jpg      // one raw->jpeg conversion (possibly done with DxO
+    PM5A0039_acr.jpg       // an alternative conversion (done with Adobe Camera Raw?)
 
-    PM5A0042_DXs2.jpg             // another familty (a ‘lonely’ image)
-    00PM5A0045.CR2                // another family (the typical DSLR couple)
-    picasa.ini                    // a (legacy) picasa file with some metadata for the entire folder
+    PM5A0042_DXs2.jpg      // another familty (a ‘lonely’ image)
+    00PM5A0045.CR2         // another family (the typical DSLR couple)
+    picasa.ini             // a (legacy) file with metadata (entire folder)
 ```
 
 ## CLI Usage:
