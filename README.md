@@ -140,13 +140,11 @@ start
 
 #### yarn tasks for release:
 
-
-
 ```
 ui:release:build
     ├ ui:release:build:main
     │    • just builds, no watching
-    │    loading through file://
+    │    • loading through file://
     └ ui:release:build:renderer
          • just builds the `client side’
 
