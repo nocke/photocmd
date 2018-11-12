@@ -1,16 +1,21 @@
 import Vue from 'vue/dist/vue.min'
-import VueRouter from 'vue-router'
+import App from './App'
 
-import titleMixin from './utils/title'
-import { createRouter } from './router'
+// import VueRouter from 'vue-router'
+// import { createRouter } from './router'
+// Vue.use(VueRouter)
 
-Vue.use(VueRouter)
-Vue.mixin(titleMixin)
+// new Vue({
+//   el:'#app',
+//   router: createRouter(),
+//   render(h) {
+//     return h('router-view')
+//   }
+// })
 
-new Vue({
-  el:'#parcel-root',
-  router: createRouter(),
-  render(h) {
-    return h('router-view')
-  }
+const app = new Vue({
+	el: '#app',
+	render(h) {
+		return h(App)
+	}
 })
