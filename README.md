@@ -9,7 +9,7 @@
 A typical photography workflow looks like this
 
 1. **shoot**: shoot a ton of images (most often with my DLSR, saving both jpg+raw)
-1. **selected tages**: concentrate on jps (filtering out their raw counterparts). Star images that are good, deleting those unstarred ones. (in another tool)
+2. **selected tages**: concentrate on jpgs (filtering out their raw counterparts). Star images that are good, deleting those unstarred ones. (in another tool like Lightroom, Picasa or Digikam)
 
 3. **prune junk** I want to delete the counterparts of those 'lonely', unstarred images. Sure this could be done in any GUI, but (first tedious manual issue).Also all sidecars that got generated.
 
@@ -111,7 +111,7 @@ Yes, photocmd is written for nodeJS, but use `import`, ES6 `Map` and spread oper
 
 `yarn cli:test` – runs the full test suite. No building needed for this.
 
-A few tests requires the existence of two large file archives  `sample1|2.zip`. (around 100-200 MB)... TODO Contact me if you need it.
+A few tests requires the existence of rather large test files (around 150 MB). These have been ‘outsourced’ to [another repository](https://github.com/nocke/photocmd-testfiles), automatically loaded through `yarn install` as a regular package.json module dependency.
 
 ----
 ## Electron UI build
