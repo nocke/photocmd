@@ -4,8 +4,8 @@
 	"description": "a command-line tool for working with ‘families’ of photos, syncing metadata, deleting and renaming",
 	"main": "build/index.js",
 	"bin": {
-		"photo": "./build/index.js",
-		"photoui": "./build/photoui.js"
+		"photo": "./dist/cli/index.js",
+		"photoui": "./dist/app/release/main/main.js"
 	},
 	"scripts": {
 		"test": "yarn cli:build && yarn cli:test",
