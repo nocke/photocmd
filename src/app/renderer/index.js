@@ -5,7 +5,6 @@ import App from './App'
 // Vue.component('Debug', Debug)
 Vue.component('Debug', require('./components/Debug').default)
 
-
 // import VueRouter from 'vue-router'
 // import { createRouter } from './router'
 // Vue.use(VueRouter)
