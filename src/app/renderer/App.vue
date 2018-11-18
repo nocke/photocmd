@@ -9,7 +9,6 @@
 		<main class='main'>
 			<h1>main: {{ hello }}</h1>
 
-			<Debug></Debug>
 
 		</main>
 		<aside class='sidebar'>
@@ -19,6 +18,8 @@
 			footer
 		</footer>
 
+		<Debug></Debug>
+		<input class='helper_reload' type="button" value="Reload Page" onClick="document.location.reload(true)">
 	</div>
 </template>
 
