@@ -4,7 +4,7 @@ const { BrowserWindow, app } = require('electron')
 const isDev = require('electron-is-dev')
 const { resolve } = require('app-root-path')
 
-// imports do land in the bundle
+// verify imports do land in the bundle
 const banana = require('./banana.js');
 
 app.on('ready', async () => {
