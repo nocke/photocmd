@@ -1,15 +1,17 @@
-import Vue from 'vue/dist/vue.min'
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+import VueRouter from 'vue-router'
+
 import App from './App'
 
-// import { ipcRenderer } from 'electron'
-// BAD? const { ipcRenderer } = require('electron')
-// GOOD:
+// github.com/electron/electron/issues/7300#issuecomment-285885725
 const { ipcRenderer } = window.require('electron')
 
 // register global components
 Vue.component('Debug', require('./components/Debug').default)
 
-import VueRouter from 'vue-router'
+
+Vue.use(Vuetify)
 Vue.use(VueRouter)
 
 new Vue({
