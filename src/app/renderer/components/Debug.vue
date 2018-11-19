@@ -6,7 +6,7 @@
 		Node version {{ NodeVersion }}<br/>
 		Chrome version {{ ChromeVersion }}<br/>
 		Electron version {{ ElectronVersion }}<br/>
-		DebugMode {{ this.$parent.debugMode? 'DEBUG' : 'RELEASE' }}<br/>
+		DebugMode {{ $parent.debugMode? 'DEBUG' : 'RELEASE' }}<br/>
 
 		<h3>images:</h3>
 		<img width='64' height='64' src='../img/testimg.png'>
