@@ -31,16 +31,17 @@
 				"ui:develop:start": "cross-env ELECTRON_IS_DEV=1 ELECTRON_DISABLE_SECURITY_WARNINGS=1 electron dist/app/development/main/main.js --target electron",
 
 		"ui:release:build": "run-s ui:release:build:main ui:release:build:renderer",
-			"ui:release:build:main": "parcel build src/app/main/main.js --out-dir dist/app/release/main --out-file main --target electron",
-
+			"ui:release:build:main": "parcel build src/app/main/main.js --out-dir dist/app/release/main --out-file main --target node",
 			"ui:release:build:renderer": "parcel build src/app/renderer/index.html --public-url ./ --out-dir dist/app/release/renderer",
 			"ui:release:start": "cross-env ELECTRON_IS_DEV=0 electron dist/app/release/main/main.js",
-
 
 		"dist": "run-s ui:release:build \"electron:build {@}\" --",
 		"electron:build": "build --dir --x64 --publish=never",
 
 		"beautify": "scripts/beautify.sh"
+	},
+	"alias": {
+		"vue": "./node_modules/vue/dist/vue.min.js"
 	},
 	"keywords": [
 		"photo",
