@@ -27,7 +27,8 @@
 export default {
 	data() {
 		return {
-			hello: 'Hello Application'
+			hello: 'Hello Application',
+			debugMode: parseInt(window.process.env.ELECTRON_IS_DEV, 10) === 1
 		}
 	}
 }

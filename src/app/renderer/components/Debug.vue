@@ -6,6 +6,7 @@
 		Node version {{ NodeVersion }}<br/>
 		Chrome version {{ ChromeVersion }}<br/>
 		Electron version {{ ElectronVersion }}<br/>
+		DebugMode {{ this.$parent.debugMode? 'DEBUG' : 'RELEASE' }}<br/>
 
 		<h3>images:</h3>
 		<img width='64' height='64' src='../img/testimg.png'>
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import { createRouter } from '../router'
+import { createRouter } from "../router";
 
 export default {
   name: "Debug",
@@ -32,15 +33,13 @@ export default {
     };
   },
   mounted() {
-	  console.log("Debug Box mounted")
-	  this.$router.push({ path:'subpage'})
+    console.log("Debug Box mounted");
+    this.$router.push({ path: "subpage" });
   },
-  props: {
-
-  }
+  props: {}
 };
 </script>
 
 <style lang="scss">
-  @import "./Debug.sass"
+@import "./Debug.sass";
 </style>

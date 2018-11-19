@@ -7,7 +7,7 @@ Vue.component('Debug', require('./components/Debug').default)
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-const app = new Vue({
+new Vue({
 	el: '#app',
 	render(h) {
 		return h(App)

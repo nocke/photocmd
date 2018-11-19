@@ -28,7 +28,7 @@
 			"ui:develop:renderer": "parcel src/app/renderer/index.html --port 1124 --out-dir dist/app/development/renderer",
 			"ui:develop:main": "run-s ui:develop:main:build ui:develop:start",
 				"ui:develop:main:build": "parcel build src/app/main/main.js --out-dir dist/app/development/main --out-file main --target electron",
-				"ui:develop:start": "electron dist/app/development/main/main.js",
+				"ui:develop:start": "ELECTRON_IS_DEV=1 electron dist/app/development/main/main.js",
 
 		"ui:release:build": "run-s ui:release:build:main ui:release:build:renderer",
 			"ui:release:build:main": "parcel build src/app/main/main.js --out-dir dist/app/release/main --out-file main --target electron",
