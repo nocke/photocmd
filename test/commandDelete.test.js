@@ -125,6 +125,6 @@ describe( 'real command-line: Delete', function() {
 		assert.match( result3, /filesTotal.*\D8/, 'regexp matches' );
 		assert.match( result3, /filesDeleted.*\D0/, 'regexp matches' );
 
-	} )
+	} ).timeout(4000); // uncached osx travis test might take a while – https://stackoverflow.com/a/15982893/444255
 
 } )
