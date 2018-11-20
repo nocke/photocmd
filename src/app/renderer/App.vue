@@ -2,11 +2,32 @@
 	<div id='app'>
 
 		<v-app dark>
-			<v-navigation-drawer app>
-				Navigation Drawer
+			<v-navigation-drawer app v-model="drawer">
+				<v-list>
+					<v-list-tile>
+						<v-list-tile-action>
+							<v-icon>home</v-icon>
+						</v-list-tile-action>
+						<v-list-tile-title>Home</v-list-tile-title>
+					</v-list-tile>
+					<v-list-tile>
+						<v-list-tile-action>
+							<v-icon>favorite</v-icon>
+						</v-list-tile-action>
+						<v-list-tile-title>Favorite</v-list-tile-title>
+					</v-list-tile>
+					<v-list-tile>
+						<v-list-tile-action>
+							<v-icon>all_inbox</v-icon>
+						</v-list-tile-action>
+						<v-list-tile-title>Archive</v-list-tile-title>
+					</v-list-tile>
+				</v-list>
 			</v-navigation-drawer>
+
+
 			<v-toolbar app>
-				<v-toolbar-side-icon></v-toolbar-side-icon>
+				<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 				<v-toolbar-title class="white--text">Toolbar</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<v-btn icon>
@@ -56,6 +77,11 @@
 								</div>
 							</div>
 
+							<v-btn color="success">Success</v-btn>
+							<v-btn color="error">Error</v-btn>
+							<v-btn color="warning">Warning</v-btn>
+							<v-btn color="info">Info</v-btn>
+
 							<v-alert :value="true" type="success">
 								Good boy!
 							</v-alert>
@@ -100,9 +126,10 @@
 
 <script>
 	export default {
+		name: 'App',
 		data() {
 			return {
-				drawer: null,
+				drawer: true,
 
 				hello: "Hello Application",
 				debugMode: parseInt(window.process.env.ELECTRON_IS_DEV, 10) === 1
