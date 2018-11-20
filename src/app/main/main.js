@@ -7,13 +7,21 @@ const { resolve } = require('app-root-path')
 // verify imports do land in the bundle
 const banana = require('./banana.js');
 
+if (isDev) {
+	require('electron-context-menu')({
+		prepend: (params, browserWindow) => []
+	});
+}
+
+
 app.on('ready', async () => {
 
 	console.log(banana)
 	console.log(isDev ? "DEVELOPMENT MODE" : "PRODUCTION MODE")
 
-	// if (isDev) {
-	require('vue-devtools').install()
+	if (isDev) {
+		require('vue-devtools').install()
+	}
 	// else
 	//require('vue-devtools').uninstall()
 	// }
