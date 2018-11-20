@@ -4,6 +4,12 @@ os:
   - osx
 node_js:
   - "8"
+jobs:
+  include:
+    - stage: install
+      script: yarn cli:build
+    - stage: test
+      script: yarn cli:test
 cache:
   directories:
     - node_modules
