@@ -162,3 +162,6 @@ ui:release:start
 ## License
 
 The content on this project are released under the (very permissive) terms of the [MIT license](LICENSE). The MIT License is simple and easy to understand and places almost no restrictions on what you can do with the project.
+
+The Roboto font family and material-design-icons are used under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), see [here](https://fonts.google.com/specimen/Roboto) and [here](https://google.github.io/material-design-icons/#licensing) for more information.
+

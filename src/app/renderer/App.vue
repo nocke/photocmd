@@ -1,52 +1,68 @@
 <template>
 	<div id='app'>
-		<v-app id="inspire">
-			<v-navigation-drawer
-			fixed
-			v-model="drawer"
-			app
-			>
-			<v-list dense>
-				<v-list-tile >  <!--  @click="" -->
-				<v-list-tile-action>
-					<v-icon>home</v-icon>
-				</v-list-tile-action>
-				<v-list-tile-content>
-					<v-list-tile-title>Home</v-list-tile-title>
-				</v-list-tile-content>
-				</v-list-tile>
-				<v-list-tile >  <!--  @click="" -->
-				<v-list-tile-action>
-					<v-icon>contact_mail</v-icon>
-				</v-list-tile-action>
-				<v-list-tile-content>
-					<v-list-tile-title>Contact</v-list-tile-title>
-				</v-list-tile-content>
-				</v-list-tile>
-			</v-list>
+
+		<v-app dark>
+			<v-navigation-drawer app>
+				Navigation Drawer
 			</v-navigation-drawer>
-			<v-toolbar color="indigo" dark fixed app>
-			<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-			<v-toolbar-title>Application</v-toolbar-title>
+			<v-toolbar app>
+				<v-toolbar-side-icon></v-toolbar-side-icon>
+				<v-toolbar-title class="white--text">Toolbar</v-toolbar-title>
+				<v-spacer></v-spacer>
+				<v-btn icon>
+					<v-icon>more_vert</v-icon>
+				</v-btn>
 			</v-toolbar>
 			<v-content>
-			<v-container fluid fill-height>
-				<v-layout
-				justify-center
-				align-center
-				>
-				<v-tooltip right>
-					<v-btn icon large :href="source" target="_blank" slot="activator">
-					<v-icon large>code</v-icon>
-					</v-btn>
-					<span>Source</span>
-				</v-tooltip>
-				</v-layout>
-			</v-container>
+				<v-container fluid>
+
+					<v-layout row wrap>
+						<v-flex xs6>
+							Howdy, partner!
+
+							<h1>Muster<i>knabe6</i> <a href='#'>mit Link</a> ONE<br>ä¼ß³</h1>
+							<h2>Hamb<i>urg</i> <a href='#'>mit Link</a> TWO<br>ä¼ß³</h2>
+							<h3>Hamb<i>urg</i> <a href='#'>mit Link</a> THREE<br>ä¼ß³</h3>
+							<h4>Hamb<i>urg</i> <a href='#'>mit Link</a> FOUR<br>ä¼ß³</h4>
+							<p> Paragraph Absatz Gallia est omnis divisa in partes tres, quarum unam <a href='#'>
+									incolunt Belgae</a>, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra
+								Galli appellantur. Hi omnes lingua, institutis, legibus inter se differunt.
+							</p>
+							Direct Text Gallos <a href='#'>ab Aquitanis Garumna</a> flumen, a Belgis Matrona et Sequana dividit. Horum omnium fortissimi sunt Belgae,
+							propterea quod a cultu atque humanitate provinciae longissime absunt.
+							<h5>Hamb<i>urg</i> <a href='#'>mit Link</a> FIVE<br>ä¼ß³</h5>
+							<h6>Hamb<i>urg</i> <a href='#'>mit Link</a> SIX<br>ä¼ß³</h6>
+							<hr>
+						</v-flex>
+						<v-flex xs6>
+							<div style='font-size:2em'>
+								<div style='font-weight: 100'>
+									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
+								</div>
+								<div style='font-weight: 300'>
+									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
+								</div>
+								<div style='font-weight: 400'>
+									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
+								</div>
+								<div style='font-weight: 500'>
+									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
+								</div>
+								<div style='font-weight: 700'>
+									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
+								</div>
+								<div style='font-weight: 900'>
+									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
+								</div>
+							</div>
+						</v-flex>
+					</v-layout>
+
+
+
+				</v-container>
 			</v-content>
-			<v-footer color="indigo" app>
-			<span class="white--text">&copy; 2017</span>
-			</v-footer>
+			<v-footer app>Footer</v-footer>
 		</v-app>
 
 		<Debug></Debug>
@@ -55,17 +71,18 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      drawer: null,
+	export default {
+		data() {
+			return {
+				drawer: null,
 
-      hello: "Hello Application",
-      debugMode: parseInt(window.process.env.ELECTRON_IS_DEV, 10) === 1
-    };
-  },
-  props: {
-    source: String
-  }
-};
+				hello: "Hello Application",
+				debugMode: parseInt(window.process.env.ELECTRON_IS_DEV, 10) === 1
+			};
+		},
+		props: {
+			source: String
+		}
+	};
+
 </script>
