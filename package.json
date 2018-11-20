@@ -36,8 +36,6 @@
 			"ui:release:build:renderer": "parcel build src/app/renderer/index.html --public-url ./ --out-dir dist/app/release/renderer",
 			"ui:release:start": "cross-env ELECTRON_IS_DEV=0 electron dist/app/release/main/main.js",
 
-
-
 		"dist": "run-s ui:release:build \"electron:build {@}\" --",
 		"electron:build": "build --dir --x64 --publish=never",
 

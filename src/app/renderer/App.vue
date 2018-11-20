@@ -55,14 +55,42 @@
 									Hamb<i>urg</i> <u>was</u> <a href='#'>here</a></i>
 								</div>
 							</div>
+
+							<v-alert :value="true" type="success">
+								Good boy!
+							</v-alert>
+
 						</v-flex>
 					</v-layout>
 
-
-
 				</v-container>
 			</v-content>
-			<v-footer app>Footer</v-footer>
+			<v-footer app>
+				<v-bottom-nav :active.sync="bottomNav" :color="color" :value="true" absolute shift>
+
+					<!-- more details: see here https://codepen.io/fnocke/pen/XyVNOx?&editors=101 -->
+					<v-btn dark>
+						<span>Video</span>
+						<v-icon>ondemand_video</v-icon>
+					</v-btn>
+
+					<v-btn dark>
+						<span>Music</span>
+						<v-icon>music_note</v-icon>
+					</v-btn>
+
+					<v-btn dark>
+						<span>Book</span>
+						<v-icon>book</v-icon>
+					</v-btn>
+
+					<v-btn dark>
+						<span>Image</span>
+						<v-icon>image</v-icon>
+					</v-btn>
+
+				</v-bottom-nav>
+			</v-footer>
 		</v-app>
 
 		<Debug></Debug>

@@ -2,7 +2,7 @@
 	<div class='Debug'>
 		<h2>The Debug Box</h2>
 		<h3>paths:</h3>
-		URL path {{ URLPath }}<br/>
+		URL path (route) {{ URLPath }}<br/>
 		Node version {{ NodeVersion }}<br/>
 		Chrome version {{ ChromeVersion }}<br/>
 		Electron version {{ ElectronVersion }}<br/>
