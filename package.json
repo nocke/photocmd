@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"test": "yarn cli:build && yarn cli:test",
+		"travis": "yarn cli:build && yarn cli:test && yarn ui:release:build",
 
 		"clean": "rimraf build dist .cache",
 
