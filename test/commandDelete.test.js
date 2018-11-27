@@ -63,7 +63,7 @@ describe( 'real command-line: Delete', function() {
 		assert.match( result, /succesfully/ )
 	} )
 
-	it( 'command on nonexisting folder', () => {
+	it( 'command on nonexisting folder', async () => {
 
 		assert.throws( () => execSync(
 			`node ${photoCmd} delete nonexistingFolder -v`, { cwd: global.app.root }
