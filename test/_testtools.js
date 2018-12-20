@@ -47,16 +47,19 @@ export const mockfile = async ( basedir, files ) => {
 
 export const assertFiles = async ( basedir, fileObj ) => {
 	let numErrors = 0
+	let numMissing = 0
+	let numSurplus = 0
 
 	Object.keys( fileObj ).forEach( ( file ) => {
 		const filepath = path.join( basedir, file )
 		if ( fs.existsSync( filepath ) != fileObj[ file ] ) {
 			warn( `${filepath} expected to be ${fs.existsSync(filepath) ? 'missing' : 'present'}` )
 			numErrors++
+			fs.existsSync(filepath) ? numSurplus++ : numMissing++
 		}
 	} )
 
-	assert( numErrors === 0, `found ${numErrors} missing/surplus files` )
+	assert( numErrors === 0, `${numMissing} missing / ${numSurplus} surplus files (${numErrors} errors)` )
 }
 
 
