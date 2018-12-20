@@ -20,6 +20,12 @@ describe( 'ES6 self-test', () => {
 		assert( !a.includes( 4 ), 'two' )
 	} )
 
+	it( 'String - include', () => {
+		var s = 'Southern Bananas'
+		assert( s.includes( 'anana' ), 'one' )
+		assert( !s.includes( 'kiwi' ), 'two' )
+	} )
+
 	it( 'Set', () => {
 		var mySet = new Set()
 		mySet.add( 1 ) // Set { 1 }
