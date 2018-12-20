@@ -38,8 +38,7 @@ describe( 'real command-line: Delete', function() {
 	this.slow( 5000 ) // yes, 2200 oder 3200 can at times not be enough (works in .only() but not on entire single test or full suite )
 
 	before( () => {
-		// sanity self-test with node version ≥ 8
-		// https://stackoverflow.com/a/28394895
+		// sanity self-test with node version ≥ 8    https://stackoverflow.com/a/28394895
 		const result = execSync( 'node -v' ).toString()
 		assert.match( result, /^v(8|9|1\d)+\.\d+\.\d+\s?$/, 'valid node version, ≥ 8' )
 	} )
