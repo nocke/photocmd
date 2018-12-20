@@ -111,7 +111,9 @@ Yes, photocmd is written for nodeJS, but use `import`, ES6 `Map` and spread oper
 
 `yarn cli:test` – runs the full test suite. No building needed for this.
 
-A few tests requires the existence of rather large test files (around 150 MB). These have been ‘outsourced’ to [another repository](https://github.com/nocke/photocmd-testfiles), automatically loaded through `yarn install` as a regular package.json module dependency.
+`yarn cli:test-single test/deleteAction.test.js` – run a single test file (local path, no glob matching)
+
+A few tests requires the existence of rather large test files (around 150 MB). These have been ‘outsourced’ to [another repository](https://github.com/nocke/photocmd-testfiles), automatically loaded through `yarn` as a regular package.json module dependency.
 
 ----
 ## Electron UI build
