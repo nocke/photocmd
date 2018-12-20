@@ -1,21 +1,20 @@
 {
 	"version": "0.2.0",
 	"configurations": [
-
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Photo as command",
+			"name": "photo as command",
 			"sourceMaps": true,
 			"outFiles": [
-				"${workspaceRoot}/build/**/*.js"
+				"${workspaceRoot}/dist/cli/**/*.js"
 			],
-			"program": "${workspaceRoot}/build/index.js",
+			"program": "${workspaceRoot}/dist/cli/index.js",
 			"protocol": "auto",
 			"cwd": "${workspaceRoot}",
 			"args": [
         		"delete",
-        		"sample1",
+        		"sample2",
 				"-lv",
 				"--lonely"
 			]
@@ -23,33 +22,38 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "mocha: all tests",
-			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-			"args": [
-				"-u",
-				"tdd",
-				"--timeout",
-				"999999",
-				"--colors",
-				"${workspaceFolder}/test"
+			"name": "cli:test (all)",
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceRoot}/dist/cli/**/*.js"
 			],
-			"internalConsoleOptions": "openOnSessionStart"
+			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"protocol": "auto",
+			"cwd": "${workspaceRoot}",
+			"args": [
+				"./test/**/*.test.js"
+			]
 		},
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "mocha: SINGLE test",
+			"name": "cli:test (current file)",
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceRoot}/dist/cli/**/*.js"
+			],
 			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"protocol": "auto",
+			"cwd": "${workspaceRoot}",
 			"args": [
 				"-u",
 				"tdd",
 				"--timeout",
 				"999999",
 				"--colors",
-				"${workspaceFolder}/test/commandDelete.test.js"
+				"${file}"
 			],
 			"internalConsoleOptions": "openOnSessionStart"
 		}
-
 	]
 }
