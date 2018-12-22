@@ -17,20 +17,20 @@ import {
  */
 class FileSet {
 
-	static getCore( p ) {
+	static getCore( {name} ) {
 		let exp,
 			match = null
 
 		// look for match
 		config.coreMatches.find( function( expCandidate ) {
 			exp = expCandidate
-			match = p.name.match( exp )
+			match = name.match( exp )
 			return match !== null // no match → false → keep on searching
 		} )
 
-		// found a match
+		// found a match?
 		if ( match !== null ) {
-			enforce( match.length === 3, 'match exprssion length' )
+			enforce( match.length === 3, 'match expression length' )
 			return match[ 1 ]
 		}
 
@@ -48,7 +48,6 @@ class FileSet {
 
 		enforce( Array.isArray( dirs ), 'not an array' )
 
-		// parsing each dir:
 		dirs.forEach( function( dir ) {
 
 			// COULDO do a file-exist-round beforehand,
@@ -86,12 +85,9 @@ class FileSet {
 				// extract Core
 				p.core = FileSet.getCore( p )
 
-				// construct Member
-				const member = new Member( p )
-
 				if ( p.core === null ) {
 					// treat singles just like families with the exception,
-					// that p.core is defined by full name...
+					// p.core is then defined by full name...
 					p.core = p.name
 
 					// COULDDO match (under all remaining) for
@@ -99,6 +95,9 @@ class FileSet {
 					// IpswickCastle44_04_retouched.jpg
 					//  _ (2-3 digits) nothing/non-digit
 				}
+
+				// construct Member
+				const member = new Member( p )
 
 				// open new Family if needed COULDDO flyweight getter
 				if ( !this._families.has( p.core ) )
