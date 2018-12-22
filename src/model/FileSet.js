@@ -21,6 +21,8 @@ class FileSet {
 		let exp,
 			match = null
 
+		// chop off plausible extensions
+
 		// look for match
 		config.coreMatches.find( function( expCandidate ) {
 			exp = expCandidate
@@ -35,7 +37,7 @@ class FileSet {
 		}
 
 		// else: a single
-		return null
+		return name
 	}
 
 	constructor( dirs = undefined ) {
@@ -69,7 +71,8 @@ class FileSet {
 				p.dir = dir
 
 				enforce( p.name.length > 0, 'sanity: no empty filenames' )
-				// skipping hidden
+
+				// skipping hidden (for now)
 				if ( p.name[ 0 ] === '.' ) return
 
 				// remove leading dot on ext, except extensionless:
@@ -82,19 +85,9 @@ class FileSet {
 				if ( !config.extensions.includes( p.ext.toLowerCase() ) )
 					return // skip nonsupported
 
-				// extract Core
+				// figure out Core
 				p.core = FileSet.getCore( p )
 
-				if ( p.core === null ) {
-					// treat singles just like families with the exception,
-					// p.core is then defined by full name...
-					p.core = p.name
-
-					// COULDDO match (under all remaining) for
-					// IpswickCastle44.CR2
-					// IpswickCastle44_04_retouched.jpg
-					//  _ (2-3 digits) nothing/non-digit
-				}
 
 				// construct Member
 				const member = new Member( p )
@@ -104,6 +97,12 @@ class FileSet {
 					this._families.set( p.core, new Family( p.core ) )
 
 				const f = this._families.get( p.core )
+
+
+				warn(p)
+
+
+
 				f.add( member )
 
 			} ) // files.map ======================

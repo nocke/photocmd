@@ -28,7 +28,7 @@ describe( 'FileSet testing', () => {
 		assert.equal( FileSet.getCore( {name:'PM5A2087_02_final.jpg'}), 'PM5A2087')
 
 		// singles
-		assert.equal( FileSet.getCore( {name:'beaches.JpG'}), null)
+		assert.equal( FileSet.getCore( {name:'beaches.JpG'}), 'beaches')
 
 		// extensionless (yes, oddity)
 		assert.equal( FileSet.getCore( {name:'PM5A2087'}), 'PM5A2087')
@@ -43,7 +43,7 @@ describe( 'FileSet testing', () => {
 		// sidecar instead
 		assert.equal( FileSet.getCore( {name:'IMG_0636.nef'}), 'IMG_0636')
 		assert.equal( FileSet.getCore( {name:'PM5A1234.xmp'}), 'PM5A1234')
-//		assert.equal( FileSet.getCore( {name:'Singles.xmp'}), 'Singles')
+		assert.equal( FileSet.getCore( {name:'Singles.xmp'}), 'Singles')
 
 
 		// sidecar append
@@ -57,6 +57,11 @@ describe( 'FileSet testing', () => {
 	it( 'test getCore - movies', () => {
 		
 		assert.equal( FileSet.getCore( {name:'PM5A2087'}), 'PM5A2087')
+	})
+
+	it.only( 'temp', () => {
+		
+		assert.equal( FileSet.getCore( {name:'beaches.JpG'}), 'beaches')
 	})
 
 

@@ -81,7 +81,7 @@ class Family {
 		this._map.set( member.base, member )
 
 		// at least one non-raw image file qualifies
-		if ( config.extensions_nonraw.includes( member.type ) ) {
+		if ( config.extensions_leaders.includes( member.type ) ) {
 			this._isLonely = false
 			this._onlySidecars = false
 		}
